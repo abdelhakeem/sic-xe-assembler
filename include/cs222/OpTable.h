@@ -2,12 +2,12 @@
 #define CS222_OPTABLE_H
 
 #include <unordered_map>
-#include "Operation.h"
+#include "Instruction.h"
 
 namespace cs222 {
     using std::unordered_map;
 
-    // TODO add remaining operations
+    // TODO add remaining instructions
 
     constexpr auto OP_ADD = "ADD";
     constexpr auto OP_ADDF = "ADDF";
@@ -18,15 +18,15 @@ namespace cs222 {
     constexpr auto OP_COMPF = "COMPF";
     constexpr auto OP_COMPR = "COMPR";
 
-    const unordered_map<string, Operation> OPTAB {
-        {OP_ADD,    Operation(OP_ADD,   0x18, Operation::FORMAT_3_4)},
-        {OP_ADDF,   Operation(OP_ADDF,  0x58, Operation::FORMAT_3_4)},
-        {OP_ADDR,   Operation(OP_ADDR,  0x90, Operation::FORMAT_2)},
-        {OP_AND,    Operation(OP_AND,   0x40, Operation::FORMAT_3_4)},
-        {OP_CLEAR,  Operation(OP_CLEAR, 0xB4, Operation::FORMAT_2)},
-        {OP_COMP,   Operation(OP_COMP,  0x28, Operation::FORMAT_3_4)},
-        {OP_COMPF,  Operation(OP_COMPF, 0x88, Operation::FORMAT_3_4)},
-        {OP_COMPR,  Operation(OP_COMPF, 0xA0, Operation::FORMAT_2)},
+    const unordered_map<string, Instruction> OPTAB {
+        {OP_ADD,    Instruction(OP_ADD,   0x18, Instruction::FORMAT_3_4)},
+        {OP_ADDF,   Instruction(OP_ADDF,  0x58, Instruction::FORMAT_3_4)},
+        {OP_ADDR,   Instruction(OP_ADDR,  0x90, Instruction::FORMAT_2)},
+        {OP_AND,    Instruction(OP_AND,   0x40, Instruction::FORMAT_3_4)},
+        {OP_CLEAR,  Instruction(OP_CLEAR, 0xB4, Instruction::FORMAT_2)},
+        {OP_COMP,   Instruction(OP_COMP,  0x28, Instruction::FORMAT_3_4)},
+        {OP_COMPF,  Instruction(OP_COMPF, 0x88, Instruction::FORMAT_3_4)},
+        {OP_COMPR,  Instruction(OP_COMPF, 0xA0, Instruction::FORMAT_2)},
     };
 }
 
