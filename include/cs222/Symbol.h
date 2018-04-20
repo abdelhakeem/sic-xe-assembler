@@ -12,9 +12,9 @@ namespace cs222 {
                     const string& name,
                     const int& location,
                     const int& length);
-            const string getName() const;
-            int getLocation() const;
-            int getLength() const;
+            const string& getName() const;
+            const int& getLocation() const;
+            const int& getLength() const;
         private:
             string name;
             int location;

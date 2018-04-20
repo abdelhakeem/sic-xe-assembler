@@ -17,9 +17,9 @@ namespace cs222 {
                     const string& mnemonic,
                     const char& opcode,
                     const Format& format);
-            const string getMnemonic() const;
-            char getOpcode() const;
-            char getFormat() const;
+            const string& getMnemonic() const;
+            const char& getOpcode() const;
+            const Format& getFormat() const;
         private:
             string mnemonic;
             char opcode;

@@ -2,6 +2,7 @@
 #define CS222_INSTRUCTION_H
 
 #include <string>
+#include "Operand.h"
 #include "Operation.h"
 
 namespace cs222 {
@@ -16,12 +17,12 @@ namespace cs222 {
                     const Operation& operation,
                     const Operand operands[2],
                     const string& comment);
-            int getLine() const;
-            int getAddress() const;
-            const string getLabel() const;
-            const Operation getOperation() const;
-            const Operand* const getOperands() const;
-            const string getComment() const;
+            const int& getLine() const;
+            const int& getAddress() const;
+            const string& getLabel() const;
+            const Operation& getOperation() const;
+            const Operand* getOperands() const;
+            const string& getComment() const;
         private:
             int line;
             int address;
