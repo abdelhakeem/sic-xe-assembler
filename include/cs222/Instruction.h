@@ -26,11 +26,14 @@ namespace cs222 {
             const string& getMnemonic() const;
             const char& getOpcode() const;
             const Format& getFormat() const;
+            const std::vector<Operand>& getOperands() const;
+            const bool isIndexable() const;
+            const bool isOperandsConsistent() const;
 
         private:
-            string mnemonic;
-            char opcode;
-            Format format;
+            const string mnemonic;
+            const char opcode;
+            const Format format;
             std::vector<Operand> operands;
             int registers;
             bool indexable;

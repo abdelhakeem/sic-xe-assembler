@@ -12,14 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaaf8c5b-5831-41c9-bc5b-c4d8c705a0f7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/include/cs222/Assembler.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/cs222/InstructionChecker.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/cs222/OperandType.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SIC_XE_Assembler.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SIC_XE_Assembler.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/SIC_XE_Assembler.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SIC_XE_Assembler.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/cs222/IO.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/cs222/IO.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/cs222/Instruction.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/cs222/Instruction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/cs222/Operand.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/cs222/Operand.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,33 +40,34 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Operand.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/include/cs222/Operand.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OperandType.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/cs222/OperandType.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Assembler.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/cs222/Assembler.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+            <state relative-caret-position="150">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="e#75#90#0" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InstructionChecker.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/include/cs222/InstructionChecker.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="113" selection-start-line="11" selection-start-column="113" selection-end-line="11" selection-end-column="113" />
-              <folding>
-                <element signature="e#83#98#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Symbol.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/cs222/Symbol.h">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -88,14 +88,15 @@
       <list>
         <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/include/cs222/OpTable.h" />
-        <option value="$PROJECT_DIR$/include/cs222/Operand.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/include/cs222/Instruction.h" />
         <option value="$PROJECT_DIR$/include/cs222/Parser.h" />
         <option value="$PROJECT_DIR$/include/cs222/IO.h" />
-        <option value="$PROJECT_DIR$/include/cs222/Assembler.h" />
         <option value="$PROJECT_DIR$/include/cs222/SyntaxChecker.h" />
         <option value="$PROJECT_DIR$/include/cs222/InstructionChecker.h" />
+        <option value="$PROJECT_DIR$/include/cs222/Instruction.h" />
+        <option value="$PROJECT_DIR$/include/cs222/Assembler.h" />
+        <option value="$PROJECT_DIR$/include/cs222/OperandType.h" />
+        <option value="$PROJECT_DIR$/include/cs222/Operand.h" />
       </list>
     </option>
   </component>
@@ -168,7 +169,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Build All">
-    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all" />
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SIC_XE_Assembler" TARGET_NAME="SIC_XE_Assembler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SIC_XE_Assembler" RUN_TARGET_NAME="SIC_XE_Assembler" />
     <configuration name="SIC_XE_Assembler" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SIC_XE_Assembler" TARGET_NAME="SIC_XE_Assembler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SIC_XE_Assembler" RUN_TARGET_NAME="SIC_XE_Assembler" />
     <list>
       <item itemvalue="Application.Build All" />
@@ -186,23 +187,25 @@
       <option name="presentableId" value="Default" />
       <updated>1524245661656</updated>
       <workItem from="1524245667125" duration="2666000" />
-      <workItem from="1524313354330" duration="4739000" />
+      <workItem from="1524313354330" duration="5398000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7405000" />
+    <option name="totallyTimeSpent" value="8064000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24596465" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="CMake" order="7" visible="true" weight="0.2951807" />
+      <window_info anchor="bottom" id="Messages" weight="0.3298193" />
+      <window_info anchor="bottom" id="CMake" order="7" weight="0.2951807" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3298193" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -243,49 +246,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/cs222/Operand.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/cs222/Symbol.h">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/cs222/Parser.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/cs222/Instruction.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="29" column="16" lean-forward="true" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
-          <folding>
-            <element signature="e#57#74#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/cs222/IO.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="e#61#80#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/cs222/Assembler.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-          <folding>
-            <element signature="e#75#90#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -297,6 +263,50 @@
           <folding>
             <element signature="e#83#98#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/cs222/Instruction.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="30" column="52" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
+          <folding>
+            <element signature="e#57#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/cs222/Symbol.h">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/cs222/Assembler.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#75#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/cs222/Parser.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/cs222/OperandType.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/cs222/Operand.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
         </state>
       </provider>
     </entry>
