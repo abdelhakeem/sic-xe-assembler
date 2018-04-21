@@ -12,6 +12,7 @@ namespace cs222 {
 
         void pass1();
         void pass2();
+        void printSymbolTable();
 
     private:
         IO io;

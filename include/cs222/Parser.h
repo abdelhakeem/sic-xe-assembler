@@ -2,18 +2,20 @@
 #define SIC_XE_ASSEMBLER_PARSER_H
 
 #include "Instruction.h"
+#include "IO.h"
 
 namespace cs222 {
     class Parser {
     public:
-        Parser();
+        Parser(IO io);
 
         Instruction parseLine(string line);
-        void setLineNumber(int lineNumber);
 
+        int lineNumber;
     private:
-        int lineNumber;// For line numbers.
+        IO io;
 
+        void printInstructionFormatted();
         void makeOperands();
     };
 }

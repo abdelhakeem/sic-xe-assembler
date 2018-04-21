@@ -3,21 +3,23 @@
 
 #include <iostream>
 #include <string>
-
+#include <utility>
+#include "Instruction.h"
 
 namespace cs222 {
     class IO {
     public:
-        IO(std::string inputFileName, std::string outputFileName);
+        IO(string inputFileName, string outputFileName);
 
-        std::string readLine();
-        void consoleOut(std::string line);
-        void fileOut(std::string line);
+        string readLine();
+        void consoleOut(string line);
+        void fileOut(string line);
+        void printSymbolTable(std::unordered_map<string, string> & symbolTable);
 
         ~IO();
     private:
-        std::string inputFileName;
-        std::string outputFileName;
+        string inputFileName;
+        string outputFileName;
     };
 }
 #endif //SIC_XE_ASSEMBLER_IO_H
