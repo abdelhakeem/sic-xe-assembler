@@ -1,0 +1,3 @@
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/edit_cache.dir
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/SIC_XE_Assembler.dir
