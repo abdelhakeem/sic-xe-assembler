@@ -6,5 +6,29 @@
 
 #IncludeRegexTransform: 
 
+../include/cs222/Instruction.h
+string
+-
+vector
+-
+Operand.h
+../include/cs222/Operand.h
+enums.h
+../include/cs222/enums.h
+
+../include/cs222/Operand.h
+string
+-
+enums.h
+../include/cs222/enums.h
+
+../include/cs222/enums.h
+
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Instruction.cpp
+string
+-
+Instruction.h
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Instruction.h
+
 /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/main.cpp
 

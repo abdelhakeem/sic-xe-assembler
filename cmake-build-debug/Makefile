@@ -123,6 +123,33 @@ SIC_XE_Assembler/fast:
 	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/build
 .PHONY : SIC_XE_Assembler/fast
 
+src/Instruction.o: src/Instruction.cpp.o
+
+.PHONY : src/Instruction.o
+
+# target to build an object file
+src/Instruction.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o
+.PHONY : src/Instruction.cpp.o
+
+src/Instruction.i: src/Instruction.cpp.i
+
+.PHONY : src/Instruction.i
+
+# target to preprocess a source file
+src/Instruction.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.i
+.PHONY : src/Instruction.cpp.i
+
+src/Instruction.s: src/Instruction.cpp.s
+
+.PHONY : src/Instruction.s
+
+# target to generate assembly for a file
+src/Instruction.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.s
+.PHONY : src/Instruction.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... SIC_XE_Assembler"
+	@echo "... src/Instruction.o"
+	@echo "... src/Instruction.i"
+	@echo "... src/Instruction.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

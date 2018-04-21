@@ -2,7 +2,7 @@
 #define CS222_OPERAND_H
 
 #include <string>
-#include "OperandType.h"
+#include "enums.h"
 
 namespace cs222 {
     using std::string;
@@ -15,9 +15,11 @@ namespace cs222 {
                     const Type& type);
             const string& getToken() const;
             const Type& getType() const;
+            const bool isRegister() const;
         private:
             const string token;
             const Type type;
+            bool registerOperand;
     };
 }
 

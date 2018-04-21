@@ -2,5 +2,10 @@
 #define SIC_XE_ASSEMBLER_OPERANDTYPE_H
 
 enum Type { REGISTER, SYMBOL, LITERAL };
-
+enum Addressing { DIRECT, INDIRECT, IMMEDIATE, XE };
+enum Format {
+    FORMAT_1,
+    FORMAT_2,
+    FORMAT_3_4,
+};
 #endif //SIC_XE_ASSEMBLER_OPERANDTYPE_H

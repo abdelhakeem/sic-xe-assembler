@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Operand.h"
+#include "enums.h"
 
 namespace cs222 {
     using std::string;
@@ -11,12 +12,6 @@ namespace cs222 {
     class Instruction {
         public:
 
-            enum Addressing { DIRECT, INDIRECT, IMMEDIATE, XE };
-            enum Format {
-                FORMAT_1,
-                FORMAT_2,
-                FORMAT_3_4,
-            };
             Instruction(
                     const string& mnemonic,
                     const char& opcode,
