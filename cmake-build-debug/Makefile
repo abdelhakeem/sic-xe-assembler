@@ -150,6 +150,33 @@ src/Instruction.cpp.s:
 	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.s
 .PHONY : src/Instruction.cpp.s
 
+src/Operand.o: src/Operand.cpp.o
+
+.PHONY : src/Operand.o
+
+# target to build an object file
+src/Operand.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o
+.PHONY : src/Operand.cpp.o
+
+src/Operand.i: src/Operand.cpp.i
+
+.PHONY : src/Operand.i
+
+# target to preprocess a source file
+src/Operand.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.i
+.PHONY : src/Operand.cpp.i
+
+src/Operand.s: src/Operand.cpp.s
+
+.PHONY : src/Operand.s
+
+# target to generate assembly for a file
+src/Operand.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.s
+.PHONY : src/Operand.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -189,6 +216,9 @@ help:
 	@echo "... src/Instruction.o"
 	@echo "... src/Instruction.i"
 	@echo "... src/Instruction.s"
+	@echo "... src/Operand.o"
+	@echo "... src/Operand.i"
+	@echo "... src/Operand.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

@@ -120,6 +120,9 @@
 		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Instruction.cpp">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
+		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Operand.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
 		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/main.cpp">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>

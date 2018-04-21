@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o"
   "CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o"
+  "CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o"
   "SIC_XE_Assembler.pdb"
   "SIC_XE_Assembler"
 )

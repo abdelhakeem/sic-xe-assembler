@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Instruction.cpp" "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o"
+  "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Operand.cpp" "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o"
   "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/main.cpp" "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

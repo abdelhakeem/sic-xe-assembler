@@ -6,5 +6,9 @@ CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o
  ../include/cs222/Operand.h
  ../include/cs222/enums.h
  /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Instruction.cpp
+CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o
+ ../include/cs222/Operand.h
+ ../include/cs222/enums.h
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Operand.cpp
 CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o
  /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/main.cpp

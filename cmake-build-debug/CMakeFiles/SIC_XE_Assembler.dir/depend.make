@@ -6,5 +6,9 @@ CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o: ../include/cs222/Operand.
 CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o: ../include/cs222/enums.h
 CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o: ../src/Instruction.cpp
 
+CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o: ../include/cs222/Operand.h
+CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o: ../include/cs222/enums.h
+CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o: ../src/Operand.cpp
+
 CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o: ../src/main.cpp
 

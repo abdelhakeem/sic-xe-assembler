@@ -2,7 +2,7 @@
 #define CS222_OPERAND_H
 
 #include <string>
-#include "enums.h"
+#include "constants.h"
 
 namespace cs222 {
     using std::string;

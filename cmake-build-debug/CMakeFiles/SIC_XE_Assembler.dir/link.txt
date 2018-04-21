@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o  -o SIC_XE_Assembler 
+/usr/bin/c++  -g   CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o  -o SIC_XE_Assembler 

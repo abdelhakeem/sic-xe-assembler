@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "Operand.h"
-#include "enums.h"
+#include "constants.h"
 
 namespace cs222 {
     using std::string;
