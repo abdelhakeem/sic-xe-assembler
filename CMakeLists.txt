@@ -11,4 +11,4 @@ add_executable(SIC_XE_Assembler
         include/cs222/Instruction.h
         include/cs222/Operand.h
         include/cs222/OpTable.h
-        include/cs222/Symbol.h include/cs222/IO.h src/main.cpp include/cs222/Parser.h)
+        include/cs222/Symbol.h include/cs222/IO.h src/main.cpp include/cs222/Parser.h include/cs222/Assembler.h include/cs222/InstructionChecker.h)

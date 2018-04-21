@@ -8,16 +8,16 @@
 namespace cs222 {
     class IO {
     public:
-        IO(string inputFileName, string outputFileName);
+        IO(std::string inputFileName, std::string outputFileName);
 
-        string readLine();
-        void consoleOut(string line);
-        void fileOut(string line);
+        std::string readLine();
+        void consoleOut(std::string line);
+        void fileOut(std::string line);
 
         ~IO();
     private:
-        string inputFileName;
-        string outputFileName;
+        std::string inputFileName;
+        std::string outputFileName;
     };
 }
 #endif //SIC_XE_ASSEMBLER_IO_H
