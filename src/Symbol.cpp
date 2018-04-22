@@ -11,8 +11,8 @@ namespace cs222 {
 					
 					
 	
-    Symbol::const string& getName() const{ return name; }
-    Symbol::const int& getLocation() const { return location; }
-    Symbol::const int& getLength() const{ return length; }
+    const string& Symbol::getName() const{ return name; }
+    const int& Symbol::getLocation() const { return location; }
+    const int& Symbol::getLength() const{ return length; }
 }	
 					
