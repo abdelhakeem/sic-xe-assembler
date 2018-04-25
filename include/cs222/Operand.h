@@ -2,31 +2,24 @@
 #define CS222_OPERAND_H
 
 #include <string>
+#include "constants.h"
 
 namespace cs222 {
     using std::string;
 
     class Operand {
         public:
-            enum Type { REGISTER, SYMBOL, LITERAL };
-            enum Addressing { DIRECT, INDIRECT, IMMEDIATE, XE };
-
-            // TODO complete addressing modes
 
             Operand(
                     const string& token,
-                    const int& value,
-                    const Type& type,
-                    const Addressing& addressing);
+                    const Type& type);
             const string& getToken() const;
-            const int& getValue() const;
             const Type& getType() const;
-            const Addressing& getAddressing() const;
+            const bool isRegister() const;
         private:
-            string token;
-            int value;
-            Type type;
-            Addressing addressing;
+            const string token;
+            const Type type;
+            bool registerOperand;
     };
 }
 
