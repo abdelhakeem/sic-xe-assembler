@@ -3,7 +3,7 @@
 namespace cs222 {
     Statement::Statement(
             const std::string& label,
-            const Operation& operation,
+            const std::string& operation,
             const Operand& firstOperand,
             const Operand& secondOperand,
             const std::string& comment) :
@@ -15,7 +15,7 @@ namespace cs222 {
         return label;
     }
 
-    Operation Statement::getOperation() const
+    std::string Statement::getOperation() const
     {
         return operation;
     }

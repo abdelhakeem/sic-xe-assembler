@@ -9,18 +9,18 @@ namespace cs222 {
         public:
             Statement(
                     const std::string& label,
-                    const Operation& operation,
+                    const std::string& operation,
                     const Operand& firstOperand,
                     const Operand& secondOperand,
                     const std::string& comment);
             std::string getLabel() const;
-            Operation getOperation() const;
+            std::string getOperation() const;
             Operand getFirstOperand() const;
             Operand getSecondOperand() const;
             std::string getComment() const;
         private:
             const std::string label;
-            const Operation operation;
+            const std::string operation;
             const Operand firstOperand;
             const Operand secondOperand;
             const std::string comment;
