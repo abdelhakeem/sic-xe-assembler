@@ -2,14 +2,21 @@
 
 namespace cs222 {
     Instruction::Instruction(
+            const size_t& lineNumber,
+            const std::string& comment) :
+        lineNumber(lineNumber), comment(comment) { }
+
+    Instruction::Instruction(
+            const size_t& lineNumber,
             const std::string& label,
             const std::string& operation,
             const Operand& firstOperand,
             const Operand& secondOperand,
             const std::string& comment,
             const std::bitset<6>& flags) :
-        label(label), operation(operation), firstOperand(firstOperand),
-        secondOperand(secondOperand), comment(comment), flags(flags) { }
+        lineNumber(lineNumber), label(label), operation(operation),
+        firstOperand(firstOperand), secondOperand(secondOperand),
+        comment(comment), flags(flags) { }
 
     std::string Instruction::getLabel() const
     {

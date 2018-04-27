@@ -24,12 +24,17 @@ namespace cs222 {
                 FLAG_EXTENDED       =   0
             };
             Instruction(
+                    const size_t& lineNumber,
+                    const std::string& comment);
+            Instruction(
+                    const size_t& lineNumber,
                     const std::string& label,
                     const std::string& operation,
                     const Operand& firstOperand,
                     const Operand& secondOperand,
                     const std::string& comment,
                     const std::bitset<6>& flags);
+            size_t getLineNumber() const;
             std::string getLabel() const;
             std::string getOperation() const;
             Operand getFirstOperand() const;
@@ -38,6 +43,7 @@ namespace cs222 {
             bool isSet(const Flag& f) const;
             const static std::unordered_map<Format, size_t> Length;
         private:
+            const size_t lineNumber;
             const std::string label;
             const std::string operation;
             const Operand firstOperand;
