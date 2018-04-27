@@ -18,6 +18,11 @@ namespace cs222 {
         firstOperand(firstOperand), secondOperand(secondOperand),
         comment(comment), flags(flags) { }
 
+    size_t Instruction::getLineNumber() const
+    {
+        return lineNumber;
+    }
+
     std::string Instruction::getLabel() const
     {
         return label;
@@ -41,6 +46,11 @@ namespace cs222 {
     std::string Instruction::getComment() const
     {
         return comment;
+    }
+
+    std::bitset<6> Instruction::getFlags() const
+    {
+        return flags;
     }
 
     bool Instruction::isSet(const Flag& f) const

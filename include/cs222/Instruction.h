@@ -40,6 +40,7 @@ namespace cs222 {
             Operand getFirstOperand() const;
             Operand getSecondOperand() const;
             std::string getComment() const;
+            std::bitset<6> getFlags() const;
             bool isSet(const Flag& f) const;
             const static std::unordered_map<Format, size_t> Length;
         private:
