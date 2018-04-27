@@ -1,4 +1,4 @@
-#include <Instruction.h>
+#include <cs222/Instruction.h>
 
 namespace cs222 {
     Instruction::Instruction(
@@ -6,9 +6,10 @@ namespace cs222 {
             const std::string& operation,
             const Operand& firstOperand,
             const Operand& secondOperand,
-            const std::string& comment) :
+            const std::string& comment,
+            const std::bitset<6>& flags) :
         label(label), operation(operation), firstOperand(firstOperand),
-        secondOperand(secondOperand), comment(comment) { }
+        secondOperand(secondOperand), comment(comment), flags(flags) { }
 
     std::string Instruction::getLabel() const
     {
@@ -33,6 +34,11 @@ namespace cs222 {
     std::string Instruction::getComment() const
     {
         return comment;
+    }
+
+    bool Instruction::isSet(const Flag& f) const
+    {
+        return flags.test(f);
     }
 
     const std::unordered_map<Instruction::Format, size_t> Instruction::Length {
