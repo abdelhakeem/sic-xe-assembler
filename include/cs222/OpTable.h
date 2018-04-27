@@ -1,7 +1,7 @@
 #ifndef CS222_OPTABLE_H
 #define CS222_OPTABLE_H
 
-#include <Operation.h>
+#include <cs222/Operation.h>
 
 namespace cs222 {
     constexpr auto OP_ADD       =       "ADD";

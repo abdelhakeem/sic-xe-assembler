@@ -1,7 +1,7 @@
 #ifndef CS222_OPERATION_H
 #define CS222_OPERATION_H
 
-#include <Instruction.h>
+#include <cs222/Instruction.h>
 
 namespace cs222 {
     class Operation {
