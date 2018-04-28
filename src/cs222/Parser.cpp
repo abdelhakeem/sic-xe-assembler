@@ -86,7 +86,7 @@ namespace cs222 {
         }
 
         std::string operation = line.substr(OPERATION_BEGIN, OPERATION_LENGTH);
-        if (operation.length() != OPERATION_LENGTH)
+        if (operation.length() > OPERATION_LENGTH)
         {
             throwError(std::string("expected ") +
                     std::to_string(OPERATION_LENGTH) +
