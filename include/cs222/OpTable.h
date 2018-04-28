@@ -1,9 +1,38 @@
 #ifndef CS222_OPTABLE_H
 #define CS222_OPTABLE_H
 
+#include <vector>
 #include <cs222/Operation.h>
 
 namespace cs222 {
+    // Directives
+    constexpr auto DIR_BASE   = "BASE";
+    constexpr auto DIR_BYTE   = "BYTE";
+    constexpr auto DIR_END    = "END";
+    constexpr auto DIR_EQU    = "EQU";
+    constexpr auto DIR_LTORG  = "LTORG";
+    constexpr auto DIR_NOBASE = "NOBASE";
+    constexpr auto DIR_ORG    = "ORG";
+    constexpr auto DIR_RESB   = "RESB";
+    constexpr auto DIR_RESW   = "RESW";
+    constexpr auto DIR_START  = "START";
+    constexpr auto DIR_WORD   = "WORD";
+
+    const std::vector<std::string> DIRECTIVES {
+        DIR_BASE,
+        DIR_BYTE,
+        DIR_END,
+        DIR_EQU,
+        DIR_LTORG,
+        DIR_NOBASE,
+        DIR_ORG,
+        DIR_RESB,
+        DIR_RESW,
+        DIR_START,
+        DIR_WORD
+    };
+
+    // Instructions
     constexpr auto OP_ADD       =       "ADD";
     constexpr auto OP_ADDF      =       "ADDF";
     constexpr auto OP_ADDR      =       "ADDR";

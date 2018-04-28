@@ -102,7 +102,7 @@ namespace cs222 {
         std::string prefix = match[1];
         operation = match[2];
 
-        if (OpTable.find(operation) == OpTable.end())
+        if (!(isOperation(operation) || isDirective(operation)))
         {
             throwError("invalid operation: " + operation);
         }
@@ -151,6 +151,26 @@ namespace cs222 {
 
     const std::regex Parser::operation_regex(
             "^(\\+?)([A-Za-z]+)\\s*$");
+
+    bool Parser::isOperation(const std::string& str)
+    {
+        return OpTable.find(toUpper(str)) != OpTable.end();
+    }
+
+    bool Parser::isDirective(const std::string& str)
+    {
+        return std::binary_search(
+                DIRECTIVES.begin(),
+                DIRECTIVES.end(),
+                toUpper(str));
+    }
+
+    std::string Parser::toUpper(const std::string& str)
+    {
+        std::string upper(str);
+        std::transform(str.begin(), str.end(), upper.begin(), toupper);
+        return upper;
+    }
 
     bool Parser::isAllSpaces(const std::string& str)
     {

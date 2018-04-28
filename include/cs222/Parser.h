@@ -25,6 +25,9 @@ namespace cs222 {
             std::string extractComment() const;
             static const std::regex label_regex;
             static const std::regex operation_regex;
+            static bool isOperation(const std::string& str);
+            static bool isDirective(const std::string& str);
+            static std::string toUpper(const std::string& str);
             static bool isAllSpaces(const std::string& str);
     };
 }
