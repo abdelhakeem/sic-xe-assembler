@@ -26,15 +26,21 @@ namespace cs222 {
             std::getline(inputStream, line);
             lineNumber += 1;
 
-            // TODO parse comment lines
-            const std::string label = extractLabel();
-            const std::string operation = extractOperation();
-            const std::pair<Operand, Operand> operands = extractOperands();
-            const std::string comment = extractComment();
+            if (line[0] == '.')
+            {
+                lastInstruction.reset(new Instruction(lineNumber, line));
+            }
+            else
+            {
+                const std::string label = extractLabel();
+                const std::string operation = extractOperation();
+                const std::pair<Operand, Operand> operands = extractOperands();
+                const std::string comment = extractComment();
 
-            lastInstruction.reset(new Instruction(
-                        lineNumber, label, operation, operands.first,
-                        operands.second, comment, flags));
+                lastInstruction.reset(new Instruction(
+                            lineNumber, label, operation, operands.first,
+                            operands.second, comment, flags));
+            }
         }
 
         return lastInstruction;
