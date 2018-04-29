@@ -21,8 +21,8 @@ namespace cs222 {
             Type getType() const;
             std::string getValue() const;
         private:
-            const Type type;
-            const std::string value;
+            Type type;
+            std::string value;
     };
 }
 
