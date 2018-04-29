@@ -11,7 +11,8 @@ namespace cs222 {
                 SYMBOL,
                 ADDRESS,
                 LITERAL,
-                CONSTANT,
+                STR_CONSTANT,
+                HEX_CONSTANT,
                 REGISTER,
                 NUMBER,
                 LOCCTR
