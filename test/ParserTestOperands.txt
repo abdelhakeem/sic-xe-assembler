@@ -1,0 +1,28 @@
+.
+. <memory>
+.
++STA         SYM
+STA         100
+STA         @SYM
+STA         @100
+STA         #SYM
+STA         #100
+STA         SYM,X
+STA         100,X
+LDA         =C'K'
+LDA         =X'1D'
+COURSE      RESW    C'CS 222'
+SYM         RESW    X'CAFEBABE'
+LTORG       *
+.
+. <register>
+.
+CLEAR       A
+.
+. <register>,<register>
+.
+ADDR        A,X
+.
+. <register>,<number>
+.
+SHIFTL      A,4
