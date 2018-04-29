@@ -6,17 +6,22 @@
 namespace cs222 {
     class Operand {
         public:
-            enum Type { NONE, ADDRESS, REGISTER, LITERAL };
+            enum Type {
+                NONE,
+                SYMBOL,
+                ADDRESS,
+                LITERAL,
+                CONSTANT,
+                REGISTER,
+                NUMBER
+            };
             Operand();
-            Operand(const Type& type, const std::string& token);
-            bool isNone() const;
-            bool isAddress() const;
-            bool isRegister() const;
-            bool isLiteral() const;
-            std::string getToken() const;
+            Operand(const Type& type, const std::string& value);
+            Type getType() const;
+            std::string getValue() const;
         private:
             const Type type;
-            const std::string token;
+            const std::string value;
     };
 }
 

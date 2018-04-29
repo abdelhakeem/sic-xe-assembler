@@ -3,31 +3,16 @@
 namespace cs222 {
     Operand::Operand() : type(Operand::NONE) { }
 
-    Operand::Operand(const Type& type, const std::string& token) :
-        type(type), token(token) { }
+    Operand::Operand(const Type& type, const std::string& value) :
+        type(type), value(value) { }
 
-    bool Operand::isNone() const
+    Operand::Type Operand::getType() const
     {
-        return type == Operand::NONE;
+        return type;
     }
 
-    bool Operand::isAddress() const
+    std::string Operand::getValue() const
     {
-        return type == Operand::ADDRESS;
-    }
-
-    bool Operand::isRegister() const
-    {
-        return type == Operand::REGISTER;
-    }
-
-    bool Operand::isLiteral() const
-    {
-        return type == Operand::LITERAL;
-    }
-
-    std::string Operand::getToken() const
-    {
-        return token;
+        return value;
     }
 }
