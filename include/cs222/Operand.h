@@ -13,7 +13,8 @@ namespace cs222 {
                 LITERAL,
                 CONSTANT,
                 REGISTER,
-                NUMBER
+                NUMBER,
+                LOCCTR
             };
             Operand();
             Operand(const Type& type, const std::string& value);
