@@ -25,9 +25,10 @@ namespace cs222 {
             };
             Instruction(
                     const size_t& lineNumber,
-                    const std::string& comment);
+                    const std::string& line);
             Instruction(
                     const size_t& lineNumber,
+                    const std::string& line,
                     const std::string& label,
                     const std::string& operation,
                     const Operand& firstOperand,
@@ -35,6 +36,7 @@ namespace cs222 {
                     const std::string& comment,
                     const std::bitset<6>& flags);
             size_t getLineNumber() const;
+            std::string getLine() const;
             std::string getLabel() const;
             std::string getOperation() const;
             Operand getFirstOperand() const;
@@ -45,6 +47,7 @@ namespace cs222 {
             const static std::unordered_map<Format, size_t> Length;
         private:
             const size_t lineNumber;
+            const std::string line;
             const std::string label;
             const std::string operation;
             const Operand firstOperand;

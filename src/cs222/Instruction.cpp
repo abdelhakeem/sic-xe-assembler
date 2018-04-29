@@ -3,24 +3,30 @@
 namespace cs222 {
     Instruction::Instruction(
             const size_t& lineNumber,
-            const std::string& comment) :
-        lineNumber(lineNumber), comment(comment) { }
+            const std::string& line) :
+        lineNumber(lineNumber), line(line), comment(line) { }
 
     Instruction::Instruction(
             const size_t& lineNumber,
+            const std::string& line,
             const std::string& label,
             const std::string& operation,
             const Operand& firstOperand,
             const Operand& secondOperand,
             const std::string& comment,
             const std::bitset<6>& flags) :
-        lineNumber(lineNumber), label(label), operation(operation),
-        firstOperand(firstOperand), secondOperand(secondOperand),
-        comment(comment), flags(flags) { }
+        lineNumber(lineNumber), line(line), label(label),
+        operation(operation), firstOperand(firstOperand),
+        secondOperand(secondOperand), comment(comment), flags(flags) { }
 
     size_t Instruction::getLineNumber() const
     {
         return lineNumber;
+    }
+
+    std::string Instruction::getLine() const
+    {
+        return line;
     }
 
     std::string Instruction::getLabel() const

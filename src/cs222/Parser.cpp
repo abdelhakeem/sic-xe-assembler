@@ -38,8 +38,9 @@ namespace cs222 {
                 const std::string comment = extractComment();
 
                 lastInstruction.reset(new Instruction(
-                            lineNumber, label, operation, operands.first,
-                            operands.second, comment, flags));
+                            lineNumber, line, label, operation,
+                            operands.first, operands.second,
+                            comment, flags));
             }
         }
 
