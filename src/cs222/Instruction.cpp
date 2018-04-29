@@ -17,8 +17,9 @@ namespace cs222 {
             const std::string& comment,
             const std::bitset<6>& flags) :
         lineNumber(lineNumber), line(line), commentLine(false),
-        label(label), operation(operation), firstOperand(firstOperand),
-        secondOperand(secondOperand), comment(comment), flags(flags) { }
+        label(label), operation(operation),
+        operands(Operand_pair(firstOperand, secondOperand)),
+        comment(comment), flags(flags) { }
 
     size_t Instruction::getLineNumber() const
     {
@@ -47,12 +48,12 @@ namespace cs222 {
 
     Operand Instruction::getFirstOperand() const
     {
-        return firstOperand;
+        return operands.first;
     }
 
     Operand Instruction::getSecondOperand() const
     {
-        return secondOperand;
+        return operands.second;
     }
 
     std::string Instruction::getComment() const

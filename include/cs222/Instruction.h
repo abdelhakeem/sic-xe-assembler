@@ -6,6 +6,8 @@
 #include <cs222/Operand.h>
 
 namespace cs222 {
+    typedef std::pair<Operand, Operand> Operand_pair;
+
     class Instruction {
         public:
             enum Format {
@@ -52,8 +54,7 @@ namespace cs222 {
             const bool commentLine;
             const std::string label;
             const std::string operation;
-            const Operand firstOperand;
-            const Operand secondOperand;
+            const Operand_pair operands;
             const std::string comment;
             const std::bitset<6> flags;
     };
