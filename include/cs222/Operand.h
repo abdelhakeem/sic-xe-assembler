@@ -17,7 +17,7 @@ namespace cs222 {
                 LOCCTR
             };
             Operand();
-            Operand(const Type& type, const std::string& value);
+            Operand(const Type& type, const std::string& value = "");
             Type getType() const;
             std::string getValue() const;
         private:
