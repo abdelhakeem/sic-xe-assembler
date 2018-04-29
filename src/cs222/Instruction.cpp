@@ -4,7 +4,8 @@ namespace cs222 {
     Instruction::Instruction(
             const size_t& lineNumber,
             const std::string& line) :
-        lineNumber(lineNumber), line(line), comment(line) { }
+        lineNumber(lineNumber), line(line),
+        commentLine(true), comment(line) { }
 
     Instruction::Instruction(
             const size_t& lineNumber,
@@ -15,8 +16,8 @@ namespace cs222 {
             const Operand& secondOperand,
             const std::string& comment,
             const std::bitset<6>& flags) :
-        lineNumber(lineNumber), line(line), label(label),
-        operation(operation), firstOperand(firstOperand),
+        lineNumber(lineNumber), line(line), commentLine(false),
+        label(label), operation(operation), firstOperand(firstOperand),
         secondOperand(secondOperand), comment(comment), flags(flags) { }
 
     size_t Instruction::getLineNumber() const
@@ -27,6 +28,11 @@ namespace cs222 {
     std::string Instruction::getLine() const
     {
         return line;
+    }
+
+    bool Instruction::isCommentLine() const
+    {
+        return commentLine;
     }
 
     std::string Instruction::getLabel() const

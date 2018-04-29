@@ -37,6 +37,7 @@ namespace cs222 {
                     const std::bitset<6>& flags);
             size_t getLineNumber() const;
             std::string getLine() const;
+            bool isCommentLine() const;
             std::string getLabel() const;
             std::string getOperation() const;
             Operand getFirstOperand() const;
@@ -48,6 +49,7 @@ namespace cs222 {
         private:
             const size_t lineNumber;
             const std::string line;
+            const bool commentLine;
             const std::string label;
             const std::string operation;
             const Operand firstOperand;
