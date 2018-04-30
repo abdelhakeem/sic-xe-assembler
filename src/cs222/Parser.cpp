@@ -2,7 +2,7 @@
 * Assembler syntax:
 * -----------------
 * <instruction>: [<label>] <operation> [<operands>] [<comment>]
-* <label>: [A-Za-z][A-Za-z0-9]*
+* <label>: [A-Za-z_][A-Za-z0-9_]*
 * <operation>: <directive> | [+]<instruction>
 * <operands>: <memory> | <register> | <register>,<register>
 *          | <register>,<number>
@@ -12,11 +12,12 @@
 * <symbol>: <label>
 * <address>: <number>
 * <literal>: =<constant>
-* <constant>: <char-constant> | <hex-constant>
-* <char-constant>: C'[A-Za-z0-9\s]+'
+* <constant>: <char-constant> | <hex-constant> | <int-constant>
+* <char-constant>: C'[^']+'
 * <hex-constant>: X'([A-Fa-f0-9]{2})+'
+* <int-constant>: [0-9]+
 * <register>: A | X | L | PC | SW | B | S | T | F
-* <number>: [0-9]+
+* <number>: <int-constant>
 * <comment>: .*
 */
 
@@ -266,9 +267,9 @@ namespace cs222 {
             operand = Operand(Operand::SYMBOL, token);
             return true;
         }
-        if (std::regex_match(token, number_regex))
+        if (std::regex_match(token, int_const_regex))
         {
-            operand = Operand(Operand::ADDRESS, token);
+            operand = Operand(Operand::INT_CONSTANT, token);
             return true;
         }
 
@@ -285,6 +286,10 @@ namespace cs222 {
                 if (operand.getType() == Operand::HEX_CONSTANT)
                 {
                     type = Operand::HEX_LITERAL;
+                }
+                else if (operand.getType() == Operand::INT_CONSTANT)
+                {
+                    type = Operand::INT_LITERAL;
                 }
                 operand = Operand(type, operand.getValue());
                 return true;
@@ -309,6 +314,11 @@ namespace cs222 {
             operand = Operand(Operand::HEX_CONSTANT, match[1]);
             return true;
         }
+        if (std::regex_match(token, match, int_const_regex))
+        {
+            operand = Operand(Operand::INT_CONSTANT, match[1]);
+            return true;
+        }
         return false;
     }
 
@@ -328,9 +338,9 @@ namespace cs222 {
             const std::string& token,
             Operand& operand) const
     {
-        if (std::regex_match(token, number_regex))
+        if (std::regex_match(token, int_const_regex))
         {
-            operand = Operand(Operand::NUMBER, token);
+            operand = Operand(Operand::INT_CONSTANT, token);
             return true;
         }
         return false;
@@ -343,9 +353,9 @@ namespace cs222 {
     }
 
     const std::regex Parser::label_regex("^[A-Za-z_][A-Za-z0-9_]*$");
-    const std::regex Parser::number_regex("^[0-9]+$");
-    const std::regex Parser::char_const_regex("^C'([A-Za-z0-9\\s]+)'$");
+    const std::regex Parser::char_const_regex("^C'([^']+)'$");
     const std::regex Parser::hex_const_regex("^X'(([A-Fa-f0-9]{2})+)'$");
+    const std::regex Parser::int_const_regex("^([0-9]+)$");
 
     const std::vector<std::string> Parser::REGISTERS {
         "A", "B", "F", "L", "PC", "S", "SW", "T", "X"

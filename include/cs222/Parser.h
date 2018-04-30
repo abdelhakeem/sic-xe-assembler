@@ -44,9 +44,9 @@ namespace cs222 {
                     Operand& operand) const;
             void throwError(const std::string& error) const;
             static const std::regex label_regex;
-            static const std::regex number_regex;
             static const std::regex char_const_regex;
             static const std::regex hex_const_regex;
+            static const std::regex int_const_regex;
             static const std::vector<std::string> REGISTERS;
             static bool isOperation(const std::string& str);
             static bool isDirective(const std::string& str);
