@@ -15,7 +15,7 @@
 * <constant>: <char-constant> | <hex-constant> | <int-constant>
 * <char-constant>: C'[^']+'
 * <hex-constant>: X'([A-Fa-f0-9]{2})+'
-* <int-constant>: [0-9]+
+* <int-constant>: -?[0-9]+
 * <register>: A | X | L | PC | SW | B | S | T | F
 * <number>: <int-constant>
 * <comment>: .*
@@ -25,6 +25,7 @@
 #include <stdexcept>
 #include <cs222/OpTable.h>
 #include <cs222/Parser.h>
+#include <cs222/Utility.h>
 
 namespace cs222 {
     Parser::Parser(std::istream& inputStream) :
@@ -355,24 +356,11 @@ namespace cs222 {
     const std::regex Parser::label_regex("^[A-Za-z_][A-Za-z0-9_]*$");
     const std::regex Parser::char_const_regex("^C'([^']+)'$");
     const std::regex Parser::hex_const_regex("^X'(([A-Fa-f0-9]{2})+)'$");
-    const std::regex Parser::int_const_regex("^([0-9]+)$");
+    const std::regex Parser::int_const_regex("^(-?[0-9]+)$");
 
     const std::vector<std::string> Parser::REGISTERS {
         "A", "B", "F", "L", "PC", "S", "SW", "T", "X"
     };
-
-    bool Parser::isOperation(const std::string& str)
-    {
-        return OpTable.find(toUpper(str)) != OpTable.end();
-    }
-
-    bool Parser::isDirective(const std::string& str)
-    {
-        return std::binary_search(
-                DIRECTIVES.begin(),
-                DIRECTIVES.end(),
-                toUpper(str));
-    }
 
     bool Parser::isRegister(const std::string& str)
     {
@@ -380,12 +368,5 @@ namespace cs222 {
                 REGISTERS.begin(),
                 REGISTERS.end(),
                 toUpper(str));
-    }
-
-    std::string Parser::toUpper(const std::string& str)
-    {
-        std::string upper(str);
-        std::transform(str.begin(), str.end(), upper.begin(), toupper);
-        return upper;
     }
 }
