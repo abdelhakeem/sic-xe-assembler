@@ -11,13 +11,13 @@ int main()
         const std::string OPERAND_TYPE[] {
             "NONE",
             "SYMBOL",
-            "ADDRESS",
             "CHAR_LITERAL",
             "HEX_LITERAL",
+            "INT_LITERAL",
             "CHAR_CONSTANT",
             "HEX_CONSTANT",
+            "INT_CONSTANT",
             "REGISTER",
-            "NUMBER",
             "LOCCTR"
         };
 
@@ -33,7 +33,8 @@ int main()
             isstream.str(line);
             isstream.clear();
             current = parser.next();
-            std::cout << "Line: " << current->getLineNumber() << std::endl;
+            std::cout << "[" << current->getLineNumber() << "] "
+                << current->getLine() << std::endl;
             std::cout << "Label: " << current->getLabel() << std::endl;
             std::cout << "Operation: " << current->getOperation()
                 << std::endl;
