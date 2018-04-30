@@ -9,13 +9,13 @@ namespace cs222 {
             enum Type {
                 NONE,
                 SYMBOL,
-                ADDRESS,
                 CHAR_LITERAL,
                 HEX_LITERAL,
+                INT_LITERAL,
                 CHAR_CONSTANT,
                 HEX_CONSTANT,
+                INT_CONSTANT,
                 REGISTER,
-                NUMBER,
                 LOCCTR
             };
             Operand();
