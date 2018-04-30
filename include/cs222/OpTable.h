@@ -129,7 +129,7 @@ namespace cs222 {
         {OP_OR,     Operation(OP_OR,    0x44, Instruction::FORMAT_3_4)},
         {OP_RD,     Operation(OP_RD,    0xD8, Instruction::FORMAT_3_4)},
         {OP_RMO,    Operation(OP_RMO,   0xAC, Instruction::FORMAT_2)},
-        {OP_RSUB,   Operation(OP_RSUB,  0x4C, Instruction::FORMAT_3_4)},
+        {OP_RSUB,   Operation(OP_RSUB,  0x4C, Instruction::FORMAT_1)},
         {OP_SHIFTL, Operation(OP_SHIFTL,0xA4, Instruction::FORMAT_2)},
         {OP_SHIFTR, Operation(OP_SHIFTR,0xA8, Instruction::FORMAT_2)},
         {OP_SIO,    Operation(OP_SIO,   0xF0, Instruction::FORMAT_1)},

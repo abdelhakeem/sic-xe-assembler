@@ -21,4 +21,9 @@ namespace cs222 {
     {
         return validFormat & format;
     }
+
+    Instruction::Format Operation::getValidFormat() const
+    {
+        return validFormat;
+    }
 }

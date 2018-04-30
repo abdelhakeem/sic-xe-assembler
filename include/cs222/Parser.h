@@ -48,10 +48,7 @@ namespace cs222 {
             static const std::regex hex_const_regex;
             static const std::regex int_const_regex;
             static const std::vector<std::string> REGISTERS;
-            static bool isOperation(const std::string& str);
-            static bool isDirective(const std::string& str);
             static bool isRegister(const std::string& str);
-            static std::string toUpper(const std::string& str);
     };
 }
 

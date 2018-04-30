@@ -5,6 +5,8 @@
 
 namespace cs222 {
     std::string toUpper(const std::string& str);
+    bool isOperation(const std::string& str);
+    bool isDirective(const std::string& str);
 }
 
 #endif

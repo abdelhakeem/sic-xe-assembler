@@ -14,12 +14,13 @@ namespace cs222 {
             const std::string& operation,
             const Operand& firstOperand,
             const Operand& secondOperand,
+            const std::string& operandsToken,
             const std::string& comment,
             const std::bitset<6>& flags) :
         lineNumber(lineNumber), line(line), commentLine(false),
         label(label), operation(operation),
         operands(Operand_pair(firstOperand, secondOperand)),
-        comment(comment), flags(flags) { }
+        operandsToken(operandsToken), comment(comment), flags(flags) { }
 
     size_t Instruction::getLineNumber() const
     {
@@ -56,6 +57,11 @@ namespace cs222 {
         return operands.second;
     }
 
+    std::string Instruction::getOperandsToken() const
+    {
+        return operandsToken;
+    }
+
     std::string Instruction::getComment() const
     {
         return comment;
@@ -84,6 +90,21 @@ namespace cs222 {
     void Instruction::clearErrors()
     {
         errors.clear();
+    }
+
+    void Instruction::addWarning(const std::string& warning)
+    {
+        warnings.push_back(warning);
+    }
+
+    std::vector<std::string> Instruction::getWarnings() const
+    {
+        return warnings;
+    }
+
+    void Instruction::clearWarnings()
+    {
+        warnings.clear();
     }
 
     const std::unordered_map<Instruction::Format, size_t> Instruction::Length {

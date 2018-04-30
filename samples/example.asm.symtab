@@ -1,0 +1,21 @@
+SYMBOL      ADDRESS
+
+WLOOP       8304
+WRREC       8301
+THREE       4136
+ONE         4142
+RDREC       8250
+FIRST       4096
+OUTPUT      8323
+ENDFIL      4114
+MAXLEN      8298
+EOF         4133
+LENGTH      4151
+ZERO        4139
+INPUT       8296
+CLOOP       4096
+FIVE        4145
+EXIT        8280
+RETADR      4148
+BUFFER      4154
+RLOOP       8256

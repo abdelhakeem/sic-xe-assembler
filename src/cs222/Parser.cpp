@@ -44,13 +44,16 @@ namespace cs222 {
 
     std::shared_ptr<Instruction> Parser::next()
     {
-        if (inputStream.good())
+        if (std::getline(inputStream, line))
         {
             flags.reset();
-            std::getline(inputStream, line);
-            while (std::regex_match(line, std::regex("^\\s*$"))) // Empty line?
+            while (
+                    std::regex_match(line, std::regex("^\\s*$")) &&
+                    std::getline(inputStream, line)
+                    ); // Ignore empty lines
+            if (!hasNext())
             {
-                std::getline(inputStream, line);
+                return lastInstruction;
             }
             isstream.str(line);
             isstream.clear();
@@ -66,6 +69,7 @@ namespace cs222 {
                 std::string label;
                 std::string operation;
                 std::pair<Operand, Operand> operands;
+                std::string operandsToken;
                 std::string comment;
 
                 if (!(
@@ -85,6 +89,22 @@ namespace cs222 {
                 else
                 {
                     parseOperation(token, operation);
+                }
+
+                if (isOperation(operation))
+                {
+                    Instruction::Format fmt =
+                        OpTable.find(operation)->second.getValidFormat();
+                    if (fmt == Instruction::FORMAT_1)
+                    {
+                        flushRestToToken();
+                        comment = token;
+                        lastInstruction.reset(new Instruction(
+                                    lineNumber, line, label, operation,
+                                    operands.first, operands.second,
+                                    operandsToken, comment, flags));
+                        return lastInstruction;
+                    }
                 }
 
                 // Corner case: character constants
@@ -117,6 +137,7 @@ namespace cs222 {
                 Operand_pair temp;
                 if (parseOperands(temp))
                 {
+                    operandsToken = token;
                     operands = temp;
                     advanceToken();
                 }
@@ -128,7 +149,7 @@ namespace cs222 {
                 lastInstruction.reset(new Instruction(
                             lineNumber, line, label, operation,
                             operands.first, operands.second,
-                            comment, flags));
+                            operandsToken, comment, flags));
             }
         }
 

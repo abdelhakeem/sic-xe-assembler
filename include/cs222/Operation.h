@@ -13,6 +13,7 @@ namespace cs222 {
             std::string getMnemonic() const;
             char getOpcode() const;
             bool isValidFormat(const Instruction::Format& format) const;
+            Instruction::Format getValidFormat() const;
         private:
             const std::string mnemonic;
             const char opcode;

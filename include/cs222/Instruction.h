@@ -36,6 +36,7 @@ namespace cs222 {
                     const std::string& operation,
                     const Operand& firstOperand,
                     const Operand& secondOperand,
+                    const std::string& operandsToken,
                     const std::string& comment,
                     const std::bitset<6>& flags);
             size_t getLineNumber() const;
@@ -45,12 +46,16 @@ namespace cs222 {
             std::string getOperation() const;
             Operand getFirstOperand() const;
             Operand getSecondOperand() const;
+            std::string getOperandsToken() const;
             std::string getComment() const;
             std::bitset<6> getFlags() const;
             bool isSet(const Flag& f) const;
             void addError(const std::string& error);
             std::vector<std::string> getErrors() const;
             void clearErrors();
+            void addWarning(const std::string& warning);
+            std::vector<std::string> getWarnings() const;
+            void clearWarnings();
             const static std::unordered_map<Format, size_t> Length;
         private:
             const size_t lineNumber;
@@ -59,9 +64,11 @@ namespace cs222 {
             const std::string label;
             const std::string operation;
             const Operand_pair operands;
+            const std::string operandsToken;
             const std::string comment;
             const std::bitset<6> flags;
             std::vector<std::string> errors;
+            std::vector<std::string> warnings;
     };
 }
 
