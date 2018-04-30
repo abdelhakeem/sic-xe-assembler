@@ -3,6 +3,7 @@
 
 #include <bitset>
 #include <unordered_map>
+#include <vector>
 #include <cs222/Operand.h>
 
 namespace cs222 {
@@ -47,6 +48,9 @@ namespace cs222 {
             std::string getComment() const;
             std::bitset<6> getFlags() const;
             bool isSet(const Flag& f) const;
+            void addError(const std::string& error);
+            std::vector<std::string> getErrors() const;
+            void clearErrors();
             const static std::unordered_map<Format, size_t> Length;
         private:
             const size_t lineNumber;
@@ -57,6 +61,7 @@ namespace cs222 {
             const Operand_pair operands;
             const std::string comment;
             const std::bitset<6> flags;
+            std::vector<std::string> errors;
     };
 }
 

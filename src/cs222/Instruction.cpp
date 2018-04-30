@@ -71,6 +71,21 @@ namespace cs222 {
         return flags.test(f);
     }
 
+    void Instruction::addError(const std::string& error)
+    {
+        errors.push_back(error);
+    }
+
+    std::vector<std::string> Instruction::getErrors() const
+    {
+        return errors;
+    }
+
+    void Instruction::clearErrors()
+    {
+        errors.clear();
+    }
+
     const std::unordered_map<Instruction::Format, size_t> Instruction::Length {
         { Instruction::FORMAT_1, 1 },
         { Instruction::FORMAT_2, 2 },
