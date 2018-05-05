@@ -114,9 +114,10 @@ namespace cs222 {
             // Corner case: character constants
             // and literals can have spaces
             std::string lookahead;
-            if (sstream)
+            size_t lookahead_start = sstream.tellg();
+            if (lookahead_start != -1)
             {
-                lookahead = line.substr(sstream.tellg());
+                lookahead = line.substr(lookahead_start);
             }
             size_t first_non_space = std::distance(
                     lookahead.begin(),
