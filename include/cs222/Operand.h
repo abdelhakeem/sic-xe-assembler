@@ -9,12 +9,12 @@ namespace cs222 {
             enum Type {
                 NONE,
                 SYMBOL,
+                INT_LITERAL,
                 CHAR_LITERAL,
                 HEX_LITERAL,
-                INT_LITERAL,
+                INT_CONSTANT,
                 CHAR_CONSTANT,
                 HEX_CONSTANT,
-                INT_CONSTANT,
                 REGISTER,
                 LOCCTR
             };

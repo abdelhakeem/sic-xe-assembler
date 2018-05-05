@@ -11,12 +11,12 @@ int main()
         const std::string OPERAND_TYPE[] {
             "NONE",
             "SYMBOL",
+            "INT_LITERAL",
             "CHAR_LITERAL",
             "HEX_LITERAL",
-            "INT_LITERAL",
+            "INT_CONSTANT",
             "CHAR_CONSTANT",
             "HEX_CONSTANT",
-            "INT_CONSTANT",
             "REGISTER",
             "LOCCTR"
         };
@@ -27,7 +27,7 @@ int main()
         std::string line;
         std::istringstream isstream;
         cs222::Parser parser(isstream);
-        std::shared_ptr<cs222::Instruction> current;
+        std::unique_ptr<cs222::Instruction> current;
         while (getline(std::cin, line) && !line.empty())
         {
             isstream.str(line);
@@ -40,10 +40,10 @@ int main()
                 << std::endl;
             cs222::Operand firstOp = current->getFirstOperand();
             cs222::Operand secondOp = current->getSecondOperand();
-            std::cout << "First Operand: " << OPERAND_TYPE[firstOp.getType()]
-                << ": \"" << firstOp.getValue() << "\"" << std::endl;
-            std::cout << "Second Operand: " << OPERAND_TYPE[secondOp.getType()]
-                << ": \"" << secondOp.getValue() << "\"" << std::endl;
+            std::cout << "First Operand: " << firstOp.getValue() << " ("
+                << OPERAND_TYPE[firstOp.getType()] << ")" << std::endl;
+            std::cout << "Second Operand: " << secondOp.getValue() << " ("
+                << OPERAND_TYPE[secondOp.getType()] << ")" << std::endl;
             std::cout << "Comment: " << current->getComment() << std::endl;
             std::cout << "Flags: " << current->getFlags() << std::endl;
             std::cout << "-----------------------------------------" << std::endl;

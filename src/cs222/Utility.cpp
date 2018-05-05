@@ -17,9 +17,14 @@ namespace cs222 {
 
     bool isDirective(const std::string& str)
     {
-        return std::binary_search(
-                DIRECTIVES.begin(),
-                DIRECTIVES.end(),
-                toUpper(str));
+        return std::find(
+                std::begin(DIRECTIVES),
+                std::end(DIRECTIVES),
+                toUpper(str)) != std::end(DIRECTIVES);
+    }
+
+    bool isRegister(const std::string& str)
+    {
+        return REGISTERS.find(toUpper(str)) != REGISTERS.end();
     }
 }

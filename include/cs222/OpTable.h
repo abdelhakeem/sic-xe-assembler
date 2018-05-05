@@ -5,34 +5,6 @@
 #include <cs222/Operation.h>
 
 namespace cs222 {
-    // Directives
-    constexpr auto DIR_BASE   = "BASE";
-    constexpr auto DIR_BYTE   = "BYTE";
-    constexpr auto DIR_END    = "END";
-    constexpr auto DIR_EQU    = "EQU";
-    constexpr auto DIR_LTORG  = "LTORG";
-    constexpr auto DIR_NOBASE = "NOBASE";
-    constexpr auto DIR_ORG    = "ORG";
-    constexpr auto DIR_RESB   = "RESB";
-    constexpr auto DIR_RESW   = "RESW";
-    constexpr auto DIR_START  = "START";
-    constexpr auto DIR_WORD   = "WORD";
-
-    const std::vector<std::string> DIRECTIVES {
-        DIR_BASE,
-        DIR_BYTE,
-        DIR_END,
-        DIR_EQU,
-        DIR_LTORG,
-        DIR_NOBASE,
-        DIR_ORG,
-        DIR_RESB,
-        DIR_RESW,
-        DIR_START,
-        DIR_WORD
-    };
-
-    // Instructions
     constexpr auto OP_ADD       =       "ADD";
     constexpr auto OP_ADDF      =       "ADDF";
     constexpr auto OP_ADDR      =       "ADDR";
@@ -129,7 +101,7 @@ namespace cs222 {
         {OP_OR,     Operation(OP_OR,    0x44, Instruction::FORMAT_3_4)},
         {OP_RD,     Operation(OP_RD,    0xD8, Instruction::FORMAT_3_4)},
         {OP_RMO,    Operation(OP_RMO,   0xAC, Instruction::FORMAT_2)},
-        {OP_RSUB,   Operation(OP_RSUB,  0x4C, Instruction::FORMAT_1)},
+        {OP_RSUB,   Operation(OP_RSUB,  0x4C, Instruction::FORMAT_3_4)},
         {OP_SHIFTL, Operation(OP_SHIFTL,0xA4, Instruction::FORMAT_2)},
         {OP_SHIFTR, Operation(OP_SHIFTR,0xA8, Instruction::FORMAT_2)},
         {OP_SIO,    Operation(OP_SIO,   0xF0, Instruction::FORMAT_1)},

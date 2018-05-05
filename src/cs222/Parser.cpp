@@ -22,6 +22,7 @@
 */
 
 #include <algorithm>
+#include <sstream>
 #include <stdexcept>
 #include <cs222/OpTable.h>
 #include <cs222/Parser.h>
@@ -31,148 +32,133 @@ namespace cs222 {
     Parser::Parser(std::istream& inputStream) :
         inputStream(inputStream), lineNumber(0)
     {
-        if (!inputStream.good())
+        if (!inputStream)
         {
             throw std::runtime_error("Parser: malformed input stream");
         }
     }
 
-    bool Parser::hasNext() const
+    bool Parser::hasNext()
     {
-        return inputStream.good();
+        if (nextInstruction) {
+            return true;
+        }
+        nextInstruction = next();
+        return nextInstruction != nullptr;
     }
 
-    std::shared_ptr<Instruction> Parser::next()
+    std::unique_ptr<Instruction> Parser::next()
     {
+        if (nextInstruction) {
+            return std::move(nextInstruction);
+        }
+
         if (std::getline(inputStream, line))
         {
+            lineNumber += 1;
             flags.reset();
+
+            // Ignore empty lines
             while (
                     std::regex_match(line, std::regex("^\\s*$")) &&
                     std::getline(inputStream, line)
-                    ); // Ignore empty lines
-            if (!hasNext())
-            {
-                return lastInstruction;
-            }
-            isstream.str(line);
-            isstream.clear();
-            lineNumber += 1;
+                    );
 
-            advanceToken();
+            // Reached end of stream?
+            if (!inputStream)
+            {
+                return nullptr;
+            }
+
+            std::stringstream sstream(line);
+            std::string token;
+
+            advanceToken(sstream, token);
             if (token[0] == '.') // Comment line?
             {
-                lastInstruction.reset(new Instruction(lineNumber, line));
+                return std::make_unique<Instruction>(lineNumber, line);
+            }
+
+            std::string label;
+            std::string operation;
+            std::string operandsToken;
+            Operand_pair operands;
+            std::string comment;
+
+            if (!(
+                        isDirective(token) ||
+                        isOperation(token) ||
+                        isOperation(token.substr(1))))
+            {
+                parseLabel(token, label);
+                advanceToken(sstream, token);
+            }
+
+            parseOperation(token, operation);
+
+            if (isOperation(operation))
+            {
+                Instruction::Format fmt =
+                    OpTable.find(operation)->second.getValidFormat();
+                if (fmt == Instruction::FORMAT_1 || operation == "RSUB")
+                {
+                    flushRestToToken(sstream, token);
+                    comment = token;
+                    return std::make_unique<Instruction>(
+                            lineNumber, line, label, operation,
+                            operands.first, operands.second,
+                            operandsToken, comment, flags);
+                }
+            }
+
+            // Corner case: character constants
+            // and literals can have spaces
+            std::string lookahead;
+            if (sstream)
+            {
+                lookahead = line.substr(sstream.tellg());
+            }
+            size_t first_non_space = std::distance(
+                    lookahead.begin(),
+                    find_if_not(lookahead.begin(), lookahead.end(), isspace));
+            lookahead = lookahead.substr(first_non_space);
+            std::smatch match;
+            if (std::regex_match(
+                        lookahead,
+                        match,
+                        std::regex("^\\=?C'[A-Za-z0-9\\s]+'")))
+            {
+                token = match[0];
+                sstream.seekg(
+                        first_non_space + token.length(), std::ios_base::cur);
             }
             else
             {
-                std::string label;
-                std::string operation;
-                std::pair<Operand, Operand> operands;
-                std::string operandsToken;
-                std::string comment;
-
-                if (!(
-                            isDirective(token) ||
-                            isOperation(token) ||
-                            isOperation(token.substr(1))))
-                {
-                    parseLabel(label);
-                    advanceToken();
-                }
-
-                if (token[0] == '+')
-                {
-                    flags.set(Instruction::FLAG_EXTENDED);
-                    parseOperation(token.substr(1), operation);
-                }
-                else
-                {
-                    parseOperation(token, operation);
-                }
-
-                if (isOperation(operation))
-                {
-                    Instruction::Format fmt =
-                        OpTable.find(operation)->second.getValidFormat();
-                    if (fmt == Instruction::FORMAT_1)
-                    {
-                        flushRestToToken();
-                        comment = token;
-                        lastInstruction.reset(new Instruction(
-                                    lineNumber, line, label, operation,
-                                    operands.first, operands.second,
-                                    operandsToken, comment, flags));
-                        return lastInstruction;
-                    }
-                }
-
-                // Corner case: character constants
-                // and literals can have spaces
-                std::string lookahead = line.substr(isstream.tellg());
-                size_t first_non_space = 0;
-                while (
-                        first_non_space < lookahead.length() &&
-                        isspace(lookahead[first_non_space]))
-                {
-                    first_non_space += 1;
-                }
-                lookahead = lookahead.substr(first_non_space);
-                std::smatch match;
-                if (std::regex_match(
-                            lookahead,
-                            match,
-                            std::regex("^\\=?C'[A-Za-z0-9\\s]+'")))
-                {
-                    token = match[0];
-                    isstream.seekg(
-                            first_non_space + token.length(),
-                            std::ios_base::cur);
-                }
-                else
-                {
-                    advanceToken();
-                }
-
-                Operand_pair temp;
-                if (parseOperands(temp))
-                {
-                    operandsToken = token;
-                    operands = temp;
-                    advanceToken();
-                }
-
-                comment = token;
-                flushRestToToken();
-                comment += token;
-
-                lastInstruction.reset(new Instruction(
-                            lineNumber, line, label, operation,
-                            operands.first, operands.second,
-                            operandsToken, comment, flags));
+                advanceToken(sstream, token);
             }
+
+            Operand_pair temp;
+            if (parseOperands(token, temp))
+            {
+                operandsToken = token;
+                operands = temp;
+                advanceToken(sstream, token);
+            }
+
+            comment = token;
+            flushRestToToken(sstream, token);
+            comment += token;
+
+            return std::make_unique<Instruction>(
+                    lineNumber, line, label, operation,
+                    operands.first, operands.second,
+                    operandsToken, comment, flags);
         }
 
-        return lastInstruction;
+        return nullptr;
     }
 
-    void Parser::advanceToken()
-    {
-        if (!(isstream >> token))
-        {
-            token = "";
-        }
-    }
-
-    void Parser::flushRestToToken()
-    {
-        if (!getline(isstream, token))
-        {
-            token = "";
-        }
-    }
-
-    void Parser::parseLabel(std::string& label) const
+    void Parser::parseLabel(const std::string& token, std::string& label) const
     {
         if (std::regex_match(token, label_regex))
         {
@@ -185,12 +171,16 @@ namespace cs222 {
     }
 
     void Parser::parseOperation(
-            const std::string& token,
-            std::string& operation) const
+            const std::string& token, std::string& operation)
     {
         if (isDirective(token) || isOperation(token))
         {
             operation = token;
+        }
+        else if (token[0] == '+' && isOperation(token.substr(1)))
+        {
+            operation = token;
+            flags.set(Instruction::FLAG_EXTENDED);
         }
         else
         {
@@ -198,7 +188,8 @@ namespace cs222 {
         }
     }
 
-    bool Parser::parseOperands(std::pair<Operand, Operand>& operands)
+    bool Parser::parseOperands(
+            const std::string& token, Operand_pair& operands)
     {
         if (parseRegister(token, operands.first))
         {
@@ -222,7 +213,7 @@ namespace cs222 {
             }
         }
 
-        if (parseMemory(operands.first))
+        if (parseMemory(token, operands.first))
         {
             return true;
         }
@@ -230,7 +221,7 @@ namespace cs222 {
         return false;
     }
 
-    bool Parser::parseMemory(Operand& operand)
+    bool Parser::parseMemory(const std::string& token, Operand& operand)
     {
         if (parseLocation(token, operand))
         {
@@ -268,7 +259,7 @@ namespace cs222 {
             }
         }
 
-        if (parseLiteral(operand) || parseConstant(token, operand))
+        if (parseLiteral(token, operand) || parseConstant(token, operand))
         {
             return true;
         }
@@ -298,7 +289,7 @@ namespace cs222 {
         return false;
     }
 
-    bool Parser::parseLiteral(Operand& operand) const
+    bool Parser::parseLiteral(const std::string& token, Operand& operand) const
     {
         if (token[0] == '=')
         {
@@ -321,9 +312,7 @@ namespace cs222 {
         return false;
     }
 
-    bool Parser::parseConstant(
-            const std::string& token,
-            Operand& operand) const
+    bool Parser::parseConstant(const std::string& token, Operand& operand) const
     {
         std::smatch match;
         if (std::regex_match(token, match, char_const_regex))
@@ -344,9 +333,7 @@ namespace cs222 {
         return false;
     }
 
-    bool Parser::parseRegister(
-            const std::string& token,
-            Operand& operand) const
+    bool Parser::parseRegister(const std::string& token, Operand& operand) const
     {
         if (isRegister(token))
         {
@@ -356,9 +343,7 @@ namespace cs222 {
         return false;
     }
 
-    bool Parser::parseNumber(
-            const std::string& token,
-            Operand& operand) const
+    bool Parser::parseNumber(const std::string& token, Operand& operand) const
     {
         if (std::regex_match(token, int_const_regex))
         {
@@ -375,19 +360,21 @@ namespace cs222 {
     }
 
     const std::regex Parser::label_regex("^[A-Za-z_][A-Za-z0-9_]*$");
+    const std::regex Parser::int_const_regex("^(-?[0-9]+)$");
     const std::regex Parser::char_const_regex("^C'([^']+)'$");
     const std::regex Parser::hex_const_regex("^X'(([A-Fa-f0-9]{2})+)'$");
-    const std::regex Parser::int_const_regex("^(-?[0-9]+)$");
 
-    const std::vector<std::string> Parser::REGISTERS {
-        "A", "B", "F", "L", "PC", "S", "SW", "T", "X"
-    };
-
-    bool Parser::isRegister(const std::string& str)
+    void Parser::advanceToken(
+            std::stringstream& sstream, std::string& token)
     {
-        return std::binary_search(
-                REGISTERS.begin(),
-                REGISTERS.end(),
-                toUpper(str));
+        token = "";
+        sstream >> token;
+    }
+
+    void Parser::flushRestToToken(
+            std::stringstream& sstream, std::string& token)
+    {
+        token = "";
+        getline(sstream, token);
     }
 }
