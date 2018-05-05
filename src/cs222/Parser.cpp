@@ -144,12 +144,17 @@ namespace cs222 {
                 operandsToken = token;
                 operands = temp;
                 // SIC/XE Simple Addressing
-                if (!(
-                            flags.test(Instruction::FLAG_INDIRECT) ||
-                            flags.test(Instruction::FLAG_IMMEDIATE)))
-                {
-                    flags.set(Instruction::FLAG_INDIRECT);
-                    flags.set(Instruction::FLAG_IMMEDIATE);
+                if (isOperation(operation))
+                    {
+                    Instruction::Format fmt =
+                        cs222::OpTable.find(operation)->second.getValidFormat();
+                    if (fmt == Instruction::FORMAT_3_4 && !(
+                                flags.test(Instruction::FLAG_INDIRECT) ||
+                                flags.test(Instruction::FLAG_IMMEDIATE)))
+                    {
+                        flags.set(Instruction::FLAG_INDIRECT);
+                        flags.set(Instruction::FLAG_IMMEDIATE);
+                    }
                 }
                 advanceToken(sstream, token);
             }
