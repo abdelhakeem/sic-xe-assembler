@@ -1,6 +1,7 @@
 #ifndef CS222_UTILITY_H
 #define CS222_UTILITY_H
 
+#include <algorithm>
 #include <string>
 #include <unordered_map>
 
@@ -56,8 +57,16 @@ namespace cs222 {
     };
 
     std::string toUpper(const std::string& str);
+
     template<class T, size_t size>
-    bool arrayContains(const T (&arr)[size], const T& key);
+    bool arrayContains(const T (&arr)[size], const T& key)
+    {
+        return std::find(
+                std::begin(arr),
+                std::end(arr),
+                key) != std::end(arr);
+    }
+
     bool isOperation(const std::string& str);
     bool isDirective(const std::string& str);
     bool isRegister(const std::string& str);

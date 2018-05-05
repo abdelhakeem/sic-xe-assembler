@@ -10,15 +10,6 @@ namespace cs222 {
         return upper;
     }
 
-    template<class T, size_t size>
-    bool arrayContains(const T (&arr)[size], const T& key)
-    {
-        return std::find(
-                std::begin(arr),
-                std::end(arr),
-                key) != std::end(arr);
-    }
-
     bool isOperation(const std::string& str)
     {
         return OpTable.find(toUpper(str)) != OpTable.end();
