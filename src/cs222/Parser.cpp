@@ -142,6 +142,14 @@ namespace cs222 {
             {
                 operandsToken = token;
                 operands = temp;
+                // SIC/XE Simple Addressing
+                if (!(
+                            flags.test(Instruction::FLAG_INDIRECT) ||
+                            flags.test(Instruction::FLAG_IMMEDIATE)))
+                {
+                    flags.set(Instruction::FLAG_INDIRECT);
+                    flags.set(Instruction::FLAG_IMMEDIATE);
+                }
                 advanceToken(sstream, token);
             }
 
