@@ -85,13 +85,14 @@ namespace cs222 {
         else if (toUpper(op) == "START")
         {
             if (
-                    firstOpType == Operand::INT_CONSTANT &&
+                    firstOpType == Operand::NONE ||
+                    (firstOpType == Operand::INT_CONSTANT &&
                     secondOpType == Operand::NONE &&
-                    inst.getFirstOperand().getValue()[0] != '-')
+                    inst.getFirstOperand().getValue()[0] != '-'))
             {
                 return true;
             }
-            inst.addError("Expected absolute address after START");
+            inst.addError("Expected nothing or absolute address after START");
             return false;
         }
         else if (toUpper(op) == "END")
