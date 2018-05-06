@@ -10,9 +10,16 @@ namespace cs222 {
         return upper;
     }
 
+    template<class Key, class T>
+    bool hashtableContains(
+            const std::unordered_map<Key, T>& table, const Key& key)
+    {
+        return table.find(key) != table.end();
+    }
+
     bool isOperation(const std::string& str)
     {
-        return OpTable.find(toUpper(str)) != OpTable.end();
+        return hashtableContains(OpTable, toUpper(str));
     }
 
     bool isDirective(const std::string& str)
@@ -22,6 +29,6 @@ namespace cs222 {
 
     bool isRegister(const std::string& str)
     {
-        return REGISTERS.find(toUpper(str)) != REGISTERS.end();
+        return hashtableContains(REGISTERS, toUpper(str));
     }
 }

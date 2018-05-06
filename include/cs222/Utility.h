@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <unordered_map>
+#include <cs222/Operation.h>
 
 namespace cs222 {
     // Directives
@@ -66,6 +67,17 @@ namespace cs222 {
                 std::end(arr),
                 key) != std::end(arr);
     }
+
+    template<class Key, class T>
+    bool hashtableContains(
+            const std::unordered_map<Key, T>& table, const Key& key);
+
+    extern template bool hashtableContains<std::string, int>(
+            const std::unordered_map<std::string, int>& table,
+            const std::string& key);
+    extern template bool hashtableContains<std::string, Operation>(
+            const std::unordered_map<std::string, Operation>& table,
+            const std::string& key);
 
     bool isOperation(const std::string& str);
     bool isDirective(const std::string& str);
