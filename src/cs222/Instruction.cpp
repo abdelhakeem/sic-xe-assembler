@@ -122,10 +122,13 @@ namespace cs222 {
     size_t Instruction::getLength() const
     {
         size_t length = 0;
+        std::string op = operation;
+        if (op[0] == '+')
+            op = op.substr(1);
 
-        if (isOperation(operation))
+        if (isOperation(op))
         {
-            Format fmt = OpTable.find(operation)->second.getValidFormat();
+            Format fmt = OpTable.find(op)->second.getValidFormat();
             if (fmt == Instruction::FORMAT_3_4)
             {
                 fmt = Instruction::FORMAT_3;
@@ -137,19 +140,19 @@ namespace cs222 {
 
             length = Length.find(fmt)->second;
         }
-        else if (operation == DIR_WORD)
+        else if (op == DIR_WORD)
         {
             length = 3;
         }
-        else if (operation == DIR_RESW)
+        else if (op == DIR_RESW)
         {
             length = 3 * std::stoul(operands.first.getValue());
         }
-        else if (operation == DIR_RESB)
+        else if (op == DIR_RESB)
         {
             length = std::stoul(operands.first.getValue());
         }
-        else if (operation == DIR_BYTE)
+        else if (op == DIR_BYTE)
         {
             length = operands.first.getValue().length();
             if (operands.first.getType() == Operand::HEX_CONSTANT)
