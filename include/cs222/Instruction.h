@@ -56,6 +56,8 @@ namespace cs222 {
             void addWarning(const std::string& warning);
             std::vector<std::string> getWarnings() const;
             void clearWarnings();
+            size_t getAddress() const;
+            void setAddress(const size_t addr);
             const static std::unordered_map<Format, size_t> Length;
         private:
             const size_t lineNumber;
@@ -67,6 +69,7 @@ namespace cs222 {
             const std::string operandsToken;
             const std::string comment;
             const std::bitset<6> flags;
+            size_t address;
             std::vector<std::string> errors;
             std::vector<std::string> warnings;
     };

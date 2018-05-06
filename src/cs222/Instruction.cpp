@@ -107,6 +107,16 @@ namespace cs222 {
         warnings.clear();
     }
 
+    size_t Instruction::getAddress() const
+    {
+        return address;
+    }
+
+    void Instruction::setAddress(const size_t addr)
+    {
+        address = addr;
+    }
+
     const std::unordered_map<Instruction::Format, size_t> Instruction::Length {
         { Instruction::FORMAT_1, 1 },
         { Instruction::FORMAT_2, 2 },
