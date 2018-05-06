@@ -72,13 +72,6 @@ namespace cs222 {
     bool hashtableContains(
             const std::unordered_map<Key, T>& table, const Key& key);
 
-    extern template bool hashtableContains<std::string, int>(
-            const std::unordered_map<std::string, int>& table,
-            const std::string& key);
-    extern template bool hashtableContains<std::string, Operation>(
-            const std::unordered_map<std::string, Operation>& table,
-            const std::string& key);
-
     bool isOperation(const std::string& str);
     bool isDirective(const std::string& str);
     bool isRegister(const std::string& str);

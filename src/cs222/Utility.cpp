@@ -17,6 +17,13 @@ namespace cs222 {
         return table.find(key) != table.end();
     }
 
+    template bool hashtableContains<std::string, int>(
+            const std::unordered_map<std::string, int>& table,
+            const std::string& key);
+    template bool hashtableContains<std::string, Operation>(
+            const std::unordered_map<std::string, Operation>& table,
+            const std::string& key);
+
     bool isOperation(const std::string& str)
     {
         return hashtableContains(OpTable, toUpper(str));
