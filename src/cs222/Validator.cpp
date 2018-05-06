@@ -107,6 +107,8 @@ namespace cs222 {
                         {
                             return true;
                         }
+                    default:
+                        break;
                 }
             }
             inst.addError(
