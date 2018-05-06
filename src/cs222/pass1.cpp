@@ -86,7 +86,8 @@ size_t processFile(
             cs222::Operand firstOp = inst->getFirstOperand();
             if (
                     cs222::toUpper(inst->getOperation()) == "START" &&
-                    inst->getErrors().empty())
+                    inst->getErrors().empty() &&
+                    firstOp.getType() == cs222::Operand::INT_CONSTANT)
             {
                 LOCCTR = std::stoul(firstOp.getValue(), nullptr, 16);
                 START = LOCCTR;
