@@ -99,45 +99,7 @@ size_t processFile(
                 if (op[0] == '+')
                     op = op.substr(1);
 
-                if (cs222::isOperation(op))
-                {
-                    cs222::Instruction::Format fmt =
-                        cs222::OpTable.find(op)->second.getValidFormat();
-                    if (fmt == cs222::Instruction::FORMAT_3_4)
-                    {
-                        fmt = cs222::Instruction::FORMAT_3;
-                        if (inst->isSet(cs222::Instruction::FLAG_EXTENDED))
-                        {
-                            fmt = cs222::Instruction::FORMAT_4;
-                        }
-                    }
-
-                    LOCCTR += cs222::Instruction::Length.find(fmt)->second;
-                }
-                else
-                {
-                    if (op == cs222::DIR_WORD)
-                    {
-                        LOCCTR += 3;
-                    }
-                    else if (op == cs222::DIR_RESW)
-                    {
-                        LOCCTR += 3 * std::stoul(firstOp.getValue());
-                    }
-                    else if (op == cs222::DIR_RESB)
-                    {
-                        LOCCTR += std::stoul(firstOp.getValue());
-                    }
-                    else if (op == cs222::DIR_BYTE)
-                    {
-                        size_t length = firstOp.getValue().length();
-                        if (firstOp.getType() == cs222::Operand::HEX_CONSTANT)
-                        {
-                            length /= 2;
-                        }
-                        LOCCTR += length;
-                    }
-                }
+                LOCCTR += inst->getLength();
 
                 if (firstOp.getType() == cs222::Operand::SYMBOL)
                 {
@@ -159,7 +121,7 @@ size_t processFile(
         if (!inst->getLabel().empty())
         {
             std::string label = inst->getLabel();
-            if (symtab.find(label) != symtab.end())
+            if (cs222::hashtableContains(symtab, label))
             {
                 inst->addError(std::string("Duplicate symbol ") + label);
             }
@@ -173,45 +135,7 @@ size_t processFile(
         if (op[0] == '+')
             op = op.substr(1);
 
-        if (cs222::isOperation(op))
-        {
-            cs222::Instruction::Format fmt =
-                cs222::OpTable.find(op)->second.getValidFormat();
-            if (fmt == cs222::Instruction::FORMAT_3_4)
-            {
-                fmt = cs222::Instruction::FORMAT_3;
-                if (inst->isSet(cs222::Instruction::FLAG_EXTENDED))
-                {
-                    fmt = cs222::Instruction::FORMAT_4;
-                }
-            }
-
-            LOCCTR += cs222::Instruction::Length.find(fmt)->second;
-        }
-        else
-        {
-            if (op == cs222::DIR_WORD)
-            {
-                LOCCTR += 3;
-            }
-            else if (op == cs222::DIR_RESW)
-            {
-                LOCCTR += 3 * std::stoul(firstOp.getValue());
-            }
-            else if (op == cs222::DIR_RESB)
-            {
-                LOCCTR += std::stoul(firstOp.getValue());
-            }
-            else if (op == cs222::DIR_BYTE)
-            {
-                size_t length = firstOp.getValue().length();
-                if (firstOp.getType() == cs222::Operand::HEX_CONSTANT)
-                {
-                    length /= 2;
-                }
-                LOCCTR += length;
-            }
-        }
+        LOCCTR += inst->getLength();
 
         instVec.push_back(std::move(inst));
     }
@@ -222,7 +146,7 @@ size_t processFile(
         firstOp = it->getFirstOperand();
         if (
                 firstOp.getType() == cs222::Operand::SYMBOL &&
-                symtab.find(firstOp.getValue()) == symtab.end())
+                !cs222::hashtableContains(symtab, firstOp.getValue()))
         {
             it->addError(std::string("Undefined symbol used: ") +
                     firstOp.getValue());
