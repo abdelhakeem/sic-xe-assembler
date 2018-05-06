@@ -58,6 +58,7 @@ namespace cs222 {
             void clearWarnings();
             size_t getAddress() const;
             void setAddress(const size_t addr);
+            size_t getLength() const;
             const static std::unordered_map<Format, size_t> Length;
         private:
             const size_t lineNumber;

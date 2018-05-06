@@ -1,4 +1,6 @@
 #include <cs222/Instruction.h>
+#include <cs222/OpTable.h>
+#include <cs222/Utility.h>
 
 namespace cs222 {
     Instruction::Instruction(
@@ -115,6 +117,48 @@ namespace cs222 {
     void Instruction::setAddress(const size_t addr)
     {
         address = addr;
+    }
+
+    size_t Instruction::getLength() const
+    {
+        size_t length = 0;
+
+        if (isOperation(operation))
+        {
+            Format fmt = OpTable.find(operation)->second.getValidFormat();
+            if (fmt == Instruction::FORMAT_3_4)
+            {
+                fmt = Instruction::FORMAT_3;
+                if (isSet(Instruction::FLAG_EXTENDED))
+                {
+                    fmt = Instruction::FORMAT_4;
+                }
+            }
+
+            length = Length.find(fmt)->second;
+        }
+        else if (operation == DIR_WORD)
+        {
+            length = 3;
+        }
+        else if (operation == DIR_RESW)
+        {
+            length = 3 * std::stoul(operands.first.getValue());
+        }
+        else if (operation == DIR_RESB)
+        {
+            length = std::stoul(operands.first.getValue());
+        }
+        else if (operation == DIR_BYTE)
+        {
+            length = operands.first.getValue().length();
+            if (operands.first.getType() == Operand::HEX_CONSTANT)
+            {
+                length /= 2;
+            }
+        }
+
+        return length;
     }
 
     const std::unordered_map<Instruction::Format, size_t> Instruction::Length {
