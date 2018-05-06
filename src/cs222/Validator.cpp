@@ -1,10 +1,9 @@
-#include <algorithm>
 #include <cs222/OpTable.h>
 #include <cs222/Utility.h>
 #include <cs222/Validator.h>
 
 namespace cs222 {
-    bool Validator::validate(Instruction& inst) const
+    bool Validator::validate(Instruction& inst)
     {
         if (inst.isCommentLine())
         {
@@ -16,9 +15,13 @@ namespace cs222 {
         return result;
     }
 
-    bool Validator::validateOperandTypes(Instruction& inst) const
+    bool Validator::validateOperandTypes(Instruction& inst)
     {
         std::string op = inst.getOperation();
+        if (op[0] == '+')
+        {
+            op = op.substr(1);
+        }
         Operand::Type firstOpType = inst.getFirstOperand().getType();
         Operand::Type secondOpType = inst.getSecondOperand().getType();
         if (is_mOp(op))
@@ -30,8 +33,7 @@ namespace cs222 {
             else
             {
                 inst.addError(
-                        std::string("Expected symbol or address after ") +
-                        op);
+                        std::string("Expected symbol or address after ") + op);
                 return false;
             }
         }
@@ -46,8 +48,7 @@ namespace cs222 {
             else
             {
                 inst.addError(
-                        std::string("Expected register symbol after ") +
-                        op);
+                        std::string("Expected register symbol after ") + op);
                 return false;
             }
         }
@@ -95,14 +96,21 @@ namespace cs222 {
         }
         else if (toUpper(op) == "END")
         {
-            if (
-                    firstOpType == Operand::NONE ||
-                    (firstOpType == Operand::SYMBOL &&
-                    secondOpType == Operand::NONE))
+            if (secondOpType == Operand::NONE)
             {
-                return true;
+                switch (firstOpType)
+                {
+                    case Operand::NONE:
+                    case Operand::SYMBOL:
+                    case Operand::INT_CONSTANT:
+                        if (inst.getFirstOperand().getValue()[0] != '-')
+                        {
+                            return true;
+                        }
+                }
             }
-            inst.addError("Expected symbol or nothing after END");
+            inst.addError(
+                    "Expected symbol, absolute address, or nothing after END");
             return false;
         }
         else if (is_storageDir(op))
@@ -110,31 +118,20 @@ namespace cs222 {
             if (inst.getLabel().empty())
             {
                 inst.addError(
-                        std::string("Expected label before ")
-                        + op);
+                        std::string("Expected label before ") + op);
             }
             if (op == "RESB" || op == "RESW")
             {
                 if (
                         firstOpType == Operand::INT_CONSTANT &&
-                        secondOpType == Operand::NONE)
+                        secondOpType == Operand::NONE &&
+                        inst.getFirstOperand().getValue()[0] != '-')
                 {
-                    if (inst.getFirstOperand().getValue()[0] == '-')
-                    {
-                        inst.addError(
-                                std::string("Expected unsigned integer with ")
-                                + op);
-                        return false;
-                    }
                     return true;
                 }
-                else
-                {
-                    inst.addError(
-                            std::string("Expected integer constant after ")
-                            + op);
-                    return false;
-                }
+                inst.addError(
+                        std::string("Expected unsigned integer after ") + op);
+                return false;
             }
             else if (op == "BYTE")
             {
@@ -166,20 +163,23 @@ namespace cs222 {
                 else
                 {
                     inst.addError(
-                            std::string("Expected int constant after ")
-                            + op);
+                            std::string("Expected int constant after ") + op);
                     return false;
                 }
             }
         }
-        inst.addWarning(
+        inst.addError(
                 std::string("Unsupported directive or operation: ") + op);
         return false;
     }
 
-    bool Validator::validateFormat(Instruction& inst) const
+    bool Validator::validateFormat(Instruction& inst)
     {
         std::string op = inst.getOperation();
+        if (op[0] == '+')
+        {
+            op = op.substr(1);
+        }
         if (isDirective(op))
         {
             if (inst.getFlags().any())
@@ -207,7 +207,6 @@ namespace cs222 {
         }
         else if (is_noneOp(op))
         {
-            format = Instruction::FORMAT_1;
             if (inst.getFlags().any())
             {
                 inst.addError(std::string("Invalid format used with ") + op);
@@ -227,39 +226,50 @@ namespace cs222 {
         return false;
     }
 
-    bool Validator::contains(
-            const std::vector<std::string>& vec,
-            const std::string& key)
-    {
-        return std::binary_search(
-                vec.begin(),
-                vec.end(),
-                toUpper(key));
-    }
+    const std::string Validator::mOps[] {
+        OP_ADD, OP_ADDF, OP_AND, OP_COMP, OP_COMPF, OP_DIV, OP_DIVF,
+        OP_J, OP_JEQ, OP_JGT, OP_JLT, OP_JSUB, OP_LDA, OP_LDB,
+        OP_LDCH, OP_LDF, OP_LDL, OP_LDS, OP_LDT, OP_LDX, OP_MUL,
+        OP_MULF, OP_OR, OP_RD, OP_STA, OP_STB, OP_STCH, OP_STF,
+        OP_STI, OP_STL, OP_STF, OP_STSW, OP_STT, OP_STX, OP_SUB,
+        OP_SUBF, OP_TD, OP_TIX, OP_WD
+    };
+
+    const std::string Validator::r1Ops[] { OP_CLEAR, OP_TIXR };
+
+    const std::string Validator::r1r2Ops[] {
+        OP_ADDR, OP_COMPR, OP_DIVR, OP_MULR, OP_RMO, OP_SUBR
+    };
+
+    const std::string Validator::noneOps[] { OP_RSUB };
+
+    const std::string Validator::storageDirs[] {
+        DIR_BYTE, DIR_RESB, DIR_RESW, DIR_WORD
+    };
 
     bool Validator::is_mOp(const std::string& op)
     {
-        return contains(mOps, op);
+        return arrayContains(mOps, toUpper(op));
     }
 
     bool Validator::is_r1Op(const std::string& op)
     {
-        return contains(r1Ops, op);
+        return arrayContains(r1Ops, op);
     }
 
     bool Validator::is_r1r2Op(const std::string& op)
     {
-        return contains(r1r2Ops, op);
+        return arrayContains(r1r2Ops, op);
     }
 
     bool Validator::is_noneOp(const std::string& op)
     {
-        return contains(noneOps, op);
+        return arrayContains(noneOps, op);
     }
 
     bool Validator::is_storageDir(const std::string& op)
     {
-        return contains(storageDirs, op);
+        return arrayContains(storageDirs, op);
     }
 
     bool Validator::isMemType(const Operand::Type& type)
@@ -273,29 +283,4 @@ namespace cs222 {
                 return false;
         }
     }
-
-    const std::vector<std::string> Validator::mOps {
-        "ADD", "ADDF", "AND", "COMP", "COMPF", "DIV", "DIVF",
-        "J", "JEQ", "JGT", "JLT", "JSUB", "LDA", "LDB", "LDCH",
-        "LDF", "LDL", "LDS", "LDT", "LDX", "MUL", "MULF",
-        "OR", "RD", "STA", "STB", "STCH", "STF", "STI",
-        "STL", "STF", "STSW", "STT", "STX", "SUB", "SUBF", "TD",
-        "TIX", "WD"
-    };
-
-    const std::vector<std::string> Validator::r1Ops {
-        "CLEAR", "TIXR"
-    };
-
-    const std::vector<std::string> Validator::r1r2Ops {
-        "ADDR", "COMPR", "DIVR", "MULR", "RMO", "SUBR"
-    };
-
-    const std::vector<std::string> Validator::noneOps {
-        "RSUB"
-    };
-
-    const std::vector<std::string> Validator::storageDirs {
-        "BYTE", "RESB", "RESW", "WORD"
-    };
 }
