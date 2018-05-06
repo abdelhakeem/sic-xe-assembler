@@ -102,8 +102,10 @@ namespace cs222 {
                     OpTable.find(operation)->second.getValidFormat();
                 if (fmt == Instruction::FORMAT_1 || operation == "RSUB")
                 {
-                    flushRestToToken(sstream, token);
+                    advanceToken(sstream, token);
                     comment = token;
+                    flushRestToToken(sstream, token);
+                    comment += token;
                     return std::make_unique<Instruction>(
                             lineNumber, line, label, operation,
                             operands.first, operands.second,
