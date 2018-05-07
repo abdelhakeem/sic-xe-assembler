@@ -37,5 +37,5 @@ bin
 *.symtab
 
 #CMake debugging files
-cmake-build-debug/  
+cmake-build-debug/
 .idea/
