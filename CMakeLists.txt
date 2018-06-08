@@ -22,4 +22,4 @@ add_executable(SIC_XE_Assembler
         src/cs222/pass1.cpp
         src/cs222/Utility.cpp
         src/cs222/Validator.cpp
-        )
+        include/cs222/Pass2.h)
