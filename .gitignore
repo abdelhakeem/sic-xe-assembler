@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+bin
+
+# pass1 output files
+*.listing
+*.symtab
+
+#CMake debugging files
+cmake-build-debug/
+.idea/

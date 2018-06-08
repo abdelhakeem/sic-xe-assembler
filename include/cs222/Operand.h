@@ -2,24 +2,29 @@
 #define CS222_OPERAND_H
 
 #include <string>
-#include "constants.h"
 
 namespace cs222 {
-    using std::string;
-
     class Operand {
         public:
-
-            Operand(
-                    const string& token,
-                    const Type& type);
-            const string& getToken() const;
-            const Type& getType() const;
-            const bool isRegister() const;
+            enum Type {
+                NONE,
+                SYMBOL,
+                INT_LITERAL,
+                CHAR_LITERAL,
+                HEX_LITERAL,
+                INT_CONSTANT,
+                CHAR_CONSTANT,
+                HEX_CONSTANT,
+                REGISTER,
+                LOCCTR
+            };
+            Operand();
+            Operand(const Type& type, const std::string& value = "");
+            Type getType() const;
+            std::string getValue() const;
         private:
-            const string token;
-            const Type type;
-            bool registerOperand;
+            Type type;
+            std::string value;
     };
 }
 
