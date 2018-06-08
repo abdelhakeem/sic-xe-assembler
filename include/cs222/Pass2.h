@@ -14,6 +14,7 @@ namespace cs222 {
         std::vector<std::string> modificationAddresses;
         std::unordered_map litTab;
         std::unordered_map symTab;
+	int base = -1;
 
         std::string translate(Instruction instruction);
         void readSymbols();
