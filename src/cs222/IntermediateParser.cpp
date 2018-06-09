@@ -4,6 +4,12 @@
 
 namespace cs222 {
 
+    IntermediateParser::IntermediateParser(std::istream& inputStream) :
+            Parser(inputStream)
+    {
+        std::getline(inputStream, line);
+    }
+
     std::unique_ptr<Instruction> IntermediateParser::next() {
 
         if (nextInstruction) {
@@ -30,11 +36,19 @@ namespace cs222 {
             std::stringstream sstream(line);
             std::string token;
 
-            advanceToken(sstream, token);
+            advanceToken(sstream, token);// Skipping line number.
+
+            advanceToken(sstream, token);// Expecting address.
+
             if (token[0] == '.') // Comment line?
             {
-                return std::make_unique<Instruction>(lineNumber, line);
+                return this->next();
             }
+
+            std::size_t address;
+            sscanf(token.c_str(), "%zu", &address);
+
+            advanceToken(sstream, token);
 
             std::string label;
             std::string operation;
@@ -63,10 +77,15 @@ namespace cs222 {
                     comment = token;
                     flushRestToToken(sstream, token);
                     comment += token;
-                    return std::make_unique<Instruction>(
+
+                    std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
                             lineNumber, line, label, operation,
                             operands.first, operands.second,
                             operandsToken, comment, flags);
+
+                    (*ptr).setAddress(address);
+
+                    return ptr;
                 }
             }
 
@@ -122,10 +141,14 @@ namespace cs222 {
             flushRestToToken(sstream, token);
             comment += token;
 
-            return std::make_unique<Instruction>(
+            std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
                     lineNumber, line, label, operation,
                     operands.first, operands.second,
                     operandsToken, comment, flags);
+
+            (*ptr).setAddress(address);
+
+            return ptr;
         }
 
         return nullptr;

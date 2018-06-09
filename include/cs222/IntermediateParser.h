@@ -10,7 +10,7 @@
 namespace cs222 {
     class IntermediateParser : Parser {
     public:
-        IntermediateParser(std::istream& inputStream);
+        IntermediateParser(std::istream& inputStream);// Stream should be advanced by a line (column names).
         std::unique_ptr<Instruction> next();
     };
 }
