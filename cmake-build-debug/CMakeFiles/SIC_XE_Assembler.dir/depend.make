@@ -8,6 +8,15 @@ CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.o: ../include/cs222/Op
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.o: ../include/cs222/Utility.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.o: ../src/cs222/Instruction.cpp
 
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/Instruction.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/IntermediateParser.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/OpTable.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/Operand.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/Operation.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/Parser.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../include/cs222/Utility.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o: ../src/cs222/IntermediateParser.cpp
+
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operand.cpp.o: ../include/cs222/Operand.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operand.cpp.o: ../src/cs222/Operand.cpp
 
@@ -24,6 +33,23 @@ CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.o: ../include/cs222/Parser.
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.o: ../include/cs222/Utility.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.o: ../src/cs222/Parser.cpp
 
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/Instruction.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/OpTable.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/Operand.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/Operation.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/Parser.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/Utility.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../include/cs222/Validator.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o: ../src/cs222/Pass1.cpp
+
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: .././include/cs222/Instruction.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: .././include/cs222/Utility.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: ../include/cs222/Instruction.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: ../include/cs222/Operand.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: ../include/cs222/Operation.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: ../include/cs222/Pass2.h
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o: ../src/cs222/Pass2.cpp
+
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.o: ../include/cs222/Instruction.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.o: ../include/cs222/OpTable.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.o: ../include/cs222/Operand.h
@@ -38,13 +64,4 @@ CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o: ../include/cs222/Oper
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o: ../include/cs222/Utility.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o: ../include/cs222/Validator.h
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o: ../src/cs222/Validator.cpp
-
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/Instruction.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/OpTable.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/Operand.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/Operation.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/Parser.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/Utility.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../include/cs222/Validator.h
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o: ../src/cs222/pass1.cpp
 

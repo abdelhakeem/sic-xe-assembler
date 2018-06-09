@@ -1,4 +1,18 @@
-/home/ab_shams/Desktop/clion-2018.1.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/ab_shams/Desktop/sys.prog.project
+/media/hesham/2CF88440F88409F2/Ubuntu/Clion/opt/clion-2018.1.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/g++-7 -G "CodeBlocks - Unix Makefiles" "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler"
+-- The C compiler identification is GNU 7.3.0
+-- The CXX compiler identification is GNU 7.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/g++-7
+-- Check for working CXX compiler: /usr/bin/g++-7 -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/ab_shams/Desktop/sys.prog.project/cmake-build-debug
+-- Build files have been written to: /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug

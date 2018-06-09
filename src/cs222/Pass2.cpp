@@ -7,6 +7,7 @@
 
 #include <cs222/Pass2.h>
 #include <include/cs222/Utility.h>
+#include <include/cs222/IntermediateParser.h>
 
 /*
 int main(int argc, char *argv[]) {
@@ -32,14 +33,19 @@ int main(int argc, char *argv[]) {
 namespace cs222 {
 
     std::string Pass2::run(std::string srcFileName) {
-        //TODO: H
         Pass2::srcFileName = srcFileName;
-        readSymbols("example.asm.symtab","example.asm.littab");
 
-        //TODO: Parse instructions and translate each.
+        readSymbols();
+
+        std::ifstream ifs(srcFileName + ".listing");
+        cs222::IntermediateParser iParser(ifs);
+        while (iParser.hasNext()) {
+            std::unique_ptr<cs222::Instruction> instruction = iParser.next();
+            if (instruction != nullptr) translate(*instruction);
+        }
 
         if (Pass2::errorReportMessage != "") {
-            writeObjectProgram("name.objprog");
+            writeObjectProgram();
             return "Pass 2 finished successfully";
         } else {
             //TODO: Produce error report.
@@ -51,11 +57,11 @@ namespace cs222 {
         //TODO: Anwar
     }
 
-    void Pass2::readSymbols(const std::string& symTabPath,
-                            const std::string& litTabPath) {
+    void Pass2::readSymbols() {
         //TODO: Mahmoud/Shams
 
         // reading from symTab
+        std::string symTabPath = srcFileName + ".symtab";
         std::ifstream ifs(symTabPath);
 
         if (!ifs)
@@ -94,6 +100,7 @@ namespace cs222 {
         }
 
         //reading from litTab
+        std::string litTabPath = srcFileName + ".littab";
 
         ifs.open(litTabPath);
 
@@ -132,13 +139,10 @@ namespace cs222 {
             }
         }
 
-
-
-
-
     }
 
-    void Pass2::writeObjectProgram(const  std::string& objProgPath) {
+    void Pass2::writeObjectProgram() {
         //TODO: Mahmoud/Shams
+        std::string objProgPath = srcFileName + ".objprog";
     }
 }

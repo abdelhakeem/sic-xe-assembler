@@ -46,7 +46,7 @@ namespace cs222 {
             }
 
             std::size_t address;
-            sscanf(token.c_str(), "%zu", &address);
+            address = std::stoul(token, nullptr, 16);
 
             advanceToken(sstream, token);
 

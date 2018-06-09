@@ -12,6 +12,7 @@ namespace cs222 {
     public:
         IntermediateParser(std::istream& inputStream);// Stream should be advanced by a line (column names).
         std::unique_ptr<Instruction> next();
+        bool hasNext();
     };
 }
 

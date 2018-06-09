@@ -7,15 +7,24 @@ CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.o
  ../include/cs222/Operand.h
  ../include/cs222/Operation.h
  ../include/cs222/Utility.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/Instruction.cpp
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Instruction.cpp
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o
+ ../include/cs222/Instruction.h
+ ../include/cs222/IntermediateParser.h
+ ../include/cs222/OpTable.h
+ ../include/cs222/Operand.h
+ ../include/cs222/Operation.h
+ ../include/cs222/Parser.h
+ ../include/cs222/Utility.h
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/IntermediateParser.cpp
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operand.cpp.o
  ../include/cs222/Operand.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/Operand.cpp
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Operand.cpp
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operation.cpp.o
  ../include/cs222/Instruction.h
  ../include/cs222/Operand.h
  ../include/cs222/Operation.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/Operation.cpp
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Operation.cpp
 CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.o
  ../include/cs222/Instruction.h
  ../include/cs222/OpTable.h
@@ -23,23 +32,8 @@ CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.o
  ../include/cs222/Operation.h
  ../include/cs222/Parser.h
  ../include/cs222/Utility.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/Parser.cpp
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.o
- ../include/cs222/Instruction.h
- ../include/cs222/OpTable.h
- ../include/cs222/Operand.h
- ../include/cs222/Operation.h
- ../include/cs222/Utility.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/Utility.cpp
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o
- ../include/cs222/Instruction.h
- ../include/cs222/OpTable.h
- ../include/cs222/Operand.h
- ../include/cs222/Operation.h
- ../include/cs222/Utility.h
- ../include/cs222/Validator.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/Validator.cpp
-CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Parser.cpp
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o
  ../include/cs222/Instruction.h
  ../include/cs222/OpTable.h
  ../include/cs222/Operand.h
@@ -47,4 +41,27 @@ CMakeFiles/SIC_XE_Assembler.dir/src/cs222/pass1.cpp.o
  ../include/cs222/Parser.h
  ../include/cs222/Utility.h
  ../include/cs222/Validator.h
- /home/ab_shams/Desktop/sys.prog.project/src/cs222/pass1.cpp
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Pass1.cpp
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o
+ .././include/cs222/Instruction.h
+ .././include/cs222/Utility.h
+ ../include/cs222/Instruction.h
+ ../include/cs222/Operand.h
+ ../include/cs222/Operation.h
+ ../include/cs222/Pass2.h
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Pass2.cpp
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.o
+ ../include/cs222/Instruction.h
+ ../include/cs222/OpTable.h
+ ../include/cs222/Operand.h
+ ../include/cs222/Operation.h
+ ../include/cs222/Utility.h
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Utility.cpp
+CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o
+ ../include/cs222/Instruction.h
+ ../include/cs222/OpTable.h
+ ../include/cs222/Operand.h
+ ../include/cs222/Operation.h
+ ../include/cs222/Utility.h
+ ../include/cs222/Validator.h
+ /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Validator.cpp

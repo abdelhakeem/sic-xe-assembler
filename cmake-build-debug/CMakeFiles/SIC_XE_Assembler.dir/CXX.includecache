@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+.././include/cs222/Instruction.h
+bitset
+-
+unordered_map
+-
+vector
+-
+cs222/Operand.h
+-
+
+.././include/cs222/Utility.h
+algorithm
+-
+string
+-
+unordered_map
+-
+cs222/Operation.h
+-
+
 ../include/cs222/Instruction.h
 bitset
 -
@@ -15,6 +35,10 @@ vector
 -
 cs222/Operand.h
 -
+
+../include/cs222/IntermediateParser.h
+Parser.h
+../include/cs222/Parser.h
 
 ../include/cs222/OpTable.h
 vector
@@ -40,6 +64,20 @@ regex
 cs222/Instruction.h
 -
 
+../include/cs222/Pass2.h
+string
+-
+vector
+-
+bits/unordered_map.h
+-
+climits
+-
+deque
+-
+Instruction.h
+../include/cs222/Instruction.h
+
 ../include/cs222/Utility.h
 algorithm
 -
@@ -54,7 +92,7 @@ cs222/Operation.h
 cs222/Instruction.h
 -
 
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/Instruction.cpp
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Instruction.cpp
 cs222/Instruction.h
 -
 cs222/OpTable.h
@@ -62,15 +100,23 @@ cs222/OpTable.h
 cs222/Utility.h
 -
 
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/Operand.cpp
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/IntermediateParser.cpp
+cs222/Utility.h
+-
+cs222/OpTable.h
+-
+cs222/IntermediateParser.h
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/cs222/IntermediateParser.h
+
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Operand.cpp
 cs222/Operand.h
 -
 
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/Operation.cpp
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Operation.cpp
 cs222/Operation.h
 -
 
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/Parser.cpp
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Parser.cpp
 algorithm
 -
 sstream
@@ -84,23 +130,7 @@ cs222/Parser.h
 cs222/Utility.h
 -
 
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/Utility.cpp
-algorithm
--
-cs222/OpTable.h
--
-cs222/Utility.h
--
-
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/Validator.cpp
-cs222/OpTable.h
--
-cs222/Utility.h
--
-cs222/Validator.h
--
-
-/home/ab_shams/Desktop/sys.prog.project/src/cs222/pass1.cpp
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Pass1.cpp
 iomanip
 -
 iostream
@@ -110,6 +140,40 @@ fstream
 cs222/OpTable.h
 -
 cs222/Parser.h
+-
+cs222/Utility.h
+-
+cs222/Validator.h
+-
+
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Pass2.cpp
+iostream
+-
+unordered_map
+-
+cs222/Instruction.h
+-
+include/cs222/Instruction.h
+-
+fstream
+-
+sstream
+-
+cs222/Pass2.h
+-
+include/cs222/Utility.h
+-
+
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Utility.cpp
+algorithm
+-
+cs222/OpTable.h
+-
+cs222/Utility.h
+-
+
+/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/cs222/Validator.cpp
+cs222/OpTable.h
 -
 cs222/Utility.h
 -

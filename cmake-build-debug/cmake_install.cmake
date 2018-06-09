@@ -1,4 +1,4 @@
-# Install script for directory: /home/ab_shams/Desktop/sys.prog.project
+# Install script for directory: /media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
