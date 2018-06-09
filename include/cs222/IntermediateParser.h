@@ -1,0 +1,19 @@
+//
+// Parser for the intermediate file produced by pass 1 for analysis in pass 2.
+//
+
+#ifndef SIC_XE_ASSEMBLER_INTERMEDIATEPARSER_H
+#define SIC_XE_ASSEMBLER_INTERMEDIATEPARSER_H
+
+#include "Parser.h"
+
+namespace cs222 {
+    class IntermediateParser : Parser {
+    public:
+        IntermediateParser(std::istream& inputStream);// Stream should be advanced by a line (column names).
+        std::unique_ptr<Instruction> next();
+        bool hasNext();
+    };
+}
+
+#endif //SIC_XE_ASSEMBLER_INTERMEDIATEPARSER_H

@@ -20,13 +20,14 @@ void writeSymbolTable(
         const std::string& path,
         const std::unordered_map<std::string, int>& symtab);
 
+
 int main(int argc, char* argv[])
 {
     try
     {
         if (argc < 2)
         {
-            std::cout << "USAGE: pass1 <file>" << std::endl;
+            std::cout << "USAGE: Pass1 <file>" << std::endl;
             return 0;
         }
 
@@ -50,6 +51,7 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
 
 size_t processFile(
         const std::string& path,
