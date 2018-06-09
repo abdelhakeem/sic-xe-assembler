@@ -24,8 +24,9 @@ namespace cs222 {
         int base = INT_MIN; // Initialised by a sentinel value indicating that the base register isn't initialised.
 
         std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
-        void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
-        void writeObjectProgram(); // Writes the object program to the output file.
+        void readSymbols(const std::string& symTabPath,
+                         const std::string& litTabPath); // Reads the symbol and literal tables from the files with the name in argv[1].
+        void writeObjectProgram(const std::string& objProgPath); // Writes the object program to the output file.
     };
 }
 

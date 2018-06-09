@@ -8,45 +8,45 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug"/>
+				<Option working_dir="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug"/>
+				<Option working_dir="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug"/>
+				<Option working_dir="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SIC_XE_Assembler">
-				<Option output="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/SIC_XE_Assembler" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug"/>
+				<Option output="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/SIC_XE_Assembler" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/."/>
-					<Add directory="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include"/>
-					<Add directory="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222"/>
+					<Add directory="/home/ab_shams/Desktop/sys.prog.project/."/>
+					<Add directory="/home/ab_shams/Desktop/sys.prog.project/include"/>
+					<Add directory="/home/ab_shams/Desktop/sys.prog.project/include/cs222"/>
 					<Add directory="/usr/include/c++/5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
 					<Add directory="/usr/include/c++/5/backward"/>
@@ -57,22 +57,22 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIC_XE_Assembler"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIC_XE_Assembler"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SIC_XE_Assembler/fast">
-				<Option output="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/SIC_XE_Assembler" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug"/>
+				<Option output="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/SIC_XE_Assembler" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/."/>
-					<Add directory="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include"/>
-					<Add directory="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222"/>
+					<Add directory="/home/ab_shams/Desktop/sys.prog.project/."/>
+					<Add directory="/home/ab_shams/Desktop/sys.prog.project/include"/>
+					<Add directory="/home/ab_shams/Desktop/sys.prog.project/include/cs222"/>
 					<Add directory="/usr/include/c++/5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
 					<Add directory="/usr/include/c++/5/backward"/>
@@ -83,50 +83,68 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIC_XE_Assembler/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/media/hesham/2CF88440F88409F2/Engineering/My\ Workspace/SIC-XE\ Assembler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIC_XE_Assembler/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/Assembler.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Instruction.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/IO.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/IntermediateParser.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/Instruction.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/OpTable.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/InstructionChecker.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Operand.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/OpTable.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Operation.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/Operand.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Parser.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/Parser.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Pass2.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/Symbol.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Utility.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/include/cs222/enums.h">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/include/cs222/Validator.h">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Instruction.cpp">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Instruction.cpp">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/Operand.cpp">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/IntermediateParser.cpp">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/src/main.cpp">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Operand.cpp">
 			<Option target="SIC_XE_Assembler"/>
 		</Unit>
-		<Unit filename="/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/CMakeLists.txt">
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Operation.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Parser.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Pass1.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Pass2.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Utility.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/src/cs222/Validator.cpp">
+			<Option target="SIC_XE_Assembler"/>
+		</Unit>
+		<Unit filename="/home/ab_shams/Desktop/sys.prog.project/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

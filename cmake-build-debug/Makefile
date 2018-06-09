@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /media/hesham/2CF88440F88409F2/Ubuntu/Clion/opt/clion-2018.1.1/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/ab_shams/Desktop/clion-2018.1.1/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /media/hesham/2CF88440F88409F2/Ubuntu/Clion/opt/clion-2018.1.1/bin/cmake/bin/cmake -E remove -f
+RM = /home/ab_shams/Desktop/clion-2018.1.1/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler"
+CMAKE_SOURCE_DIR = /home/ab_shams/Desktop/sys.prog.project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug"
+CMAKE_BINARY_DIR = /home/ab_shams/Desktop/sys.prog.project/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/media/hesham/2CF88440F88409F2/Ubuntu/Clion/opt/clion-2018.1.1/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/ab_shams/Desktop/clion-2018.1.1/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/media/hesham/2CF88440F88409F2/Ubuntu/Clion/opt/clion-2018.1.1/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/ab_shams/Desktop/clion-2018.1.1/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles" "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/CMakeFiles /home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/hesham/2CF88440F88409F2/Engineering/My Workspace/SIC-XE Assembler/cmake-build-debug/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ab_shams/Desktop/sys.prog.project/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,86 +123,248 @@ SIC_XE_Assembler/fast:
 	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/build
 .PHONY : SIC_XE_Assembler/fast
 
-src/Instruction.o: src/Instruction.cpp.o
+src/cs222/Instruction.o: src/cs222/Instruction.cpp.o
 
-.PHONY : src/Instruction.o
-
-# target to build an object file
-src/Instruction.cpp.o:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.o
-.PHONY : src/Instruction.cpp.o
-
-src/Instruction.i: src/Instruction.cpp.i
-
-.PHONY : src/Instruction.i
-
-# target to preprocess a source file
-src/Instruction.cpp.i:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.i
-.PHONY : src/Instruction.cpp.i
-
-src/Instruction.s: src/Instruction.cpp.s
-
-.PHONY : src/Instruction.s
-
-# target to generate assembly for a file
-src/Instruction.cpp.s:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Instruction.cpp.s
-.PHONY : src/Instruction.cpp.s
-
-src/Operand.o: src/Operand.cpp.o
-
-.PHONY : src/Operand.o
+.PHONY : src/cs222/Instruction.o
 
 # target to build an object file
-src/Operand.cpp.o:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.o
-.PHONY : src/Operand.cpp.o
+src/cs222/Instruction.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.o
+.PHONY : src/cs222/Instruction.cpp.o
 
-src/Operand.i: src/Operand.cpp.i
+src/cs222/Instruction.i: src/cs222/Instruction.cpp.i
 
-.PHONY : src/Operand.i
+.PHONY : src/cs222/Instruction.i
 
 # target to preprocess a source file
-src/Operand.cpp.i:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.i
-.PHONY : src/Operand.cpp.i
+src/cs222/Instruction.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.i
+.PHONY : src/cs222/Instruction.cpp.i
 
-src/Operand.s: src/Operand.cpp.s
+src/cs222/Instruction.s: src/cs222/Instruction.cpp.s
 
-.PHONY : src/Operand.s
+.PHONY : src/cs222/Instruction.s
 
 # target to generate assembly for a file
-src/Operand.cpp.s:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/Operand.cpp.s
-.PHONY : src/Operand.cpp.s
+src/cs222/Instruction.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Instruction.cpp.s
+.PHONY : src/cs222/Instruction.cpp.s
 
-src/main.o: src/main.cpp.o
+src/cs222/IntermediateParser.o: src/cs222/IntermediateParser.cpp.o
 
-.PHONY : src/main.o
+.PHONY : src/cs222/IntermediateParser.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/cs222/IntermediateParser.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.o
+.PHONY : src/cs222/IntermediateParser.cpp.o
 
-src/main.i: src/main.cpp.i
+src/cs222/IntermediateParser.i: src/cs222/IntermediateParser.cpp.i
 
-.PHONY : src/main.i
+.PHONY : src/cs222/IntermediateParser.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/cs222/IntermediateParser.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.i
+.PHONY : src/cs222/IntermediateParser.cpp.i
 
-src/main.s: src/main.cpp.s
+src/cs222/IntermediateParser.s: src/cs222/IntermediateParser.cpp.s
 
-.PHONY : src/main.s
+.PHONY : src/cs222/IntermediateParser.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/cs222/IntermediateParser.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/IntermediateParser.cpp.s
+.PHONY : src/cs222/IntermediateParser.cpp.s
+
+src/cs222/Operand.o: src/cs222/Operand.cpp.o
+
+.PHONY : src/cs222/Operand.o
+
+# target to build an object file
+src/cs222/Operand.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operand.cpp.o
+.PHONY : src/cs222/Operand.cpp.o
+
+src/cs222/Operand.i: src/cs222/Operand.cpp.i
+
+.PHONY : src/cs222/Operand.i
+
+# target to preprocess a source file
+src/cs222/Operand.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operand.cpp.i
+.PHONY : src/cs222/Operand.cpp.i
+
+src/cs222/Operand.s: src/cs222/Operand.cpp.s
+
+.PHONY : src/cs222/Operand.s
+
+# target to generate assembly for a file
+src/cs222/Operand.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operand.cpp.s
+.PHONY : src/cs222/Operand.cpp.s
+
+src/cs222/Operation.o: src/cs222/Operation.cpp.o
+
+.PHONY : src/cs222/Operation.o
+
+# target to build an object file
+src/cs222/Operation.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operation.cpp.o
+.PHONY : src/cs222/Operation.cpp.o
+
+src/cs222/Operation.i: src/cs222/Operation.cpp.i
+
+.PHONY : src/cs222/Operation.i
+
+# target to preprocess a source file
+src/cs222/Operation.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operation.cpp.i
+.PHONY : src/cs222/Operation.cpp.i
+
+src/cs222/Operation.s: src/cs222/Operation.cpp.s
+
+.PHONY : src/cs222/Operation.s
+
+# target to generate assembly for a file
+src/cs222/Operation.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Operation.cpp.s
+.PHONY : src/cs222/Operation.cpp.s
+
+src/cs222/Parser.o: src/cs222/Parser.cpp.o
+
+.PHONY : src/cs222/Parser.o
+
+# target to build an object file
+src/cs222/Parser.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.o
+.PHONY : src/cs222/Parser.cpp.o
+
+src/cs222/Parser.i: src/cs222/Parser.cpp.i
+
+.PHONY : src/cs222/Parser.i
+
+# target to preprocess a source file
+src/cs222/Parser.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.i
+.PHONY : src/cs222/Parser.cpp.i
+
+src/cs222/Parser.s: src/cs222/Parser.cpp.s
+
+.PHONY : src/cs222/Parser.s
+
+# target to generate assembly for a file
+src/cs222/Parser.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Parser.cpp.s
+.PHONY : src/cs222/Parser.cpp.s
+
+src/cs222/Pass1.o: src/cs222/Pass1.cpp.o
+
+.PHONY : src/cs222/Pass1.o
+
+# target to build an object file
+src/cs222/Pass1.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.o
+.PHONY : src/cs222/Pass1.cpp.o
+
+src/cs222/Pass1.i: src/cs222/Pass1.cpp.i
+
+.PHONY : src/cs222/Pass1.i
+
+# target to preprocess a source file
+src/cs222/Pass1.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.i
+.PHONY : src/cs222/Pass1.cpp.i
+
+src/cs222/Pass1.s: src/cs222/Pass1.cpp.s
+
+.PHONY : src/cs222/Pass1.s
+
+# target to generate assembly for a file
+src/cs222/Pass1.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass1.cpp.s
+.PHONY : src/cs222/Pass1.cpp.s
+
+src/cs222/Pass2.o: src/cs222/Pass2.cpp.o
+
+.PHONY : src/cs222/Pass2.o
+
+# target to build an object file
+src/cs222/Pass2.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.o
+.PHONY : src/cs222/Pass2.cpp.o
+
+src/cs222/Pass2.i: src/cs222/Pass2.cpp.i
+
+.PHONY : src/cs222/Pass2.i
+
+# target to preprocess a source file
+src/cs222/Pass2.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.i
+.PHONY : src/cs222/Pass2.cpp.i
+
+src/cs222/Pass2.s: src/cs222/Pass2.cpp.s
+
+.PHONY : src/cs222/Pass2.s
+
+# target to generate assembly for a file
+src/cs222/Pass2.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Pass2.cpp.s
+.PHONY : src/cs222/Pass2.cpp.s
+
+src/cs222/Utility.o: src/cs222/Utility.cpp.o
+
+.PHONY : src/cs222/Utility.o
+
+# target to build an object file
+src/cs222/Utility.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.o
+.PHONY : src/cs222/Utility.cpp.o
+
+src/cs222/Utility.i: src/cs222/Utility.cpp.i
+
+.PHONY : src/cs222/Utility.i
+
+# target to preprocess a source file
+src/cs222/Utility.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.i
+.PHONY : src/cs222/Utility.cpp.i
+
+src/cs222/Utility.s: src/cs222/Utility.cpp.s
+
+.PHONY : src/cs222/Utility.s
+
+# target to generate assembly for a file
+src/cs222/Utility.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Utility.cpp.s
+.PHONY : src/cs222/Utility.cpp.s
+
+src/cs222/Validator.o: src/cs222/Validator.cpp.o
+
+.PHONY : src/cs222/Validator.o
+
+# target to build an object file
+src/cs222/Validator.cpp.o:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.o
+.PHONY : src/cs222/Validator.cpp.o
+
+src/cs222/Validator.i: src/cs222/Validator.cpp.i
+
+.PHONY : src/cs222/Validator.i
+
+# target to preprocess a source file
+src/cs222/Validator.cpp.i:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.i
+.PHONY : src/cs222/Validator.cpp.i
+
+src/cs222/Validator.s: src/cs222/Validator.cpp.s
+
+.PHONY : src/cs222/Validator.s
+
+# target to generate assembly for a file
+src/cs222/Validator.cpp.s:
+	$(MAKE) -f CMakeFiles/SIC_XE_Assembler.dir/build.make CMakeFiles/SIC_XE_Assembler.dir/src/cs222/Validator.cpp.s
+.PHONY : src/cs222/Validator.cpp.s
 
 # Help Target
 help:
@@ -213,15 +375,33 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... SIC_XE_Assembler"
-	@echo "... src/Instruction.o"
-	@echo "... src/Instruction.i"
-	@echo "... src/Instruction.s"
-	@echo "... src/Operand.o"
-	@echo "... src/Operand.i"
-	@echo "... src/Operand.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... src/cs222/Instruction.o"
+	@echo "... src/cs222/Instruction.i"
+	@echo "... src/cs222/Instruction.s"
+	@echo "... src/cs222/IntermediateParser.o"
+	@echo "... src/cs222/IntermediateParser.i"
+	@echo "... src/cs222/IntermediateParser.s"
+	@echo "... src/cs222/Operand.o"
+	@echo "... src/cs222/Operand.i"
+	@echo "... src/cs222/Operand.s"
+	@echo "... src/cs222/Operation.o"
+	@echo "... src/cs222/Operation.i"
+	@echo "... src/cs222/Operation.s"
+	@echo "... src/cs222/Parser.o"
+	@echo "... src/cs222/Parser.i"
+	@echo "... src/cs222/Parser.s"
+	@echo "... src/cs222/Pass1.o"
+	@echo "... src/cs222/Pass1.i"
+	@echo "... src/cs222/Pass1.s"
+	@echo "... src/cs222/Pass2.o"
+	@echo "... src/cs222/Pass2.i"
+	@echo "... src/cs222/Pass2.s"
+	@echo "... src/cs222/Utility.o"
+	@echo "... src/cs222/Utility.i"
+	@echo "... src/cs222/Utility.s"
+	@echo "... src/cs222/Validator.o"
+	@echo "... src/cs222/Validator.i"
+	@echo "... src/cs222/Validator.s"
 .PHONY : help
 
 
