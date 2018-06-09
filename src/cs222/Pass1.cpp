@@ -20,6 +20,7 @@ void writeSymbolTable(
         const std::string& path,
         const std::unordered_map<std::string, int>& symtab);
 
+
 int main(int argc, char* argv[])
 {
     try
@@ -50,6 +51,7 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
 
 size_t processFile(
         const std::string& path,

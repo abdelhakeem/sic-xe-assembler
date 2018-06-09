@@ -1,0 +1,61 @@
+LINE    ADDRESS     LABEL       MNEMONIC    OPERANDS        	COMMENTS
+
+1       1000        TEST        START       1000            	TEST PROGRAM FOR SIC SOFTWARE
+2       1000        FIRST       STL         RETADR          	SAVE RETURN ADDRESS
+3       1003        CLOOP       JSUB        RDREC           	READ INPUT RECORD
+4       1006                    LDA         LENGTH          	TEST FOR EOF (LENGTH = 0
+5       1009                    COMP        ONE             	PLUS EOL OR EOF)
+6       100C                    JEQ         ENDFIL          	EXIT IF EOF FOUND
+7       100F                    JSUB        WRREC           	WRITE OUTPUT RECORD
+8       1012                    J           CLOOP           	LOOP
+9       1015        ENDFIL      LDA         EOF             	INSERT END OF FILE MARKER
+10      1018                    STA         BUFFER          	
+11      101B                    LDA         THREE           	SET LENGTH = 3
+12      101E                    STA         LENGTH          	
+13      1021                    JSUB        WRREC           	WRITE EOF
+14      1024                    LDL         RETADR          	GET RETURN ADDRESS
+15      1027                    RSUB                        	RETURN TO CALLER
+16      102A        EOF         BYTE        C'EOF'          	
+17      102D        THREE       WORD        3               	
+18      1030        ZERO        WORD        0               	
+19      1033        ONE         WORD        1               	
+20      1036        FIVE        WORD        5               	
+21      1039        RETADR      RESW        1               	
+22      103C        LENGTH      RESW        1               	
+23      103F        BUFFER      RESB        4096            	4096-BYTE BUFFER AREA
+24                  .
+25                  .       SUBROUTINE TO READ RECORD INTO BUFFER
+26                  .
+27      203F        RDREC       LDX         ZERO            	CLEAR LOOP COUNTER
+28      2042                    LDA         ZERO            	CLEAR A TO ZERO
+29      2045        RLOOP       TD          INPUT           	TEST INPUT DEVICE
+30      2048                    JEQ         RLOOP           	LOOP UNTIL READY
+31      204B                    RD          INPUT           	READ CHARACTER INTO REGISTER A
+32      204E                    COMP        FIVE            	TEST FOR EOL OR EOF
+33      2051                    JLT         EXIT            	EXIT LOOP IF FOUND
+34      2054                    STCH        BUFFER,X        	STORE CHARACTER IN BUFFER
+35      2057                    TIX         MAXLEN          	LOOP UNLESS MAX LENGTH
+36      205A                    JLT         RLOOP           	HAS BEEN REACHED
+37      205D        EXIT        STCH        BUFFER,X        	STORE EOL/EOF IN BUFFER
+38      2060                    STX         LENGTH          	SAVE RECORD LENGTH
+39      2063                    LDA         LENGTH          	MODIFY RECORD LENGTH TO INCLUDE
+40      2066                    ADD         ONE             	EOL OR EOF
+41      2069                    STA         LENGTH          	
+42      206C                    RSUB                        	RETURN TO CALLER
+43      206F        INPUT       BYTE        X'F3'           	CODE FOR INPUT DEVICE
+44      2070        MAXLEN      WORD        4096            	
+45                  .
+46                  .       SUBROUTINE TO WRITE RECORD FROM BUFFER
+47                  .
+48      2073        WRREC       LDX         ZERO            	CLEAR LOOP COUNTER
+49      2076        WLOOP       TD          OUTPUT          	TEST OUTPUT DEVICE
+50      2079                    JEQ         WLOOP           	LOOP UNTIL READY
+51      207C                    LDCH        BUFFER,X        	GET CHARACTER FROM BUFFER
+52      207F                    WD          OUTPUT          	WRITE CHARACTER
+53      2082                    TIX         LENGTH          	LOOP UNTIL ALL CHARACTERS
+54      2085                    JLT         WLOOP           	HAVE BEEN WRITTEN
+55      2088                    RSUB                        	RETURN TO CALLER
+56      208B        OUTPUT      BYTE        X'06'           	CODE FOR OUTPUT DEVICE
+57      208C                    END         FIRST           	
+
+PROGRAM LENGTH: 4236

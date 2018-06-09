@@ -1,8 +1,8 @@
 #include <iostream>
 #include <unordered_map>
-#include <include/cs222/Instruction.h>
+#include <cs222/Instruction.h>
 
-#include "Pass2.h"
+#include <cs222/Pass2.h>
 
 /*
 int main(int argc, char *argv[]) {

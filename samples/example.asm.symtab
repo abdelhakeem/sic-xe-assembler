@@ -1,0 +1,21 @@
+SYMBOL      ADDRESS
+
+WLOOP       2076
+WRREC       2073
+THREE       102D
+ONE         1033
+RDREC       203F
+FIRST       1000
+OUTPUT      208B
+ENDFIL      1015
+MAXLEN      2070
+EOF         102A
+LENGTH      103C
+ZERO        1030
+INPUT       206F
+CLOOP       1003
+FIVE        1036
+EXIT        205D
+RETADR      1039
+BUFFER      103F
+RLOOP       2045
