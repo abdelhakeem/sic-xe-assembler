@@ -15,12 +15,12 @@ namespace cs222 {
     private:
         std::vector<std::string> modificationAddresses; // Addresses to generate modification records for.
         std::deque<std::string> objectCode; // LinkedList of object code translations for all instructions in order.
+        std::string errorReportMessage;
 
         std::unordered_map litTab; // Literal table containing addresses.
         std::unordered_map symTab; // Symbol table containing addresses.
 
         int base = INT_MIN; // Initialised by a sentinel value indicating that the base register isn't initialised.
-	    std::string errorReportMessage;
 
         std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
         void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
