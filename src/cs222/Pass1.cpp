@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     {
         if (argc < 2)
         {
-            std::cout << "USAGE: pass1 <file>" << std::endl;
+            std::cout << "USAGE: Pass1 <file>" << std::endl;
             return 0;
         }
 

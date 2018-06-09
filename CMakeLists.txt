@@ -15,11 +15,12 @@ add_executable(SIC_XE_Assembler
         include/cs222/Parser.h
         include/cs222/Utility.h
         include/cs222/Validator.h
+        include/cs222/Pass2.h
         src/cs222/Instruction.cpp
         src/cs222/Operand.cpp
         src/cs222/Operation.cpp
         src/cs222/Parser.cpp
-        src/cs222/pass1.cpp
+        src/cs222/Pass1.cpp
         src/cs222/Utility.cpp
         src/cs222/Validator.cpp
-        include/cs222/Pass2.h)
+        src/cs222/Pass2.cpp)
