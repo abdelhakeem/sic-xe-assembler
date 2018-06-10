@@ -177,7 +177,7 @@ namespace cs222 {
     void Pass2::writeObjectProgram(std::string& progName,std::string& progLength) {
         //TODO: Mahmoud/Shams
 
-        /*
+
         std::string objProgPath = srcFileName + ".objprog";
 
         std::string headerRecord;
@@ -185,47 +185,81 @@ namespace cs222 {
         std::deque<std::string> modRecords;
         std::string endRecord;
 
-        headerRecord += "H" + progName;
-        while(progName.length() < 6)
+        headerRecord = "H" + progName;
+        while(headerRecord.length() < 7)
             headerRecord += " ";
 
-        for (int i = 0; i < 6; ++i) {
+        std::deque<std::string> coAdd; //bta3tna elly hanshta8l 3leha
+        for (int i = 0; i < correspondingAddresses.size(); ++i) {
 
-            while(correspondingAddresses[i].length() < 6)
-                correspondingAddresses[i] = "0" + correspondingAddresses[i];
+            std::stringstream ss;
+            std::string temp = "";
+            ss << std::hex << correspondingAddresses[i];
+            ss >> temp;
+            coAdd.push_back(temp);
+
+            while(coAdd.at(i).length() < 6)
+                coAdd.at(i) = "0" + coAdd.at(i);
 
         }
 
-        headerRecord += correspondingAddresses[0];
+        headerRecord += coAdd.at(0);
 
         while(progLength.length() < 6)
             progLength = "0" + progLength;
 
-        headerRecord += progLength;
+        headerRecord += progLength; // now header record is done
 
-
-        endRecord += "E" + correspondingAddresses[0];
-
+        // now modification record era nya nya
 
         for (auto it : modificationAddresses) {
 
-            std::string modRec;
+            std::string modRec = "";
+            std::stringstream ss;
+            ss << std::hex << it + 1;
+            ss >> modRec;
+
+
+            while (modRec.length() < 6)
+                modRec = "0" + modRec;
+
+            modRec = "M" + modRec + "05";
+            modRecords.push_back(modRec);
+        }
+
+        endRecord = "E" + coAdd.at(0);
+
+        for (int i = 0; i < objectCode.size(); ++i) {
+
+            std::string startAdd = coAdd.at(i);
+            std::string textRecLength;
+            std::string textRec = objectCode.at(i);
+            ++i;
+
+            while( (textRec.length() < 60) && (i < objectCode.size()) ){
+                if((correspondingAddresses.at(i) - correspondingAddresses.at(i-1)) <= 4){
+                    if (objectCode.at(i).length() + textRec.length() <= 60){
+                        textRec += objectCode.at(i);
+                        ++i;
+                    }
+                } else {
+                    break;
+                }
+            }
 
             std::stringstream ss;
-            ss << std::hex << std::stoi(it, nullptr,16) + 1;
-            ss >> it;
+            ss << std::hex << textRec.length()/2;
+            ss >> textRecLength;
 
-            ss.str("");
+            while (textRecLength.length() < 2){
+                textRecLength = "0" + textRecLength;
+            }
 
-            while (it.length() < 6)
-                it = "0" + it;
+            textRec = "T" + startAdd + textRecLength + textRec;
+            textRecords.push_back(textRec);
 
-            modRec += "M" + it + "05";
-            modRecords.push_back(modRec);
-
-            modRec = "";
+            --i;
         }
-        */
 
     }
 }
