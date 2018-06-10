@@ -27,6 +27,7 @@ namespace cs222 {
         void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
         void writeObjectProgram(); // Writes the object program to the output file.
         string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
+        string Decimal_to_hex(int dec);
     };
 }
 
