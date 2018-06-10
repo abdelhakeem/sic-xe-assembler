@@ -16,6 +16,7 @@ namespace cs222 {
                 INT_CONSTANT,
                 CHAR_CONSTANT,
                 HEX_CONSTANT,
+                EXPRESSION,
                 REGISTER,
                 LOCCTR
             };

@@ -41,6 +41,7 @@ namespace cs222 {
             static const std::regex int_const_regex;
             static const std::regex char_const_regex;
             static const std::regex hex_const_regex;
+            static const std::regex simple_expr_regex;
             static void advanceToken(
                     std::stringstream& sstream, std::string& token);
             static void flushRestToToken(
