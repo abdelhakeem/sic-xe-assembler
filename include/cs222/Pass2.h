@@ -13,8 +13,9 @@ namespace cs222 {
     public:
         std::string run(std::string srcFileName); // Runs the pass and returns a feedback message to console.
     private:
-        std::vector<std::string> modificationAddresses; // Addresses to generate modification records for.
+        std::deque<std::size_t> modificationAddresses; // Addresses to generate modification records for.
         std::deque<std::string> objectCode; // LinkedList of object code translations for all instructions in order.
+        std::deque<std::size_t> correspondingAddresses;
         std::string errorReportMessage = "";
         std::string srcFileName;
 
@@ -23,11 +24,14 @@ namespace cs222 {
 
         int base = INT_MIN; // Initialised by a sentinel value indicating that the base register isn't initialised.
 
-        std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
-        void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
-        void writeObjectProgram(); // Writes the object program to the output file.
+        std::string parseProgramName(std::ifstream& ifs);
+        std::string parseProgramLength(std::ifstream& ifs);
         string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
         string Decimal_to_hex(int dec);
+        
+        std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
+        void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
+        void writeObjectProgram(std::string& progName,std::string& progLength); // Writes the object program to the output file.
     };
 }
 

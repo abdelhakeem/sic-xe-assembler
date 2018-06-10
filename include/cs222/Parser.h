@@ -12,7 +12,7 @@ namespace cs222 {
             Parser(std::istream& inputStream);
             bool hasNext();
             std::unique_ptr<Instruction> next();
-        private:
+        protected:
             std::istream& inputStream;
             size_t lineNumber;
             std::string line;

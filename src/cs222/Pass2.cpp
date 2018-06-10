@@ -1,13 +1,15 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include <include/cs222/Instruction.h>
-#include <include/cs222/Operation.h>
-#include "Pass2.h"
-#include <include/cs222/Utility.h>
-#include <include/cs222/Operand.h>
-#include <sstream>
 #include <bitset>
+#include <fstream>
+#include <sstream>
+
+#include <cs222/Instruction.h>
+#include <cs222/Pass2.h>
+#include <cs222/Utility.h>
+#include <cs222/IntermediateParser.h>
+
 /*
 int main(int argc, char *argv[]) {
     try
@@ -32,19 +34,67 @@ int main(int argc, char *argv[]) {
 namespace cs222 {
 
     std::string Pass2::run(std::string srcFileName) {
-        //TODO: H
         Pass2::srcFileName = srcFileName;
+
         readSymbols();
 
-        //TODO: Parse instructions and translate each.
+        std::ifstream ifs(srcFileName + ".listing");
+
+        std::string progName = parseProgramName(ifs);
+
+        cs222::IntermediateParser iParser(ifs);
+        while (iParser.hasNext()) {
+            std::unique_ptr<cs222::Instruction> instruction = iParser.next();
+            if (instruction != nullptr) {
+                Instruction i = *instruction;
+                const size_t iAddress = i.getAddress();
+                translate(i);
+                correspondingAddresses.push_back(iAddress);
+                if (i.isSet(i.FLAG_EXTENDED)) {
+                    modificationAddresses.push_back(iAddress);
+                }
+            }
+        }
 
         if (Pass2::errorReportMessage != "") {
-            writeObjectProgram();
+            std::string progLength = parseProgramLength(ifs);
+            writeObjectProgram(progName, progLength);
             return "Pass 2 finished successfully";
         } else {
             //TODO: Produce error report.
             return errorReportMessage;
         }
+    }
+
+    std::string Pass2::parseProgramName(std::ifstream &ifs) {
+        std::string line;
+        getline(ifs, line); // Skip first line (column names).
+        getline(ifs, line); // Skip the second line (empty line).
+        getline(ifs, line);
+
+        // Get program name
+        std::stringstream lineStream(line);
+        std::string buffer;
+        lineStream >> buffer; // Skip line number.
+        lineStream >> buffer; // Skip address.
+
+        std::string progName;
+        lineStream >> progName;
+        return progName;
+    }
+
+    std::string Pass2::parseProgramLength(std::ifstream &ifs) {
+        std::string line;
+        getline(ifs, line);
+        std::stringstream lineStream(line);
+        std::string buffer;
+
+        lineStream >> buffer; // Skip "PROGRAM"
+        lineStream >> buffer; // Skip "LENGTH:"
+
+        std::string progLength;
+        lineStream >> progLength;
+        return progLength;
     }
 
     std::string Pass2::translate(Instruction instruction) {
@@ -239,11 +289,132 @@ namespace cs222 {
     }
 
     void Pass2::readSymbols() {
-        //TODO: Mahmoud/Shams
+        // reading from symTab
+        std::string symTabPath = srcFileName + ".symtab";
+        std::ifstream ifs(symTabPath);
+
+        if (!ifs)
+            throw std::runtime_error(std::string("Cannot open file: ") + symTabPath);
+
+        std::cout << "Reading from symbolTable file: " << symTabPath << std::endl;
+
+        if (ifs.is_open()) {
+
+            std::string key;
+            int address;
+            std::stringstream buf;
+
+            buf << ifs.rdbuf();
+
+            ifs.close();
+
+            // ignoring SYMBOL & ADDRESS
+            buf >> key;
+            buf >> key;
+
+            while (buf)
+            {
+                buf >> key;
+                std::cout << key << "\t";
+
+                buf >> std::hex >> address;
+                std::cout << std::hex << address << std::endl;
+
+                symTab[key] = address;
+            }
+        }
+
+        //reading from litTab
+        std::string litTabPath = srcFileName + ".littab";
+
+        ifs.open(litTabPath);
+
+        if (!ifs)
+            throw std::runtime_error(std::string("Cannot open file: ") + litTabPath);
+
+        std::cout << "Reading from litTable file: " << litTabPath << std::endl;
+
+        if (ifs.is_open()) {
+
+            std::string key;
+            int address;
+            std::stringstream buf;
+
+            buf << ifs.rdbuf();
+
+            ifs.close();
+
+            // ignoring SYMBOL & ADDRESS
+            buf >> key;
+            buf >> key;
+
+            while (buf)
+            {
+                buf >> key;
+                std::cout << key << "\t";
+
+                buf >> std::hex >> address;
+                std::cout << std::hex << address << std::endl;
+
+                litTab[key] = address;
+            }
+        }
+
     }
 
-    void Pass2::writeObjectProgram() {
+    void Pass2::writeObjectProgram(std::string& progName,std::string& progLength) {
         //TODO: Mahmoud/Shams
+
+        /*
+        std::string objProgPath = srcFileName + ".objprog";
+
+        std::string headerRecord;
+        std::deque<std::string> textRecords;
+        std::deque<std::string> modRecords;
+        std::string endRecord;
+
+        headerRecord += "H" + progName;
+        while(progName.length() < 6)
+            headerRecord += " ";
+
+        for (int i = 0; i < 6; ++i) {
+
+            while(correspondingAddresses[i].length() < 6)
+                correspondingAddresses[i] = "0" + correspondingAddresses[i];
+
+        }
+
+        headerRecord += correspondingAddresses[0];
+
+        while(progLength.length() < 6)
+            progLength = "0" + progLength;
+
+        headerRecord += progLength;
+
+
+        endRecord += "E" + correspondingAddresses[0];
+
+
+        for (auto it : modificationAddresses) {
+
+            std::string modRec;
+
+            std::stringstream ss;
+            ss << std::hex << std::stoi(it, nullptr,16) + 1;
+            ss >> it;
+
+            ss.str("");
+
+            while (it.length() < 6)
+                it = "0" + it;
+
+            modRec += "M" + it + "05";
+            modRecords.push_back(modRec);
+
+            modRec = "";
+        }
+        */
+
     }
 
     string Pass2::objectCodefor_EXP(string obCode, string expression, char arithmeticOp)
@@ -363,4 +534,5 @@ namespace cs222 {
         }
         return output;
     }
+
 }
