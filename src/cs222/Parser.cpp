@@ -7,11 +7,11 @@
 * <operands>: <memory> | <register> | <register>,<register>
 *          | <register>,<number>
 * <memory>: [@#]<location> | <location>,X | <literal>
-*          | <constant> | \*
+*          | <constant> | *
 * <location>: <symbol> | <address>
 * <symbol>: <label>
 * <address>: <number>
-* <literal>: =<constant>
+* <literal>: =<constant> | =*
 * <constant>: <char-constant> | <hex-constant> | <int-constant>
 * <char-constant>: C'[^']+'
 * <hex-constant>: X'([A-Fa-f0-9]{2})+'
@@ -309,7 +309,15 @@ namespace cs222 {
     {
         if (token[0] == '=')
         {
-            if (parseConstant(token.substr(1), operand))
+            const std::string restOfToken = token.substr(1);
+
+            if (restOfToken == "*")
+            {
+                operand = Operand(Operand::LOCCTR_LITERAL, token);
+                return true;
+            }
+
+            else if (parseConstant(restOfToken, operand))
             {
                 Operand::Type type = Operand::CHAR_LITERAL;
                 if (operand.getType() == Operand::HEX_CONSTANT)
