@@ -142,7 +142,7 @@ namespace cs222 {
         }
 
 
-        if (mn_Op.compare("WORD") == 0)
+        else if (mn_Op.compare("WORD") == 0)
         {
             //the operand for WORD is a constant integer
             std::string hexValue = Decimal_to_hex(std::stoi(operand));
@@ -154,22 +154,22 @@ namespace cs222 {
         }
 
         //check if the instruction is format 1
-        if (instruction.getLength() == instruction.Length.find(instruction.FORMAT_1))
+        else if (instruction.getFormat() == Instruction::FORMAT_1)   //hakeem
         {
             objCode = instruction.getOpcode();
             return objCode;
         }
 
-        if (instruction.getFormat() == instruction::FORMAT_2)
+        else if (instruction.getFormat() == Instruction::FORMAT_2)
         {
             objCode = instruction.getOpcode();
-            register1 = instruction.getFirstOperand();
-            register2 = instruction.getSecondOperand();
-            objCode.insert(2, 1,/*register2 number*/);
-            objCode.insert(2, 1,/*register1 number*/);
+            std::string register1Str = instruction.getFirstOperand().getValue();
+            std::string register2Str = instruction.getSecondOperand().getValue();
+            objCode.insert(2, 1,REGISTERS.find(register2Str)->second - '0');
+            objCode.insert(2, 1,REGISTERS.find(register1Str)->second - '0');
         }
 
-        if (instruction.getFormat() == instruction.FORMAT_3)
+        else if (instruction.getFormat() == Instruction::FORMAT_3)
         {
             char flags[6] = {'1','1','0','0','0','0'};      //n,i,x,b,p,e
             Operand firstOperand = instruction.getFirstOperand();
@@ -179,47 +179,37 @@ namespace cs222 {
 
             if (instruction.getFirstOperand().SYMBOL)
             {
-                got = symTab.find (operand);
-                int address = got->second;
-                objCode = std::to_string(address);
-                objCode.insert(0,5-objCode.size(),'0');
+                int address = symTab.find (operand)->second;
                 //calculated by program counter
-                int disp = address - (instruction.getAddress()+3);     ///is the address in symtab in hex or int
-                if (disp > 2047 || disp < -2048)
-                {
-                    //use base relative
-                    if (base != INT_MIN)
-                    {
-                        disp = address - (base);
-                        if (disp < 0 || disp > 4096) /////********error*******///////
-                    }else
-                    {
-                        /////********error*******///////
-                    }
-                }
-                objCode = Decimal_to_hex(disp);
-                if (objCode.length > 3) objCode = objCode.substr(objCode.length - 3,3);
-                else if (objCode.length < 3) objCode.insert(0,3-objCode.size(),'0');
-                string binaryString = Hexa_to_Binary(instruction.getOpcode());
+                objCode = calculateDisp(objCode, address, instruction);
+            }
+            else if (firstOperand.INT_CONSTANT)
+            {
+                //no disp will be calculated
+                objCode = Decimal_to_hex(std::stoi(firstOperand.getValue()));
+                if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
+                else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
+                std::string binaryString = Hexa_to_Binary(instruction.getOpcode());
+                binaryString = binaryString.substr(0,6);
                 for (int i = 0; i < 6; ++i) {
                     int size = binaryString.size();
                     binaryString.insert(size,1,flags[i]);
                 }
                 objCode = Binary_to_Hexa(binaryString) + objCode;
             }
-            else if (firstOperand.INT_CONSTANT)
-            {
-                //no disp will be calculated
-            }
             else if (firstOperand.INT_LITERAL)
             {
+                int address = Pass2::litTab.find (firstOperand.getValue())->second;
+                objCode = calculateDisp(objCode, address, instruction);
 
             }else if (firstOperand.CHAR_LITERAL)
             {
-
+                int address = Pass2::litTab.find (firstOperand.getValue())->second;
+                objCode = calculateDisp(objCode, address, instruction);
             }else if (firstOperand.HEX_LITERAL)
             {
-
+                int address = Pass2::litTab.find (firstOperand.getValue())->second;
+                objCode = calculateDisp(objCode, address, instruction);
             }else if (operand.find('+') != -1      ////for expressions
                       ||operand.find('-') != -1
                       ||operand.find('*') != -1
@@ -229,7 +219,7 @@ namespace cs222 {
             }
         }
 
-        if (instruction.getFormat() == instruction::FORMAT_4)
+        else if (instruction.getFormat() == instruction.FORMAT_4)
         {
             char flags[6] = {'1','1','0','0','0','1'};      //n,i,x,b,p,e
             Operand firstOperand = instruction.getFirstOperand();
@@ -237,31 +227,36 @@ namespace cs222 {
             if (instruction.isSet(instruction.FLAG_INDIRECT)) flags[1] = '0';
             if (instruction.isSet(instruction.FLAG_IMMEDIATE)) flags[0] = '0';
 
-            if (instruction.getFirstOperand().SYMBOL)
+            if (instruction.getFirstOperand().getType() == Operand::SYMBOL)
             {
                 got = symTab.find (operand);
                 int address = got->second;
-                objCode = std::to_string(address);
+                objCode = Decimal_to_hex(address);
                 objCode.insert(0,5-objCode.size(),'0');
-            }else if (firstOperand.INT_CONSTANT)
+            }else if (instruction.getFirstOperand().getType() == Operand::INT_CONSTANT)
             {
                 objCode = Decimal_to_hex(std::stoi(firstOperand.getValue()));
                 objCode.insert(0,5-objCode.size(),'0');
-            }else if (firstOperand.INT_LITERAL)
+            }else if (instruction.getFirstOperand().getType() == Operand::INT_LITERAL)
             {
-                objCode = objectCodefor_LITERALS(objCode);
-            }else if (firstOperand.CHAR_LITERAL)
+                Operand firstOperand = instruction.getFirstOperand();
+                objCode = translateLiteral(objCode, firstOperand);
+                objCode.insert(0,5-objCode.size(),'0');
+            }else if (instruction.getFirstOperand().getType() == Operand::CHAR_LITERAL)
             {
-                objCode = objectCodefor_LITERALS(objCode);
-            }else if (firstOperand.HEX_LITERAL)
+                Operand firstOperand = instruction.getFirstOperand();
+                objCode = translateLiteral(objCode, firstOperand);
+                objCode.insert(0,5-objCode.size(),'0');
+            }else if (instruction.getFirstOperand().getType() == Operand::HEX_LITERAL)
             {
-                objCode = objectCodefor_LITERALS(objCode);
-            }else if (operand.find('+') != -1      ////for expressions
+                Operand firstOperand = instruction.getFirstOperand();
+                objCode = translateLiteral(objCode, firstOperand);
+                objCode.insert(0,5-objCode.size(),'0');
+            }else if (operand.find('+') != -1      //for expressions
                      ||operand.find('-') != -1
                      ||operand.find('*') != -1
                      ||operand.find('/') != -1)
             {
-                flags[2] = '1'
                 if (operand.find('+') != -1)
                 {
                     objCode = objectCodefor_EXP(objCode, operand, '+');
@@ -279,13 +274,15 @@ namespace cs222 {
                     objCode = objectCodefor_EXP(objCode, operand, '/');
                 }
             }
-            string binaryString = Hexa_to_Binary(instruction.getOpcode());
+            std::string binaryString = Hexa_to_Binary(instruction.getOpcode());
+            binaryString = binaryString.substr(0,6);
             for (int i = 0; i < 6; ++i) {
                 int size = binaryString.size();
                 binaryString.insert(size,1,flags[i]);
             }
             objCode = Binary_to_Hexa(binaryString) + objCode;
         }
+        return objCode;
     }
 
     void Pass2::readSymbols() {
@@ -417,44 +414,75 @@ namespace cs222 {
 
     }
 
-    string Pass2::objectCodefor_EXP(string obCode, string expression, char arithmeticOp)
+    std::string Pass2::translateExpression(std::string obCode, std::string expression, char arithmeticOp)  //**********//
     {
         int index = expression.find(arithmeticOp);
         int address1, address2;
-        string symbol1, symbol2;
+        std::string symbol1, symbol2;
         symbol1 = expression.substr(0,index-1);
         symbol2 = expression.substr(index+1,expression.size()-index);
-        got = litTab.find (symbol1);
-        address1 = got->second;
-        got = litTab.find(symbol2);
-        address2 = got->second;
+        address1 = Pass2::litTab.find (symbol1)->second;
+        address2 = Pass2::litTab.find(symbol2)->second;
         obCode = Decimal_to_hex(address1-address2);
         obCode.insert(0,5-obCode.size(),'0');
         return obCode;
     }
 
-    string Pass2::objectCodefor_LITERALS(string obCode)
+    std::string Pass2::translateLiteral(std::string obCode, Operand &firstOperand)
     {
-        got = litTab.find (firstOperand.getValue());
-        obCode = got->second;
-        obCode.insert(0,5-objCode.size(),'0');
+        int address = Pass2::litTab.find (firstOperand.getValue())->second;
+        obCode = Decimal_to_hex(address);
         return obCode;
     }
 
-    string Pass2::Hexa_to_Binary(string hexValue)
+    std::string Pass2::calculateDisp(std::string objCode, int address,Instruction &instruction)
     {
-        string s = hexValue;
-        stringstream ss;
-        ss << hex << s;
+        int disp = address - (instruction.getAddress()+3);
+        if (disp > 2047 || disp < -2048)
+        {
+            //use base relative
+            if (base != INT_MIN)
+            {
+                disp = address - (base);
+                if (disp < 0 || disp > 4096)
+                {
+                    errorReportMessage = "Disp is out of range";
+                    return nullptr;
+                }
+
+            }else
+            {
+                errorReportMessage = "Base register is empty!!";
+                return nullptr;
+            }
+        }
+        objCode = Decimal_to_hex(disp);
+        if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
+        else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
+        std::string binaryString = Hexa_to_Binary(instruction.getOpcode());
+        binaryString = binaryString.substr(0,6);
+        for (int i = 0; i < 6; ++i) {
+            int size = binaryString.size();
+            binaryString.insert(size,1,flags[i]);
+        }
+        objCode = Binary_to_Hexa(binaryString) + objCode;
+        return objCode;
+    }
+
+    std::string Pass2::Hexa_to_Binary(std::string hexValue)
+    {
+        std::string s = hexValue;
+        std::stringstream ss;
+        ss << std::hex << s;
         unsigned n;
         ss >> n;
-        bitset<8> b(n);
+        std::bitset<8> b(n);
         s = b.to_string();
         s = s.substr(0,s.size()-2);
         return s;
     }
 
-    string Pass2::Binary_to_Hexa(string binaryValue)
+    std::string Pass2::Binary_to_Hexa(std::string binaryValue)
     {
 
         int result =0 ;
@@ -464,18 +492,18 @@ namespace cs222 {
             result += binaryValue[count]=='1'? 1 :0;
         }
 
-        stringstream ss;
-        ss << hex  << result;
+        std::stringstream ss;
+        ss << std::hex  << result;
 
-        string hexVal(ss.str());
+        std::string hexVal(ss.str());
         return hexVal;
     }
 
-    string Pass2::Decimal_to_hex(int dec)
+    std::string Pass2::Decimal_to_hex(int dec)
     {
         int rem;
-        string s = "";
-        string hexaValue;
+        std::string s = "";
+        std::string hexaValue;
         while (dec > 0)   // Do this whilst the quotient is greater than 0.
         {
             rem = dec % 16; // Get the remainder.
@@ -519,12 +547,12 @@ namespace cs222 {
         return hexaValue;
     }
 
-    string Pass2::string_to_hex(const std::string& input)
+    std::string Pass2::string_to_hex(const std::string& input)
     {
         static const char* const lut = "0123456789ABCDEF";
         size_t len = input.length();
 
-        string output;
+        std::string output;
         output.reserve(2 * len);
         for (size_t i = 0; i < len; ++i)
         {
