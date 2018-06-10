@@ -38,19 +38,62 @@ namespace cs222 {
         readSymbols();
 
         std::ifstream ifs(srcFileName + ".listing");
+
+        std::string progName = parseProgramName(ifs);
+
         cs222::IntermediateParser iParser(ifs);
         while (iParser.hasNext()) {
             std::unique_ptr<cs222::Instruction> instruction = iParser.next();
-            if (instruction != nullptr) translate(*instruction);
+            if (instruction != nullptr) {
+                Instruction i = *instruction;
+                const size_t iAddress = i.getAddress();
+                translate(i);
+                correspondingAddresses.push_back(iAddress);
+                if (i.isSet(i.FLAG_EXTENDED)) {
+                    modificationAddresses.push_back(iAddress);
+                }
+            }
         }
 
         if (Pass2::errorReportMessage != "") {
-//            writeObjectProgram();
+            std::string progLength = parseProgramLength(ifs);
+            writeObjectProgram(progName, progLength);
             return "Pass 2 finished successfully";
         } else {
             //TODO: Produce error report.
             return errorReportMessage;
         }
+    }
+
+    std::string Pass2::parseProgramName(std::ifstream &ifs) {
+        std::string line;
+        getline(ifs, line); // Skip first line (column names).
+        getline(ifs, line); // Skip the second line (empty line).
+        getline(ifs, line);
+
+        // Get program name
+        std::stringstream lineStream(line);
+        std::string buffer;
+        lineStream >> buffer; // Skip line number.
+        lineStream >> buffer; // Skip address.
+
+        std::string progName;
+        lineStream >> progName;
+        return progName;
+    }
+
+    std::string Pass2::parseProgramLength(std::ifstream &ifs) {
+        std::string line;
+        getline(ifs, line);
+        std::stringstream lineStream(line);
+        std::string buffer;
+
+        lineStream >> buffer; // Skip "PROGRAM"
+        lineStream >> buffer; // Skip "LENGTH:"
+
+        std::string progLength;
+        lineStream >> progLength;
+        return progLength;
     }
 
     std::string Pass2::translate(Instruction instruction) {
@@ -134,6 +177,7 @@ namespace cs222 {
     void Pass2::writeObjectProgram(std::string& progName,std::string& progLength) {
         //TODO: Mahmoud/Shams
 
+        /*
         std::string objProgPath = srcFileName + ".objprog";
 
         std::string headerRecord;
@@ -181,6 +225,7 @@ namespace cs222 {
 
             modRec = "";
         }
+        */
 
     }
 }
