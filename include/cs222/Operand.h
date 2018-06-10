@@ -6,7 +6,7 @@
 namespace cs222 {
     class Operand {
         public:
-            static enum Type {
+            enum Type {
                 NONE,
                 SYMBOL,
                 INT_LITERAL,

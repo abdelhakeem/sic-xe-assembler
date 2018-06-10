@@ -55,13 +55,11 @@ namespace cs222 {
                 }
             }
         }
-
-        if (Pass2::errorReportMessage != "") {
-            std::string progLength = parseProgramLength(ifs);
-            writeObjectProgram(progName, progLength);
+        std::string progLength = parseProgramLength(ifs);
+        writeObjectProgram(progName, progLength);
+        if (errorReportMessage != "") {
             return "Pass 2 finished successfully";
         } else {
-            //TODO: Produce error report.
             return errorReportMessage;
         }
     }
