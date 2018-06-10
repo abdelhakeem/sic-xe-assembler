@@ -75,6 +75,8 @@ namespace cs222 {
     bool isOperation(const std::string& str);
     bool isDirective(const std::string& str);
     bool isRegister(const std::string& str);
+
+    char getOpcode(const std::string& op);
 }
 
 #endif

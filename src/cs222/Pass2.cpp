@@ -143,7 +143,7 @@ namespace cs222 {
         else if (mn_Op.compare("WORD") == 0)
         {
             //the operand for WORD is a constant integer
-            std::string hexValue = Decimal_to_hex(std::stoi(operand));
+            std::string hexValue = decimalToHex(std::stoi(operand));
             //now complete the object code to be in format 000000
             //EX: hexValue = 1E  after insert below it will be 00001E
             hexValue.insert(0, 6-hexValue.size(), '0');
@@ -154,13 +154,14 @@ namespace cs222 {
         //check if the instruction is format 1
         else if (instruction.getFormat() == Instruction::FORMAT_1)   //hakeem
         {
-            objCode = instruction.getOpcode();
+            objCode = getOpcode(instruction.getOperation());
+
             return objCode;
         }
 
         else if (instruction.getFormat() == Instruction::FORMAT_2)
         {
-            objCode = instruction.getOpcode();
+            objCode = getOpcode(instruction.getOperation());
             std::string register1Str = instruction.getFirstOperand().getValue();
             std::string register2Str = instruction.getSecondOperand().getValue();
             objCode.insert(2, 1,REGISTERS.find(register2Str)->second - '0');
@@ -184,16 +185,16 @@ namespace cs222 {
             else if (firstOperand.INT_CONSTANT)
             {
                 //no disp will be calculated
-                objCode = Decimal_to_hex(std::stoi(firstOperand.getValue()));
+                objCode = decimalToHex(std::stoi(firstOperand.getValue()));
                 if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
                 else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
-                std::string binaryString = Hexa_to_Binary(instruction.getOpcode());
+                std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
                 binaryString = binaryString.substr(0,6);
                 for (int i = 0; i < 6; ++i) {
                     int size = binaryString.size();
                     binaryString.insert(size,1,flags[i]);
                 }
-                objCode = Binary_to_Hexa(binaryString) + objCode;
+                objCode = binaryToHex(binaryString) + objCode;
             }
             else if (firstOperand.INT_LITERAL)
             {
@@ -229,11 +230,11 @@ namespace cs222 {
             {
                 got = symTab.find (operand);
                 int address = got->second;
-                objCode = Decimal_to_hex(address);
+                objCode = decimalToHex(address);
                 objCode.insert(0,5-objCode.size(),'0');
             }else if (instruction.getFirstOperand().getType() == Operand::INT_CONSTANT)
             {
-                objCode = Decimal_to_hex(std::stoi(firstOperand.getValue()));
+                objCode = decimalToHex(std::stoi(firstOperand.getValue()));
                 objCode.insert(0,5-objCode.size(),'0');
             }else if (instruction.getFirstOperand().getType() == Operand::INT_LITERAL)
             {
@@ -272,13 +273,13 @@ namespace cs222 {
                     objCode = objectCodefor_EXP(objCode, operand, '/');
                 }
             }
-            std::string binaryString = Hexa_to_Binary(instruction.getOpcode());
+            std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
             binaryString = binaryString.substr(0,6);
             for (int i = 0; i < 6; ++i) {
                 int size = binaryString.size();
                 binaryString.insert(size,1,flags[i]);
             }
-            objCode = Binary_to_Hexa(binaryString) + objCode;
+            objCode = binaryToHex(binaryString) + objCode;
         }
         return objCode;
     }
@@ -455,7 +456,7 @@ namespace cs222 {
         symbol2 = expression.substr(index+1,expression.size()-index);
         address1 = Pass2::litTab.find (symbol1)->second;
         address2 = Pass2::litTab.find(symbol2)->second;
-        obCode = Decimal_to_hex(address1-address2);
+        obCode = decimalToHex(address1 - address2);
         obCode.insert(0,5-obCode.size(),'0');
         return obCode;
     }
@@ -463,7 +464,7 @@ namespace cs222 {
     std::string Pass2::translateLiteral(std::string obCode, Operand &firstOperand)
     {
         int address = Pass2::litTab.find (firstOperand.getValue())->second;
-        obCode = Decimal_to_hex(address);
+        obCode = decimalToHex(address);
         return obCode;
     }
 
@@ -488,20 +489,20 @@ namespace cs222 {
                 return nullptr;
             }
         }
-        objCode = Decimal_to_hex(disp);
+        objCode = decimalToHex(disp);
         if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
         else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
-        std::string binaryString = Hexa_to_Binary(instruction.getOpcode());
+        std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
         binaryString = binaryString.substr(0,6);
         for (int i = 0; i < 6; ++i) {
             int size = binaryString.size();
             binaryString.insert(size,1,flags[i]);
         }
-        objCode = Binary_to_Hexa(binaryString) + objCode;
+        objCode = binaryToHex(binaryString) + objCode;
         return objCode;
     }
 
-    std::string Pass2::Hexa_to_Binary(std::string hexValue)
+    std::string Pass2::hexaToBinary(std::string hexValue)
     {
         std::string s = hexValue;
         std::stringstream ss;
@@ -514,7 +515,7 @@ namespace cs222 {
         return s;
     }
 
-    std::string Pass2::Binary_to_Hexa(std::string binaryValue)
+    std::string Pass2::binaryToHex(std::string binaryValue)
     {
 
         int result =0 ;
@@ -531,7 +532,7 @@ namespace cs222 {
         return hexVal;
     }
 
-    std::string Pass2::Decimal_to_hex(int dec)
+    std::string Pass2::decimalToHex(int dec)
     {
         int rem;
         std::string s = "";
