@@ -61,8 +61,21 @@ namespace cs222 {
                     isOperation(token) ||
                     isOperation(token.substr(1))))
             {
-                parseLabel(token, label);
-                advanceToken(sstream, token);
+                if (token == "*") { // Literal found.
+                    label = token;
+                    advanceToken(sstream, token);
+                    operation = token;
+                    std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
+                            lineNumber, line, label, operation,
+                            "", "", "", "", nullptr);
+
+                    (*ptr).setAddress(address);
+
+                    return ptr;
+                } else {
+                    parseLabel(token, label);
+                    advanceToken(sstream, token);
+                }
             }
 
             parseOperation(token, operation);
