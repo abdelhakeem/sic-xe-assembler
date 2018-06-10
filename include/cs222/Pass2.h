@@ -26,6 +26,9 @@ namespace cs222 {
 
         std::string parseProgramName(std::ifstream& ifs);
         std::string parseProgramLength(std::ifstream& ifs);
+        string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
+        string Decimal_to_hex(int dec);
+        
         std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
         void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
         void writeObjectProgram(std::string& progName,std::string& progLength); // Writes the object program to the output file.
