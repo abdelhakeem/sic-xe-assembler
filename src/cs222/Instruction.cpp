@@ -119,9 +119,8 @@ namespace cs222 {
         address = addr;
     }
 
-    size_t Instruction::getLength() const
+    Instruction::Format Instruction::getFormat() const
     {
-        size_t length = 0;
         std::string op = operation;
         if (op[0] == '+')
             op = op.substr(1);
@@ -138,7 +137,22 @@ namespace cs222 {
                 }
             }
 
-            length = Length.find(fmt)->second;
+            return fmt;
+        }
+
+        return static_cast<Instruction::Format>(0);
+    }
+
+    size_t Instruction::getLength() const
+    {
+        size_t length = 0;
+        std::string op = operation;
+        if (op[0] == '+')
+            op = op.substr(1);
+
+        if (isOperation(op))
+        {
+            length = Length.find(getFormat())->second;
         }
         else if (op == DIR_WORD)
         {

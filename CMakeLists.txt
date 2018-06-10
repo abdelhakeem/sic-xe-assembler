@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 
+add_executable(ParserTest test/ParserTest.cpp)
 add_executable(pass1 src/cs222/Pass1.cpp)
 add_executable(assemble src/cs222/Pass2.cpp)
 
@@ -18,5 +19,6 @@ add_library(SIC_XE_Assembler
     src/cs222/IntermediateParser.cpp
     )
 
+target_link_libraries(ParserTest SIC_XE_Assembler)
 target_link_libraries(pass1 SIC_XE_Assembler)
 #target_link_libraries(assemble SIC_XE_Assembler)

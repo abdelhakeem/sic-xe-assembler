@@ -6,15 +6,17 @@
 namespace cs222 {
     class Operand {
         public:
-             enum Type {
+            enum Type {
                 NONE,
                 SYMBOL,
                 INT_LITERAL,
                 CHAR_LITERAL,
                 HEX_LITERAL,
+                LOCCTR_LITERAL,
                 INT_CONSTANT,
                 CHAR_CONSTANT,
                 HEX_CONSTANT,
+                EXPRESSION,
                 REGISTER,
                 LOCCTR
             };

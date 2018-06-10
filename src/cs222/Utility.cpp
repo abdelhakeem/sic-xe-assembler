@@ -38,4 +38,14 @@ namespace cs222 {
     {
         return hashtableContains(REGISTERS, toUpper(str));
     }
+
+    char getOpcode(const std::string& op)
+    {
+        if (isOperation(op))
+        {
+            return OpTable.find(toUpper(op))->second.getOpcode();
+        }
+
+        return -1;
+    }
 }

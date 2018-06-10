@@ -7,15 +7,17 @@
 * <operands>: <memory> | <register> | <register>,<register>
 *          | <register>,<number>
 * <memory>: [@#]<location> | <location>,X | <literal>
-*          | <constant> | \*
+*          | <constant> | <simple-expression> | *
 * <location>: <symbol> | <address>
 * <symbol>: <label>
 * <address>: <number>
-* <literal>: =<constant>
+* <literal>: =<constant> | =*
 * <constant>: <char-constant> | <hex-constant> | <int-constant>
 * <char-constant>: C'[^']+'
 * <hex-constant>: X'([A-Fa-f0-9]{2})+'
 * <int-constant>: -?[0-9]+
+* <simple-expression>: <symbol><op><symbol>
+* <op>: + | - | * | /
 * <register>: A | X | L | PC | SW | B | S | T | F
 * <number>: <int-constant>
 * <comment>: .*
@@ -286,6 +288,12 @@ namespace cs222 {
             return true;
         }
 
+        if (std::regex_match(token, simple_expr_regex))
+        {
+            operand = Operand(Operand::EXPRESSION, token);
+            return true;
+        }
+
         return false;
     }
 
@@ -309,7 +317,15 @@ namespace cs222 {
     {
         if (token[0] == '=')
         {
-            if (parseConstant(token.substr(1), operand))
+            const std::string restOfToken = token.substr(1);
+
+            if (restOfToken == "*")
+            {
+                operand = Operand(Operand::LOCCTR_LITERAL, token);
+                return true;
+            }
+
+            else if (parseConstant(restOfToken, operand))
             {
                 Operand::Type type = Operand::CHAR_LITERAL;
                 if (operand.getType() == Operand::HEX_CONSTANT)
@@ -375,10 +391,13 @@ namespace cs222 {
                 std::to_string(lineNumber) + ": " + error);
     }
 
-    const std::regex Parser::label_regex("^[A-Za-z_][A-Za-z0-9_]*$");
+    constexpr auto label = "[A-Za-z_][A-Za-z0-9_]*";
+    const std::regex Parser::label_regex(std::string("^") + label + "$");
     const std::regex Parser::int_const_regex("^(-?[0-9]+)$");
     const std::regex Parser::char_const_regex("^C'([^']+)'$");
     const std::regex Parser::hex_const_regex("^X'(([A-Fa-f0-9]{2})+)'$");
+    const std::regex Parser::simple_expr_regex(
+            std::string("^") + label + "[\\+\\-\\*/]" + label + "$");
 
     void Parser::advanceToken(
             std::stringstream& sstream, std::string& token)
