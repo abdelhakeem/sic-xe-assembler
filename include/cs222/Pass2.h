@@ -16,7 +16,7 @@ namespace cs222 {
         std::deque<std::size_t> modificationAddresses; // Addresses to generate modification records for.
         std::deque<std::string> objectCode; // LinkedList of object code translations for all instructions in order.
         std::deque<std::size_t> correspondingAddresses;
-        std::string errorReportMessage = "";
+        std::string errorReportMessage;
         std::string srcFileName;
 
         std::unordered_map<std::string, int> litTab; // Literal table containing addresses.
@@ -26,9 +26,14 @@ namespace cs222 {
 
         std::string parseProgramName(std::ifstream& ifs);
         std::string parseProgramLength(std::ifstream& ifs);
-        string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
-        string Decimal_to_hex(int dec);
-        
+        std::string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
+        std::string decimalToHex(int dec);
+        std::string binaryToHex(std::string binaryValue);
+        std::string hexaToBinary(std::string hexValue);
+        std::string translateLiteral(std::string obCode, Operand &firstOperand);
+        std::string calculateDisp(std::string objCode, int address, Instruction &instruction);
+        std::string translateExpression(std::string obCode, std::string expression, char arithmeticOp);
+
         std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
         void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
         void writeObjectProgram(std::string& progName,std::string& progLength); // Writes the object program to the output file.
