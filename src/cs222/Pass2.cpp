@@ -1,13 +1,13 @@
 #include <iostream>
 #include <unordered_map>
 #include <cs222/Instruction.h>
-#include <include/cs222/Instruction.h>
+#include <cs222/Instruction.h>
 #include <fstream>
 #include <sstream>
 
 #include <cs222/Pass2.h>
-#include <include/cs222/Utility.h>
-#include <include/cs222/IntermediateParser.h>
+#include <cs222/Utility.h>
+#include <cs222/IntermediateParser.h>
 
 /*
 int main(int argc, char *argv[]) {
@@ -45,7 +45,7 @@ namespace cs222 {
         }
 
         if (Pass2::errorReportMessage != "") {
-            writeObjectProgram();
+//            writeObjectProgram();
             return "Pass 2 finished successfully";
         } else {
             //TODO: Produce error report.
@@ -91,11 +91,7 @@ namespace cs222 {
                 buf >> std::hex >> address;
                 std::cout << std::hex << address << std::endl;
 
-                while (!(cs222::hashtableContains(symTab, key))){
-
-                    symTab[key] = address;
-
-                }
+                symTab[key] = address;
             }
         }
 
@@ -131,18 +127,62 @@ namespace cs222 {
                 buf >> std::hex >> address;
                 std::cout << std::hex << address << std::endl;
 
-                while (!(cs222::hashtableContains(litTab, key))){
-
-                    litTab[key] = address;
-
-                }
+                litTab[key] = address;
             }
         }
 
     }
 
-    void Pass2::writeObjectProgram() {
+    void Pass2::writeObjectProgram(std::string& progName,std::string& progLength) {
         //TODO: Mahmoud/Shams
+
         std::string objProgPath = srcFileName + ".objprog";
+
+        std::string headerRecord;
+        std::deque<std::string> textRecords;
+        std::deque<std::string> modRecords;
+        std::string endRecord;
+
+        headerRecord += "H" + progName;
+        while(progName.length() < 6)
+            headerRecord += " ";
+
+        for (int i = 0; i < 6; ++i) {
+
+            while(correspondingAddresses[i].length() < 6)
+                correspondingAddresses[i] = "0" + correspondingAddresses[i];
+
+        }
+
+        headerRecord += correspondingAddresses[0];
+
+        while(progLength.length() < 6)
+            progLength = "0" + progLength;
+
+        headerRecord += progLength;
+
+
+        endRecord += "E" + correspondingAddresses[0];
+
+
+        for (auto it : modificationAddresses) {
+
+            std::string modRec;
+
+            std::stringstream ss;
+            ss << std::hex << std::stoi(it, nullptr,16) + 1;
+            ss >> it;
+
+            ss.str("");
+
+            while (it.length() < 6)
+                it = "0" + it;
+
+            modRec += "M" + it + "05";
+            modRecords.push_back(modRec);
+
+            modRec = "";
+        }
+
     }
 }

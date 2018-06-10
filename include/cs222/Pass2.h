@@ -15,6 +15,7 @@ namespace cs222 {
     private:
         std::vector<std::string> modificationAddresses; // Addresses to generate modification records for.
         std::deque<std::string> objectCode; // LinkedList of object code translations for all instructions in order.
+        std::deque<std::string> correspondingAddresses;
         std::string errorReportMessage = "";
         std::string srcFileName;
 
@@ -25,7 +26,7 @@ namespace cs222 {
 
         std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
         void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].
-        void writeObjectProgram(); // Writes the object program to the output file.
+        void writeObjectProgram(std::string& progName,std::string& progLength); // Writes the object program to the output file.
     };
 }
 
