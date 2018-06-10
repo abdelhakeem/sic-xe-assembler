@@ -8,11 +8,10 @@
 #include "Parser.h"
 
 namespace cs222 {
-    class IntermediateParser : Parser {
+    class IntermediateParser : public Parser {
     public:
-        IntermediateParser(std::istream& inputStream);// Stream should be advanced by a line (column names).
+        IntermediateParser(std::istream& inputStream); // Stream has head on first instruction.
         std::unique_ptr<Instruction> next();
-        bool hasNext();
     };
 }
 

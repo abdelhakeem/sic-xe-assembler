@@ -141,14 +141,18 @@ namespace cs222 {
             flushRestToToken(sstream, token);
             comment += token;
 
-            std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
-                    lineNumber, line, label, operation,
-                    operands.first, operands.second,
-                    operandsToken, comment, flags);
+            if (operation.compare("end") == 0 || operation.compare("END") == 0) {
+                return nullptr;
+            } else {
+                std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
+                        lineNumber, line, label, operation,
+                        operands.first, operands.second,
+                        operandsToken, comment, flags);
 
-            (*ptr).setAddress(address);
+                (*ptr).setAddress(address);
 
-            return ptr;
+                return ptr;
+            }
         }
 
         return nullptr;
