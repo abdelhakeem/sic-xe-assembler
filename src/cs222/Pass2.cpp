@@ -1,13 +1,13 @@
 #include <iostream>
 #include <unordered_map>
 #include <cs222/Instruction.h>
-#include <include/cs222/Instruction.h>
+#include <cs222/Instruction.h>
 #include <fstream>
 #include <sstream>
 
 #include <cs222/Pass2.h>
-#include <include/cs222/Utility.h>
-#include <include/cs222/IntermediateParser.h>
+#include <cs222/Utility.h>
+#include <cs222/IntermediateParser.h>
 
 /*
 int main(int argc, char *argv[]) {
@@ -91,11 +91,7 @@ namespace cs222 {
                 buf >> std::hex >> address;
                 std::cout << std::hex << address << std::endl;
 
-                while (!(cs222::hashtableContains(symTab, key))){
-
-                    symTab[key] = address;
-
-                }
+                symTab[key] = address;
             }
         }
 
@@ -131,11 +127,7 @@ namespace cs222 {
                 buf >> std::hex >> address;
                 std::cout << std::hex << address << std::endl;
 
-                while (!(cs222::hashtableContains(litTab, key))){
-
-                    litTab[key] = address;
-
-                }
+                litTab[key] = address;
             }
         }
 
@@ -144,5 +136,7 @@ namespace cs222 {
     void Pass2::writeObjectProgram() {
         //TODO: Mahmoud/Shams
         std::string objProgPath = srcFileName + ".objprog";
+
+
     }
 }
