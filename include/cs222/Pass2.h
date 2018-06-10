@@ -13,7 +13,7 @@ namespace cs222 {
     public:
         std::string run(std::string srcFileName); // Runs the pass and returns a feedback message to console.
     private:
-        std::vector<std::string> modificationAddresses; // Addresses to generate modification records for.
+        std::deque<std::string> modificationAddresses; // Addresses to generate modification records for.
         std::deque<std::string> objectCode; // LinkedList of object code translations for all instructions in order.
         std::deque<std::string> correspondingAddresses;
         std::string errorReportMessage = "";

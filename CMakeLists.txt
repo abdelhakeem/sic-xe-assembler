@@ -19,4 +19,4 @@ add_library(SIC_XE_Assembler
     )
 
 target_link_libraries(pass1 SIC_XE_Assembler)
-target_link_libraries(assemble SIC_XE_Assembler)
+#target_link_libraries(assemble SIC_XE_Assembler)

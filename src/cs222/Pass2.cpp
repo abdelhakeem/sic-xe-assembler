@@ -58,8 +58,6 @@ namespace cs222 {
     }
 
     void Pass2::readSymbols() {
-        //TODO: Mahmoud/Shams
-
         // reading from symTab
         std::string symTabPath = srcFileName + ".symtab";
         std::ifstream ifs(symTabPath);

@@ -36,7 +36,7 @@ build/
 #CMake debugging files
 cmake-build-debug/
 
-# IntelliJ files
+# IDE files
 .idea/
 
 # pass1 output files
