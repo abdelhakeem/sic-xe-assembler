@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <cs222/Operation.h>
+#include <cs222/Symbol.h>
 
 namespace cs222 {
     // Directives
@@ -75,6 +76,11 @@ namespace cs222 {
     bool isOperation(const std::string& str);
     bool isDirective(const std::string& str);
     bool isRegister(const std::string& str);
+    char getOpcode(const std::string& op);
+    Symbol evaluateExpression(
+            Instruction& inst,
+            const std::string& expr,
+            const std::unordered_map<std::string, Symbol>& symtab);
 }
 
 #endif

@@ -8,17 +8,18 @@ namespace cs222 {
 
     class Symbol {
         public:
+            enum Type { ABSOLUTE, RELATIVE };
             Symbol(
-                    const string& name,
-                    const int& location,
-                    const int& length);
-            const string& getName() const;
-            const int& getLocation() const;
-            const int& getLength() const;
+                    const string& name = "",
+                    const int& value = 0,
+                    const Type& type = ABSOLUTE);
+            string getName() const;
+            int getValue() const;
+            Type getType() const;
         private:
             string name;
-            int location;
-            int length;
+            int value;
+            Type type;
     };
 }
 

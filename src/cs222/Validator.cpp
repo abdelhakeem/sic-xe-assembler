@@ -157,7 +157,7 @@ namespace cs222 {
             }
             else if (op == "WORD")
             {
-                if(
+                if (
                     firstOpType == Operand::INT_CONSTANT &&
                     secondOpType == Operand::NONE)
                 {
@@ -170,6 +170,38 @@ namespace cs222 {
                     return false;
                 }
             }
+        }
+        else if (toUpper(op) == "EQU" || toUpper(op) == "ORG")
+        {
+            if (toUpper(op) == "EQU" && inst.getLabel().empty())
+            {
+                inst.addError(
+                        std::string("Expected label before ") + op);
+                return false;
+            }
+            if (secondOpType == Operand::NONE)
+            {
+                if (
+                        firstOpType == Operand::INT_CONSTANT ||
+                        firstOpType == Operand::EXPRESSION ||
+                        firstOpType == Operand::SYMBOL)
+                {
+                    return true;
+                }
+            }
+            inst.addError(
+                    std::string("Expected int constant or expression "
+                        "after ") + op);
+            return false;
+        }
+        else if (toUpper(op) == "LTORG")
+        {
+            if (firstOpType == Operand::NONE)
+            {
+                return true;
+            }
+            inst.addError(std::string("No operands expected after ") + op);
+            return false;
         }
         inst.addError(
                 std::string("Unsupported directive or operation: ") + op);
@@ -281,6 +313,9 @@ namespace cs222 {
         {
             case Operand::SYMBOL:
             case Operand::INT_CONSTANT:
+            case Operand::INT_LITERAL:
+            case Operand::CHAR_LITERAL:
+            case Operand::HEX_LITERAL:
                 return true;
             default:
                 return false;

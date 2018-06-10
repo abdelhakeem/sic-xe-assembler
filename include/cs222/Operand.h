@@ -12,7 +12,6 @@ namespace cs222 {
                 INT_LITERAL,
                 CHAR_LITERAL,
                 HEX_LITERAL,
-                LOCCTR_LITERAL,
                 INT_CONSTANT,
                 CHAR_CONSTANT,
                 HEX_CONSTANT,

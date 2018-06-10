@@ -1,5 +1,7 @@
 #include <algorithm>
+#include <regex>
 #include <cs222/OpTable.h>
+#include <cs222/Parser.h>
 #include <cs222/Utility.h>
 
 namespace cs222 {
@@ -47,5 +49,50 @@ namespace cs222 {
         }
 
         return -1;
+    }
+
+    Symbol evaluateExpression(
+            Instruction& inst,
+            const std::string& expr,
+            const std::unordered_map<std::string, Symbol>& symtab)
+    {
+        std::smatch match;
+        std::regex_search(expr, match, Parser::op_regex);
+        size_t opPos = match.position();
+        std::string firstTerm = expr.substr(0, opPos);
+        std::string secondTerm = expr.substr(opPos+1);
+
+        int firstTermValue, secondTermValue;
+        if (std::regex_match(firstTerm, Parser::label_regex))
+        {
+            if (!hashtableContains(symtab, firstTerm))
+            {
+                inst.addError(std::string("Undefined symbol: ") +
+                        firstTerm);
+                return Symbol("", 0, Symbol::ABSOLUTE);
+            }
+            firstTermValue = symtab.find(firstTerm)->second.getValue();
+        }
+        else
+        {
+            firstTermValue = std::stoi(firstTerm);
+        }
+        if (std::regex_match(secondTerm, Parser::label_regex))
+        {
+            if (!hashtableContains(symtab, secondTerm))
+            {
+                inst.addError(std::string("Undefined symbol: ") +
+                        secondTerm);
+                return Symbol("", 0, Symbol::ABSOLUTE);
+            }
+            secondTermValue = symtab.find(secondTerm)->second.getValue();
+        }
+        else
+        {
+            secondTermValue = std::stoi(secondTerm);
+        }
+
+        int resultValue = firstTermValue + secondTermValue;
+        return Symbol(inst.getLabel(), resultValue, Symbol::ABSOLUTE);
     }
 }

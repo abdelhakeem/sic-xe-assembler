@@ -11,12 +11,13 @@
 * <location>: <symbol> | <address>
 * <symbol>: <label>
 * <address>: <number>
-* <literal>: =<constant> | =*
+* <literal>: =<constant>
 * <constant>: <char-constant> | <hex-constant> | <int-constant>
 * <char-constant>: C'[^']+'
 * <hex-constant>: X'([A-Fa-f0-9]{2})+'
 * <int-constant>: -?[0-9]+
-* <simple-expression>: <symbol><op><symbol>
+* <simple-expression>: <term><op><term>
+* <term>: <int-constant> | <symbol>
 * <op>: + | - | * | /
 * <register>: A | X | L | PC | SW | B | S | T | F
 * <number>: <int-constant>
@@ -288,7 +289,7 @@ namespace cs222 {
             return true;
         }
 
-        if (std::regex_match(token, simple_expr_regex))
+        if (parseExpression(token))
         {
             operand = Operand(Operand::EXPRESSION, token);
             return true;
@@ -318,14 +319,7 @@ namespace cs222 {
         if (token[0] == '=')
         {
             const std::string restOfToken = token.substr(1);
-
-            if (restOfToken == "*")
-            {
-                operand = Operand(Operand::LOCCTR_LITERAL, token);
-                return true;
-            }
-
-            else if (parseConstant(restOfToken, operand))
+            if (parseConstant(restOfToken, operand))
             {
                 Operand::Type type = Operand::CHAR_LITERAL;
                 if (operand.getType() == Operand::HEX_CONSTANT)
@@ -365,6 +359,32 @@ namespace cs222 {
         return false;
     }
 
+    bool Parser::parseExpression(const std::string& token) const
+    {
+        std::smatch match;
+        if(!std::regex_search(token, match, op_regex))
+        {
+            return false;
+        }
+
+        size_t opPos = match.position();
+        std::string firstTerm = token.substr(0, opPos);
+        std::string secondTerm = token.substr(opPos+1);
+        return parseTerm(firstTerm) && parseTerm(secondTerm);
+    }
+
+    bool Parser::parseTerm(const std::string& token) const
+    {
+        if (
+                std::regex_match(token, int_const_regex) ||
+                std::regex_match(token, label_regex))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     bool Parser::parseRegister(const std::string& token, Operand& operand) const
     {
         if (isRegister(token))
@@ -391,13 +411,11 @@ namespace cs222 {
                 std::to_string(lineNumber) + ": " + error);
     }
 
-    constexpr auto label = "[A-Za-z_][A-Za-z0-9_]*";
-    const std::regex Parser::label_regex(std::string("^") + label + "$");
+    const std::regex Parser::label_regex("^[A-Za-z_][A-Za-z0-9_]*$");
     const std::regex Parser::int_const_regex("^(-?[0-9]+)$");
     const std::regex Parser::char_const_regex("^C'([^']+)'$");
     const std::regex Parser::hex_const_regex("^X'(([A-Fa-f0-9]{2})+)'$");
-    const std::regex Parser::simple_expr_regex(
-            std::string("^") + label + "[\\+\\-\\*/]" + label + "$");
+    const std::regex Parser::op_regex("[\\+\\-\\*/]");
 
     void Parser::advanceToken(
             std::stringstream& sstream, std::string& token)

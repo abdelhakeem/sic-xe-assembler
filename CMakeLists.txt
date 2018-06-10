@@ -17,6 +17,7 @@ add_library(SIC_XE_Assembler
     src/cs222/Utility.cpp
     src/cs222/Validator.cpp
     src/cs222/IntermediateParser.cpp
+    src/cs222/Symbol.cpp
     )
 
 target_link_libraries(ParserTest SIC_XE_Assembler)
