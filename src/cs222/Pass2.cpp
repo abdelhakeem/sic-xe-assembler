@@ -447,6 +447,28 @@ namespace cs222 {
             --i;
         }
 
+
+        // writing to file
+
+        std::ofstream ofs(objProgPath);
+        if (!ofs)
+            throw std::runtime_error(std::string("Cannot open file: ") + objProgPath);
+
+        std::cout << "Writing Object Program to " << objProgPath << std::endl;
+        ofs.setf(std::ios::left);
+
+        ofs << headerRecord << std::endl;
+
+        for(auto it : textRecords)
+            ofs << it << std::endl;
+
+        for(auto it : modRecords)
+            ofs << it << std::endl;
+
+        ofs << endRecord << std::endl;
+
+        ofs.close();
+
     }
 
     string Pass2::objectCodefor_EXP(string obCode, string expression, char arithmeticOp)
