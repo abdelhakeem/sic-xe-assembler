@@ -174,6 +174,13 @@ namespace cs222 {
                 length /= 2;
             }
         }
+        else if (label == "*") {
+            length = operation.length();
+            if (operands.first.getType() == Operand::HEX_LITERAL)
+            {
+                length /= 2;
+            }
+        }
 
         return length;
     }

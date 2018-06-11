@@ -3,13 +3,16 @@
 #include <fstream>
 #include <cs222/OpTable.h>
 #include <cs222/Parser.h>
+#include <cs222/Symbol.h>
 #include <cs222/Utility.h>
 #include <cs222/Validator.h>
 
 size_t processFile(
         const std::string& path,
         std::vector<std::unique_ptr<cs222::Instruction>>& instVec,
-        std::unordered_map<std::string, int>& symtab);
+        std::unordered_map<std::string, cs222::Symbol>& symtab,
+        std::unordered_map<
+            std::string, std::pair<cs222::Operand::Type, size_t>>& littab);
 
 void writeIntermediateFile(
         const std::string& path,
@@ -18,8 +21,12 @@ void writeIntermediateFile(
 
 void writeSymbolTable(
         const std::string& path,
-        const std::unordered_map<std::string, int>& symtab);
+        const std::unordered_map<std::string, cs222::Symbol>& symtab);
 
+void writeLiteralTable(
+        const std::string& path,
+        std::unordered_map<
+            std::string, std::pair<cs222::Operand::Type, size_t>>& littab);
 
 int main(int argc, char* argv[])
 {
@@ -27,39 +34,46 @@ int main(int argc, char* argv[])
     {
         if (argc < 2)
         {
-            std::cout << "USAGE: Pass1 <file>" << std::endl;
+            std::cout << "USAGE: pass1 <file>" << std::endl;
             return 0;
         }
 
         std::vector<std::unique_ptr<cs222::Instruction>> instVec;
-        std::unordered_map<std::string, int> SYMTAB;
+        std::unordered_map<std::string, cs222::Symbol> SYMTAB;
+        std::unordered_map<
+            std::string, std::pair<cs222::Operand::Type, size_t>> LITTAB;
         std::string currentFile;
         size_t START;
 
         for (size_t i = 1; i < argc; ++i)
         {
             currentFile = argv[i];
-            START = processFile(currentFile, instVec, SYMTAB);
+            START = processFile(currentFile, instVec, SYMTAB, LITTAB);
             writeIntermediateFile(currentFile + ".listing", instVec, START);
             writeSymbolTable(currentFile + ".symtab", SYMTAB);
+            writeLiteralTable(currentFile + ".littab", LITTAB);
         }
     }
     catch(const std::exception& ex)
     {
-        std::cout << ex.what() << std::endl;
+        std::cout << "Error: " << ex.what() << std::endl;
     }
 
     return 0;
 }
 
-
 size_t processFile(
         const std::string& path,
         std::vector<std::unique_ptr<cs222::Instruction>>& instVec,
-        std::unordered_map<std::string, int>& symtab)
+        std::unordered_map<std::string, cs222::Symbol>& symtab,
+        std::unordered_map<
+            std::string, std::pair<cs222::Operand::Type, size_t>>& littab)
 {
     instVec.clear();
     symtab.clear();
+    littab.clear();
+    std::unordered_map<
+        std::string, std::pair<cs222::Operand::Type, size_t>> temp_littab;
 
     std::ifstream ifs(path);
     if (!ifs)
@@ -84,43 +98,68 @@ size_t processFile(
 
         if (inst)
         {
-            validator.validate(*inst);
             cs222::Operand firstOp = inst->getFirstOperand();
+
             if (
                     cs222::toUpper(inst->getOperation()) == "START" &&
-                    inst->getErrors().empty() &&
                     firstOp.getType() == cs222::Operand::INT_CONSTANT)
             {
-                LOCCTR = std::stoul(firstOp.getValue(), nullptr, 16);
-                START = LOCCTR;
-                inst->setAddress(LOCCTR);
-            }
-            else
-            {
-                inst->setAddress(LOCCTR);
-                std::string op = inst->getOperation();
-                if (op[0] == '+')
-                    op = op.substr(1);
-
-                LOCCTR += inst->getLength();
-
-                if (firstOp.getType() == cs222::Operand::SYMBOL)
+                validator.validate(*inst);
+                if (inst->getErrors().empty())
                 {
-                    usedSymbols.push_back(firstOp.getValue());
+                    LOCCTR = std::stoul(firstOp.getValue(), nullptr, 16);
+                    START = LOCCTR;
+                    inst->setAddress(LOCCTR);
                 }
+                instVec.push_back(std::move(inst));
+                inst = parser.next();
             }
-
-            instVec.push_back(std::move(inst));
         }
     }
 
-    while (parser.hasNext())
+    while (inst)
     {
-        inst = parser.next();
         validator.validate(*inst);
         cs222::Operand firstOp = inst->getFirstOperand();
         inst->setAddress(LOCCTR);
 
+        if (
+                cs222::toUpper(inst->getOperation()) == cs222::DIR_LTORG ||
+                cs222::toUpper(inst->getOperation()) == cs222::DIR_END
+                )
+        {
+            for (auto& it : temp_littab)
+            {
+                std::unique_ptr<cs222::Instruction> litinst =
+                    std::make_unique<cs222::Instruction>(
+                        0,
+                        "",
+                        "*",
+                        it.first,
+                        cs222::Operand(it.second.first),
+                        cs222::Operand(),
+                        "",
+                        "",
+                        std::bitset<6>());
+                litinst->setAddress(LOCCTR);
+                it.second.second = LOCCTR;
+                littab.insert(it);
+                LOCCTR += litinst->getLength();
+                instVec.push_back(std::move(litinst));
+            }
+            temp_littab.clear();
+        }
+        if (
+                firstOp.getType() == cs222::Operand::INT_LITERAL ||
+                firstOp.getType() == cs222::Operand::CHAR_LITERAL ||
+                firstOp.getType() == cs222::Operand::HEX_LITERAL)
+        {
+            temp_littab[firstOp.getValue()] =
+                std::pair<cs222::Operand::Type, size_t>(
+                        firstOp.getType(),
+                        0
+                        );
+        }
         if (!inst->getLabel().empty())
         {
             std::string label = inst->getLabel();
@@ -130,17 +169,89 @@ size_t processFile(
             }
             else
             {
-                symtab[label] = LOCCTR;
+                cs222::Symbol sym =
+                    cs222::Symbol(label, LOCCTR, cs222::Symbol::RELATIVE);
+                if (inst->getOperation() == "EQU")
+                {
+                    if (firstOp.getType() == cs222::Operand::INT_CONSTANT)
+                    {
+                        sym = cs222::Symbol(
+                                label,
+                                std::stoi(firstOp.getValue()),
+                                cs222::Symbol::ABSOLUTE);
+                    }
+                    else if (firstOp.getType() == cs222::Operand::SYMBOL)
+                    {
+                        if (cs222::hashtableContains(
+                                    symtab, firstOp.getValue()))
+                        {
+                            cs222::Symbol tempsym =
+                                symtab[firstOp.getValue()];
+                            sym = cs222::Symbol(
+                                    label,
+                                    sym.getValue(),
+                                    sym.getType());
+                        }
+                        else
+                        {
+                            inst->addError(std::string("Undefined symbol ") +
+                                    firstOp.getValue() + ". Are you using a "
+                                    "forward reference with EQU?");
+                        }
+                    }
+                    else // cs222::Operand::EXPRESSION
+                    {
+                        sym = cs222::evaluateExpression(
+                                *inst,
+                                firstOp.getValue(),
+                                symtab);
+                    }
+                }
+                symtab[label] = sym;
             }
         }
+        if (inst->getOperation() == "ORG")
+        {
+            if (firstOp.getType() == cs222::Operand::INT_CONSTANT)
+            {
+                LOCCTR = std::stoi(firstOp.getValue());
+            }
+            else if (firstOp.getType() == cs222::Operand::SYMBOL)
+            {
+                if (cs222::hashtableContains(
+                            symtab, firstOp.getValue()))
+                {
+                    LOCCTR =
+                        symtab[firstOp.getValue()].getValue();
+                }
+                else
+                {
+                    inst->addError(std::string("Undefined symbol ") +
+                            firstOp.getValue() + ". Are you using a "
+                            "forward reference with ORG?");
+                }
+            }
+            else // cs222::Operand::EXPRESSION
+            {
+                LOCCTR = cs222::evaluateExpression(
+                        *inst,
+                        firstOp.getValue(),
+                        symtab).getValue();
+            }
+        }
+        else
+        {
+            LOCCTR += inst->getLength();
+        }
 
-        std::string op = inst->getOperation();
-        if (op[0] == '+')
-            op = op.substr(1);
-
-        LOCCTR += inst->getLength();
-
-        instVec.push_back(std::move(inst));
+        if (
+                !(cs222::toUpper(inst->getOperation()) == cs222::DIR_LTORG) &&
+                !(cs222::toUpper(inst->getOperation()) == cs222::DIR_END)
+                )
+        {
+            instVec.push_back(std::move(inst));
+        }
+        inst = parser.next();
     }
 
     cs222::Operand firstOp;
@@ -220,7 +331,7 @@ void writeIntermediateFile(
 
 void writeSymbolTable(
         const std::string& path,
-        const std::unordered_map<std::string, int>& symtab)
+        const std::unordered_map<std::string, cs222::Symbol>& symtab)
 {
     std::ofstream ofs(path);
     if (!ofs)
@@ -232,7 +343,27 @@ void writeSymbolTable(
     for (auto it : symtab)
     {
         ofs << std::setw(12) << std::nouppercase << it.first
-            << std::uppercase << std::hex << it.second << std::endl;
+            << std::uppercase << std::hex << it.second.getValue() << std::endl;
+    }
+    ofs.close();
+}
+
+void writeLiteralTable(
+        const std::string& path,
+        std::unordered_map<
+            std::string, std::pair<cs222::Operand::Type, size_t>>& littab)
+{
+    std::ofstream ofs(path);
+    if (!ofs)
+        throw std::runtime_error(std::string("Cannot open file: ") + path);
+
+    std::cout << "Writing LITTAB to " << path << std::endl;
+    ofs.setf(std::ios::left);
+    ofs << std::setw(12) << "LITERAL" << "ADDRESS" << std::endl << std::endl;
+    for (auto it : littab)
+    {
+        ofs << std::setw(12) << std::nouppercase << it.first
+            << std::uppercase << std::hex << it.second.second << std::endl;
     }
     ofs.close();
 }

@@ -12,6 +12,11 @@ namespace cs222 {
             Parser(std::istream& inputStream);
             bool hasNext();
             std::unique_ptr<Instruction> next();
+            static const std::regex label_regex;
+            static const std::regex int_const_regex;
+            static const std::regex char_const_regex;
+            static const std::regex hex_const_regex;
+            static const std::regex op_regex;
         protected:
             std::istream& inputStream;
             size_t lineNumber;
@@ -32,16 +37,13 @@ namespace cs222 {
                     const std::string& token, Operand& operand) const;
             bool parseConstant(
                     const std::string& token, Operand& operand) const;
+            bool parseExpression(const std::string& token) const;
+            bool parseTerm(const std::string& token) const;
             bool parseRegister(
                     const std::string& token, Operand& operand) const;
             bool parseNumber(
                     const std::string& token, Operand& operand) const;
             void throwError(const std::string& error) const;
-            static const std::regex label_regex;
-            static const std::regex int_const_regex;
-            static const std::regex char_const_regex;
-            static const std::regex hex_const_regex;
-            static const std::regex simple_expr_regex;
             static void advanceToken(
                     std::stringstream& sstream, std::string& token);
             static void flushRestToToken(
