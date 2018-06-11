@@ -100,7 +100,12 @@ namespace cs222 {
                     std::to_string(i.getAddress()) + ": " +
                     i.getOperandsToken());
             const size_t iAddress = i.getAddress();
-            objectCode.push_back(translate(i));
+            logDebug("Operation: " + i.getOperation());
+            logDebug("Operands: " + i.getOperandsToken());
+            logDebug("Flags: " + i.getFlags().to_string());
+            std::string instObjCode = translate(i);
+            logDebug("Object Code: " + instObjCode);
+            objectCode.push_back(instObjCode);
             correspondingAddresses.push_back(iAddress);
             if (i.isSet(i.FLAG_EXTENDED)) {
                 modificationAddresses.push_back(iAddress);
@@ -279,6 +284,7 @@ namespace cs222 {
             }
             else if (instruction.getFirstOperand().getType() == Operand::INT_CONSTANT)
             {
+                flags[4] = '1';
                 //no disp will be calculated
                 objCode = decimalToHex(std::stoi(firstOperand.getValue()));
                 if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
@@ -648,6 +654,10 @@ namespace cs222 {
                 errorReportMessage = "Base register is empty!!";
                 return "";
             }
+        }
+        else
+        {
+            flags[4] = '1';
         }
         std::string objCode = decimalToHex(disp);
         if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
