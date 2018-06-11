@@ -404,9 +404,6 @@ namespace cs222 {
     }
 
     void Pass2::writeObjectProgram(std::string& progName,std::string& progLength) {
-        //TODO: Mahmoud/Shams
-
-
         std::string objProgPath = srcFileName + ".objprog";
 
         std::string headerRecord;

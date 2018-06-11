@@ -11,7 +11,7 @@ namespace cs222 {
         public:
             Parser(std::istream& inputStream);
             bool hasNext();
-            std::unique_ptr<Instruction> next();
+            virtual std::unique_ptr<Instruction> next();
             static const std::regex label_regex;
             static const std::regex int_const_regex;
             static const std::regex char_const_regex;

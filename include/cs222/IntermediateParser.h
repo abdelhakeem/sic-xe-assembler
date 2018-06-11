@@ -11,7 +11,7 @@ namespace cs222 {
     class IntermediateParser : public Parser {
     public:
         IntermediateParser(std::istream& inputStream); // Stream has head on first instruction.
-        std::unique_ptr<Instruction> next();
+        std::unique_ptr<Instruction> next() override;
     };
 }
 
