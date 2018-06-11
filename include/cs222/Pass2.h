@@ -29,10 +29,10 @@ namespace cs222 {
         std::string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
         std::string decimalToHex(int dec);
         std::string binaryToHex(std::string binaryValue);
-        std::string hexaToBinary(std::string hexValue);
-        std::string translateLiteral(std::string obCode, Operand &firstOperand);
-        std::string calculateDisp(std::string objCode, int address, Instruction &instruction);
-        std::string translateExpression(std::string obCode, std::string expression, char arithmeticOp);
+        std::string hexaToBinary(char hexValue);
+        std::string translateLiteral(Operand &firstOperand);
+        std::string calculateDisp(int address, Instruction &instruction, char flags[6]);
+        std::string translateExpression(std::string expression, char arithmeticOp);
 
         std::string translate(Instruction instruction); // Translates one instruction and returns its object code.
         void readSymbols(); // Reads the symbol and literal tables from the files with the name in argv[1].

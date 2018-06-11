@@ -98,8 +98,7 @@ namespace cs222 {
     std::string Pass2::translate(Instruction instruction) {
         //TODO: Anwar
         //this operations donot have object code
-
-        static std::string theseOperations [9] = {"START","END","LTORG","RESW","RESB","USE","ORG","EQU","BASE"};
+        static std::string directives [9] = {"START","END","LTORG","RESW","RESB","USE","ORG","EQU","BASE"};
         std::unordered_map<std::string,int>::const_iterator got;
         std::string mn_Op = instruction.getOperation();
         std::string operand = instruction.getOperandsToken();
@@ -107,16 +106,16 @@ namespace cs222 {
 
         for (int i = 0; i < 9; ++i) {
             //check if the two strings are equal
-            if (mn_Op.compare(theseOperations[i]) == 0)
+            if (mn_Op.compare(directives[i]) == 0)
             {
                 if (mn_Op.compare("BASE") == 0)
                 {
                     //search for the operand address in SYMTABLE
                     //get its address and assign it into base register
-                    got = symTab.find (operand);
-                    int address = got->second;
+                    int address = symTab.find (operand)->second;                 //handle operand integer
                     base = address;
                 }
+                return nullptr;
             }
         }
 
@@ -125,7 +124,7 @@ namespace cs222 {
         {
             //the operand for BYTE is in two formats
             //first one C'EOF' ---> for string
-            //second  X'2A3'  ---> for constant integers
+            //second  X'2A3'  ---> for constant hexa
 
             if (instruction.getFirstOperand().getType() == instruction.getFirstOperand().HEX_CONSTANT)        //hakeem
             {
@@ -151,70 +150,112 @@ namespace cs222 {
             return objCode;
         }
 
-        //check if the instruction is format 1
-        else if (instruction.getFormat() == Instruction::FORMAT_1)   //hakeem
+        else if (instruction.getLabel() == "*")
         {
-            objCode = getOpcode(instruction.getOperation());
-
+            std::string type = instruction.getOperation().substr(0,1);
+            std::string literal = instruction.getOperation().substr(1,instruction.getOperation().size()-1);
+            if (type == "W")
+            {
+                objCode = decimalToHex(std::stoi(literal));
+                objCode.insert(0,6-objCode.size(),'0');
+            }
+            else if (type == "C")
+            {
+                objCode = string_to_hex(literal);
+            }
+            else if (type == "X")
+            {
+                objCode = literal;
+            }
+        }
+        //check if the instruction is format 1
+        else if (instruction.getFormat() == Instruction::FORMAT_1)
+        {
+            char x = getOpcode(instruction.getOperation());
+            objCode = hexaToBinary(x);
+            objCode = objCode + "00";
+            objCode = binaryToHex(objCode);
             return objCode;
         }
 
         else if (instruction.getFormat() == Instruction::FORMAT_2)
         {
-            objCode = getOpcode(instruction.getOperation());
+            char x = getOpcode(instruction.getOperation());
+            objCode = hexaToBinary(x);
+            objCode = objCode + "00";
+            objCode = binaryToHex(objCode);
             std::string register1Str = instruction.getFirstOperand().getValue();
             std::string register2Str = instruction.getSecondOperand().getValue();
-            objCode.insert(2, 1,REGISTERS.find(register2Str)->second - '0');
-            objCode.insert(2, 1,REGISTERS.find(register1Str)->second - '0');
+            if (register2Str.compare("") == 0)
+            {
+                objCode.insert(2, 1,REGISTERS.find(register1Str)->second);
+            }else{
+                objCode.insert(2, 1,REGISTERS.find(register2Str)->second);
+                objCode.insert(2, 1,REGISTERS.find(register1Str)->second);
+            }
+            return objCode;
         }
 
         else if (instruction.getFormat() == Instruction::FORMAT_3)
         {
             char flags[6] = {'1','1','0','0','0','0'};      //n,i,x,b,p,e
             Operand firstOperand = instruction.getFirstOperand();
-            if (instruction.FLAG_INDEXED) flags[2] = '1';
-            if (instruction.FLAG_INDIRECT) flags[1] = '0';
-            if (instruction.FLAG_IMMEDIATE) flags[0] = '0';
+            if (instruction.isSet(instruction.FLAG_INDEXED)) flags[2] = '1';
+            if (instruction.isSet(instruction.FLAG_INDIRECT)) flags[1] = '0';
+            if (instruction.isSet(instruction.FLAG_IMMEDIATE)) flags[0] = '0';
 
-            if (instruction.getFirstOperand().SYMBOL)
+            if (instruction.getFirstOperand().getType() == Operand::SYMBOL)
             {
-                int address = symTab.find (operand)->second;
-                //calculated by program counter
-                objCode = calculateDisp(objCode, address, instruction);
+                int address = symTab.find(firstOperand.getValue())->second;
+                objCode = calculateDisp(address, instruction, flags);
             }
-            else if (firstOperand.INT_CONSTANT)
+            else if (instruction.getFirstOperand().getType() == Operand::INT_CONSTANT)
             {
                 //no disp will be calculated
                 objCode = decimalToHex(std::stoi(firstOperand.getValue()));
                 if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
                 else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
                 std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
-                binaryString = binaryString.substr(0,6);
                 for (int i = 0; i < 6; ++i) {
-                    int size = binaryString.size();
-                    binaryString.insert(size,1,flags[i]);
+
+                    binaryString = binaryString + flags[i];
                 }
                 objCode = binaryToHex(binaryString) + objCode;
             }
-            else if (firstOperand.INT_LITERAL)
+            else if (instruction.getFirstOperand().getType() == Operand::INT_LITERAL)
             {
                 int address = Pass2::litTab.find (firstOperand.getValue())->second;
-                objCode = calculateDisp(objCode, address, instruction);
-
-            }else if (firstOperand.CHAR_LITERAL)
+                objCode = calculateDisp(address, instruction, flags);
+            }else if (instruction.getFirstOperand().getType() == Operand::CHAR_LITERAL)
             {
                 int address = Pass2::litTab.find (firstOperand.getValue())->second;
-                objCode = calculateDisp(objCode, address, instruction);
-            }else if (firstOperand.HEX_LITERAL)
+                objCode = calculateDisp(address, instruction, flags);
+            }else if (instruction.getFirstOperand().getType() == Operand::HEX_LITERAL)
             {
                 int address = Pass2::litTab.find (firstOperand.getValue())->second;
-                objCode = calculateDisp(objCode, address, instruction);
-            }else if (operand.find('+') != -1      ////for expressions
-                      ||operand.find('-') != -1
-                      ||operand.find('*') != -1
-                      ||operand.find('/') != -1)
+                objCode = calculateDisp(address, instruction, flags);
+            }else if (instruction.getFirstOperand().getType() == Operand::EXPRESSION)
             {
-
+                if (operand.find('+') != std::string::npos)
+                {
+                    int address = std::stoul(translateExpression(operand, '+'), nullptr, 16);
+                    objCode =  calculateDisp(address, instruction, flags);
+                }
+                else if (operand.find('-') != std::string::npos)
+                {
+                    int address = std::stoul(translateExpression(operand, '-'), nullptr, 16);
+                    objCode =  calculateDisp(address, instruction, flags);
+                }
+                else if (operand.find('*') != std::string::npos)
+                {
+                    int address = std::stoul(translateExpression(operand, '*'), nullptr, 16);
+                    objCode =  calculateDisp(address, instruction, flags);
+                }
+                else if (operand.find('/') != std::string::npos)
+                {
+                    int address = std::stoul(translateExpression(operand, '/'), nullptr, 16);
+                    objCode =  calculateDisp(address, instruction, flags);
+                }
             }
         }
 
@@ -228,7 +269,7 @@ namespace cs222 {
 
             if (instruction.getFirstOperand().getType() == Operand::SYMBOL)
             {
-                got = symTab.find (operand);
+                got = symTab.find(instruction.getFirstOperand().getValue());
                 int address = got->second;
                 objCode = decimalToHex(address);
                 objCode.insert(0,5-objCode.size(),'0');
@@ -239,42 +280,46 @@ namespace cs222 {
             }else if (instruction.getFirstOperand().getType() == Operand::INT_LITERAL)
             {
                 Operand firstOperand = instruction.getFirstOperand();
-                objCode = translateLiteral(objCode, firstOperand);
+                objCode = translateLiteral(firstOperand);
                 objCode.insert(0,5-objCode.size(),'0');
             }else if (instruction.getFirstOperand().getType() == Operand::CHAR_LITERAL)
             {
                 Operand firstOperand = instruction.getFirstOperand();
-                objCode = translateLiteral(objCode, firstOperand);
+                objCode = translateLiteral(firstOperand);
                 objCode.insert(0,5-objCode.size(),'0');
             }else if (instruction.getFirstOperand().getType() == Operand::HEX_LITERAL)
             {
                 Operand firstOperand = instruction.getFirstOperand();
-                objCode = translateLiteral(objCode, firstOperand);
+                objCode = translateLiteral(firstOperand);
                 objCode.insert(0,5-objCode.size(),'0');
-            }else if (operand.find('+') != -1      //for expressions
-                     ||operand.find('-') != -1
-                     ||operand.find('*') != -1
-                     ||operand.find('/') != -1)
+            }else if (instruction.getFirstOperand().getType() == Operand::EXPRESSION)
             {
-                if (operand.find('+') != -1)
+                if (operand.find('+') != std::string::npos)
                 {
-                    objCode = objectCodefor_EXP(objCode, operand, '+');
+                    objCode = translateExpression(operand, '+');
+                    if (objCode.length() > 5) objCode = objCode.substr(objCode.length() - 5,5);
+                    else if (objCode.length() < 5) objCode.insert(0,5-objCode.size(),'0');
                 }
-                else if (operand.find('-') != -1)
+                else if (operand.find('-') != std::string::npos)
                 {
-                    objCode = objectCodefor_EXP(objCode, operand, '-');
+                    objCode = translateExpression(operand, '-');
+                    if (objCode.length() > 5) objCode = objCode.substr(objCode.length() - 5,5);
+                    else if (objCode.length() < 5) objCode.insert(0,5-objCode.size(),'0');
                 }
-                else if (operand.find('*') != -1)
+                else if (operand.find('*') != std::string::npos)
                 {
-                    objCode = objectCodefor_EXP(objCode, operand, '*');
+                    objCode = translateExpression(operand, '*');
+                    if (objCode.length() > 5) objCode = objCode.substr(objCode.length() - 5,5);
+                    else if (objCode.length() < 5) objCode.insert(0,5-objCode.size(),'0');
                 }
-                else if (operand.find('/') != -1)
+                else if (operand.find('/') != std::string::npos)
                 {
-                    objCode = objectCodefor_EXP(objCode, operand, '/');
+                    objCode = translateExpression(operand, '/');
+                    if (objCode.length() > 5) objCode = objCode.substr(objCode.length() - 5,5);
+                    else if (objCode.length() < 5) objCode.insert(0,5-objCode.size(),'0');
                 }
             }
             std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
-            binaryString = binaryString.substr(0,6);
             for (int i = 0; i < 6; ++i) {
                 int size = binaryString.size();
                 binaryString.insert(size,1,flags[i]);
@@ -469,28 +514,42 @@ namespace cs222 {
 
     }
 
-    std::string Pass2::translateExpression(std::string obCode, std::string expression, char arithmeticOp)  //**********//
+    std::string Pass2::translateExpression(std::string expression, char arithmeticOp)
     {
         int index = expression.find(arithmeticOp);
         int address1, address2;
         std::string symbol1, symbol2;
         symbol1 = expression.substr(0,index-1);
         symbol2 = expression.substr(index+1,expression.size()-index);
-        address1 = Pass2::litTab.find (symbol1)->second;
-        address2 = Pass2::litTab.find(symbol2)->second;
-        obCode = decimalToHex(address1 - address2);
-        obCode.insert(0,5-obCode.size(),'0');
-        return obCode;
+        address1 = Pass2::symTab.find(symbol1)->second;
+        address2 = Pass2::symTab.find(symbol2)->second;
+        std::string objectCode;
+        if (arithmeticOp == '+')
+        {
+            objectCode = decimalToHex(address1 + address2);
+        }
+        else if (arithmeticOp == '-')
+        {
+            objectCode = decimalToHex(address1 - address2);
+        }
+        else if (arithmeticOp == '*')
+        {
+            objectCode = decimalToHex(address1 * address2);
+        }
+        else if (arithmeticOp == '/')
+        {
+            objectCode = decimalToHex(address1 / address2);
+        }
+        return objectCode;
     }
 
-    std::string Pass2::translateLiteral(std::string obCode, Operand &firstOperand)
+    std::string Pass2::translateLiteral(Operand &firstOperand)
     {
         int address = Pass2::litTab.find (firstOperand.getValue())->second;
-        obCode = decimalToHex(address);
-        return obCode;
+        return decimalToHex(address);
     }
 
-    std::string Pass2::calculateDisp(std::string objCode, int address,Instruction &instruction)
+    std::string Pass2::calculateDisp(int address,Instruction &instruction, char flags[6])
     {
         int disp = address - (instruction.getAddress()+3);
         if (disp > 2047 || disp < -2048)
@@ -498,7 +557,7 @@ namespace cs222 {
             //use base relative
             if (base != INT_MIN)
             {
-                disp = address - (base);
+                disp = address - base;
                 if (disp < 0 || disp > 4096)
                 {
                     errorReportMessage = "Disp is out of range";
@@ -511,30 +570,30 @@ namespace cs222 {
                 return nullptr;
             }
         }
-        objCode = decimalToHex(disp);
+        std::string objCode = decimalToHex(disp);
         if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
         else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
+
         std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
-        binaryString = binaryString.substr(0,6);
         for (int i = 0; i < 6; ++i) {
-            int size = binaryString.size();
-            binaryString.insert(size,1,flags[i]);
+            binaryString = binaryString + flags[i];
         }
         objCode = binaryToHex(binaryString) + objCode;
         return objCode;
     }
 
-    std::string Pass2::hexaToBinary(std::string hexValue)
+    std::string Pass2::hexaToBinary(char hexValue)
     {
-        std::string s = hexValue;
+        char s = hexValue;
+        std::string binaryOpCode;
         std::stringstream ss;
         ss << std::hex << s;
         unsigned n;
         ss >> n;
         std::bitset<8> b(n);
-        s = b.to_string();
-        s = s.substr(0,s.size()-2);
-        return s;
+        binaryOpCode = b.to_string();
+        binaryOpCode = binaryOpCode.substr(0,binaryOpCode.size()-2);
+        return binaryOpCode;
     }
 
     std::string Pass2::binaryToHex(std::string binaryValue)
@@ -568,22 +627,22 @@ namespace cs222 {
                 switch (rem)
                 {
                     case 10:
-                        s = "A" + s;
+                        s = "a" + s;
                         break;
                     case 11:
-                        s = "B" + s;
+                        s = "b" + s;
                         break;
                     case 12:
-                        s = "C" + s;
+                        s = "c" + s;
                         break;
                     case 13:
-                        s = "D" + s;
+                        s = "d" + s;
                         break;
                     case 14:
-                        s = "E" + s;
+                        s = "e" + s;
                         break;
                     case 15:
-                        s = "F" + s;
+                        s = "f" + s;
                         break;
                 }
             }
