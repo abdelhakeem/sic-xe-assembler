@@ -29,7 +29,7 @@ namespace cs222 {
         std::string string_to_hex(const std::string &input);   // Convert the string input to its hexa value
         std::string decimalToHex(int dec);
         std::string binaryToHex(std::string binaryValue);
-        std::string hexaToBinary(char hexValue);
+        std::string charToBinStr(char hexValue);
         std::string translateLiteral(Operand &firstOperand);
         std::string calculateDisp(int address, Instruction &instruction, char flags[6]);
         std::string translateExpression(std::string expression, char arithmeticOp);

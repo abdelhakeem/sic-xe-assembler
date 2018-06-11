@@ -240,7 +240,7 @@ namespace cs222 {
         else if (instruction.getFormat() == Instruction::FORMAT_1)
         {
             char x = getOpcode(instruction.getOperation());
-            objCode = hexaToBinary(x);
+            objCode = charToBinStr(x);
             objCode = objCode + "00";
             objCode = binaryToHex(objCode);
             return objCode;
@@ -249,7 +249,7 @@ namespace cs222 {
         else if (instruction.getFormat() == Instruction::FORMAT_2)
         {
             char x = getOpcode(instruction.getOperation());
-            objCode = hexaToBinary(x);
+            objCode = charToBinStr(x);
             objCode = objCode + "00";
             objCode = binaryToHex(objCode);
             std::string register1Str = instruction.getFirstOperand().getValue();
@@ -283,7 +283,7 @@ namespace cs222 {
                 objCode = decimalToHex(std::stoi(firstOperand.getValue()));
                 if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
                 else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
-                std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
+                std::string binaryString = charToBinStr(getOpcode(instruction.getOperation()));
                 for (int i = 0; i < 6; ++i) {
 
                     binaryString = binaryString + flags[i];
@@ -387,7 +387,7 @@ namespace cs222 {
                     else if (objCode.length() < 5) objCode.insert(0,5-objCode.size(),'0');
                 }
             }
-            std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
+            std::string binaryString = charToBinStr(getOpcode(instruction.getOperation()));
             for (int i = 0; i < 6; ++i) {
                 int size = binaryString.size();
                 binaryString.insert(size,1,flags[i]);
@@ -653,7 +653,7 @@ namespace cs222 {
         if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
         else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
 
-        std::string binaryString = hexaToBinary(getOpcode(instruction.getOperation()));
+        std::string binaryString = charToBinStr(getOpcode(instruction.getOperation()));
         for (int i = 0; i < 6; ++i) {
             binaryString = binaryString + flags[i];
         }
@@ -661,18 +661,9 @@ namespace cs222 {
         return objCode;
     }
 
-    std::string Pass2::hexaToBinary(char hexValue)
+    std::string Pass2::charToBinStr(char hexValue)
     {
-        char s = hexValue;
-        std::string binaryOpCode;
-        std::stringstream ss;
-        ss << std::hex << s;
-        unsigned n = 0;
-        ss >> n;
-        std::bitset<8> b(n);
-        binaryOpCode = b.to_string();
-        binaryOpCode = binaryOpCode.substr(0,binaryOpCode.size()-2);
-        return binaryOpCode;
+        return std::bitset<6>(hexValue >> 2).to_string();
     }
 
     std::string Pass2::binaryToHex(std::string binaryValue)
