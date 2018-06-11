@@ -228,7 +228,7 @@ size_t processFile(
         {
             if (firstOp.getType() == cs222::Operand::INT_CONSTANT)
             {
-                LOCCTR = std::stoi(firstOp.getValue());
+                LOCCTR = std::stoi(firstOp.getValue(), nullptr, 16);
             }
             else if (firstOp.getType() == cs222::Operand::SYMBOL)
             {
@@ -305,6 +305,15 @@ void writeIntermediateFile(
 
     for (const std::unique_ptr<cs222::Instruction>& it : instVec)
     {
+        std::string op = it->getOperation();
+        if (cs222::isDirective(op))
+        {
+            if (op != "BYTE" && op != "WORD" && op != "BASE")
+            {
+                continue;
+            }
+        }
+
         ofs << std::setw(8) << it->getLineNumber();
 
         if (it->isCommentLine())
