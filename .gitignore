@@ -43,3 +43,6 @@ cmake-build-debug/
 *.listing
 *.symtab
 *.littab
+
+# pass1 output
+*.objprog
