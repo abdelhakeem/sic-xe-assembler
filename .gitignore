@@ -42,3 +42,4 @@ cmake-build-debug/
 # pass1 output files
 *.listing
 *.symtab
+*.littab
