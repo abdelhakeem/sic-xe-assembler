@@ -5,16 +5,9 @@
 namespace cs222 {
 
     IntermediateParser::IntermediateParser(std::istream& inputStream) :
-            Parser(inputStream)
-    {
-        std::getline(inputStream, line);
-    }
+            Parser(inputStream) { }
 
     std::unique_ptr<Instruction> IntermediateParser::next() {
-
-        if (nextInstruction) {
-            return std::move(nextInstruction);
-        }
 
         if (std::getline(inputStream, line))
         {
@@ -36,11 +29,6 @@ namespace cs222 {
             advanceToken(sstream, token);// Skipping line number.
 
             advanceToken(sstream, token);// Expecting address.
-
-            if (token[0] == '.') // Comment line?
-            {
-                return this->next();
-            }
 
             std::size_t address;
             address = std::stoul(token, nullptr, 16);
@@ -151,18 +139,14 @@ namespace cs222 {
             flushRestToToken(sstream, token);
             comment += token;
 
-            if (operation.compare("end") == 0 || operation.compare("END") == 0) {
-                return nullptr;
-            } else {
-                std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
-                        lineNumber, line, label, operation,
-                        operands.first, operands.second,
-                        operandsToken, comment, flags);
+            std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
+                    lineNumber, line, label, operation,
+                    operands.first, operands.second,
+                    operandsToken, comment, flags);
 
-                (*ptr).setAddress(address);
+            (*ptr).setAddress(address);
 
-                return ptr;
-            }
+            return ptr;
         }
 
         return nullptr;

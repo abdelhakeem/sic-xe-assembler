@@ -43,17 +43,18 @@ namespace cs222 {
         std::string progName = parseProgramName(ifs);
 
         cs222::IntermediateParser iParser(ifs);
-        while (iParser.hasNext()) {
-            std::unique_ptr<cs222::Instruction> instruction = iParser.next();
-            if (instruction != nullptr) {
-                Instruction i = *instruction;
-                const size_t iAddress = i.getAddress();
-                translate(i);
-                correspondingAddresses.push_back(iAddress);
-                if (i.isSet(i.FLAG_EXTENDED)) {
-                    modificationAddresses.push_back(iAddress);
-                }
+
+        std::unique_ptr<cs222::Instruction> instruction = iParser.next();
+        while (instruction != nullptr) {
+            Instruction i = *instruction;
+            std::cout << i.getAddress() << " " <<  i.getOperandsToken() << std::endl;//DEBUG
+            const size_t iAddress = i.getAddress();
+            objectCode.push_back(translate(i));
+            correspondingAddresses.push_back(iAddress);
+            if (i.isSet(i.FLAG_EXTENDED)) {
+                modificationAddresses.push_back(iAddress);
             }
+            instruction = iParser.next();
         }
         std::string progLength = parseProgramLength(ifs);
         writeObjectProgram(progName, progLength);
@@ -417,6 +418,9 @@ namespace cs222 {
 
         std::deque<std::string> coAdd; //bta3tna elly hanshta8l 3leha
         for (int i = 0; i < correspondingAddresses.size(); ++i) {
+
+            //DEBUG:
+                    std::cout << "Address bta3 " << i << " howa " << correspondingAddresses[i] << std::endl;
 
             std::stringstream ss;
             std::string temp = "";
