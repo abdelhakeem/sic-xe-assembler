@@ -57,8 +57,8 @@ namespace cs222 {
             instruction = iParser.next();
         }
         std::string progLength = parseProgramLength(ifs);
-        writeObjectProgram(progName, progLength);
         if (errorReportMessage != "") {
+            writeObjectProgram(progName, progLength);
             return "Pass 2 finished successfully";
         } else {
             return errorReportMessage;
