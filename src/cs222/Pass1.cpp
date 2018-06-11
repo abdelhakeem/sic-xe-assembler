@@ -130,26 +130,14 @@ size_t processFile(
         {
             for (auto& it : temp_littab)
             {
+                std::string literal = it.first;
                 cs222::Operand::Type literalType = it.second.first;
-                std::string listingLiteral;
-                if (literalType == cs222::Operand::INT_LITERAL)
-                {
-                    listingLiteral = std::string("W") + it.first;
-                }
-                else if (literalType == cs222::Operand::CHAR_LITERAL)
-                {
-                    listingLiteral = std::string("C") + it.first;
-                }
-                else if (literalType == cs222::Operand::HEX_LITERAL)
-                {
-                    listingLiteral = std::string("X") + it.first;
-                }
                 std::unique_ptr<cs222::Instruction> litinst =
                     std::make_unique<cs222::Instruction>(
                         0,
                         "",
                         "*",
-                        listingLiteral,
+                        literal,
                         cs222::Operand(literalType),
                         cs222::Operand(),
                         "",
@@ -168,9 +156,24 @@ size_t processFile(
                 firstOp.getType() == cs222::Operand::CHAR_LITERAL ||
                 firstOp.getType() == cs222::Operand::HEX_LITERAL)
         {
-            temp_littab[firstOp.getValue()] =
+            cs222::Operand::Type literalType = firstOp.getType();
+            std::string literal;
+            if (literalType == cs222::Operand::INT_LITERAL)
+            {
+                literal = std::string("W") + firstOp.getValue();
+            }
+            else if (literalType == cs222::Operand::CHAR_LITERAL)
+            {
+                literal = std::string("C") + firstOp.getValue();
+            }
+            else if (literalType == cs222::Operand::HEX_LITERAL)
+            {
+                literal = std::string("X") + firstOp.getValue();
+            }
+
+            temp_littab[literal] =
                 std::pair<cs222::Operand::Type, size_t>(
-                        firstOp.getType(),
+                        literalType,
                         0
                         );
         }
