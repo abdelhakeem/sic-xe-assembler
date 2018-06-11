@@ -16,11 +16,11 @@ int main(int argc, char *argv[]) {
     {
         if (argc < 2)
         {
-            std::cout << "USAGE: Pass2 <file>" << std::endl;
+            std::cout << "USAGE: assemble <file>" << std::endl;
             return 0;
         }
         cs222::Pass2 assemblerPass2;
-        std::cout << assemblerPass2.run(argv[1]) << std::endl;
+        assemblerPass2.run(argv[1]);
     }
 //    catch(const std::exception& ex)
 //    {
@@ -33,6 +33,16 @@ int main(int argc, char *argv[]) {
 
 namespace cs222 {
 
+    bool debug = true;
+
+    void logDebug(const std::string& info)
+    {
+        if (debug)
+        {
+            std::cout << "[DEBUG] " << info << std::endl;
+        }
+    }
+
     std::string Pass2::run(std::string srcFileName) {
         Pass2::srcFileName = srcFileName;
 
@@ -41,13 +51,14 @@ namespace cs222 {
         std::ifstream ifs(srcFileName + ".listing");
 
         std::string progName = parseProgramName(ifs);
+        logDebug("Program name is " + progName);
 
         cs222::IntermediateParser iParser(ifs);
 
         std::unique_ptr<cs222::Instruction> instruction = iParser.next();
         while (instruction != nullptr) {
             Instruction i = *instruction;
-            std::cout << i.getAddress() << " " <<  i.getOperandsToken() << std::endl;//DEBUG
+            logDebug(std::to_string(i.getAddress()) + i.getOperandsToken());
             const size_t iAddress = i.getAddress();
             objectCode.push_back(translate(i));
             correspondingAddresses.push_back(iAddress);
@@ -189,10 +200,10 @@ namespace cs222 {
             std::string register2Str = instruction.getSecondOperand().getValue();
             if (register2Str.compare("") == 0)
             {
-                objCode.insert(2, 1,REGISTERS.find(register1Str)->second);
+                objCode += REGISTERS.find(register1Str)->second;
             }else{
-                objCode.insert(2, 1,REGISTERS.find(register2Str)->second);
-                objCode.insert(2, 1,REGISTERS.find(register1Str)->second);
+                objCode += REGISTERS.find(register1Str)->second;
+                objCode += REGISTERS.find(register2Str)->second;
             }
             return objCode;
         }
@@ -338,7 +349,7 @@ namespace cs222 {
         if (!ifs)
             throw std::runtime_error(std::string("Cannot open file: ") + symTabPath);
 
-        std::cout << "Reading from symbolTable file: " << symTabPath << std::endl;
+        logDebug("Reading SYMTAB from " + symTabPath);
 
         if (ifs.is_open()) {
 
@@ -359,12 +370,12 @@ namespace cs222 {
                 buf >> key;
                 if (!buf)
                     break;
-                std::cout << key << "\t";
+                //std::cout << key << "\t";
 
                 buf >> std::hex >> address;
                 if (!buf)
                     break;
-                std::cout << std::hex << address << std::endl;
+                //std::cout << std::hex << address << std::endl;
 
                 symTab[key] = address;
             }
@@ -376,11 +387,11 @@ namespace cs222 {
         ifs.open(litTabPath);
 
         if (!ifs){
-            std::cout << "There is no litTab !!" << std::endl;
+            logDebug("No LITTAB present");
             return;
         }
 
-        std::cout << "Reading from litTable file: " << litTabPath << std::endl;
+        logDebug("Reading LITTAB from " + litTabPath);
 
         if (ifs.is_open()) {
 
@@ -400,12 +411,12 @@ namespace cs222 {
                 buf >> key;
                 if (!buf)
                     break;
-                std::cout << key << "\t";
+                //std::cout << key << "\t";
 
                 buf >> std::hex >> address;
                 if (!buf)
                     break;
-                std::cout << std::hex << address << std::endl;
+                //std::cout << std::hex << address << std::endl;
 
                 litTab[key] = address;
             }
@@ -429,7 +440,7 @@ namespace cs222 {
         for (int i = 0; i < correspondingAddresses.size(); ++i) {
 
             //DEBUG:
-                    std::cout << "Address bta3 " << i << " howa " << correspondingAddresses[i] << std::endl;
+                    //std::cout << "Address bta3 " << i << " howa " << correspondingAddresses[i] << std::endl;
 
             std::stringstream ss;
             std::string temp = "";
@@ -509,7 +520,7 @@ namespace cs222 {
         if (!ofs)
             throw std::runtime_error(std::string("Cannot open file: ") + objProgPath);
 
-        std::cout << "Writing Object Program to " << objProgPath << std::endl;
+        logDebug("Writing object program to " + objProgPath);
         ofs.setf(std::ios::left);
 
         ofs << headerRecord << std::endl;
@@ -600,7 +611,7 @@ namespace cs222 {
         std::string binaryOpCode;
         std::stringstream ss;
         ss << std::hex << s;
-        unsigned n;
+        unsigned n = 0;
         ss >> n;
         std::bitset<8> b(n);
         binaryOpCode = b.to_string();
