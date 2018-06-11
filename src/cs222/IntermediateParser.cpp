@@ -21,12 +21,9 @@ namespace cs222 {
             lineNumber += 1;
             flags.reset();
 
-            // Ignore empty lines
-            while (
-                    std::regex_match(line, std::regex("^\\s*$")) &&
-                    std::getline(inputStream, line)
-                    );
-
+            // Stop on empty line
+            if (std::regex_match(line, std::regex("^\\s*$")))
+                return nullptr;
             // Reached end of stream?
             if (!inputStream)
             {
