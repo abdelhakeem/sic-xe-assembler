@@ -19,8 +19,8 @@ int main(int argc, char *argv[]) {
             std::cout << "USAGE: assemble <file>" << std::endl;
             return 0;
         }
-        cs222::Pass2 assemblerPass2;
-        assemblerPass2.run(argv[1]);
+         cs222::Pass2 assemblerPass2;
+         std::cout << assemblerPass2.run(argv[1]) << std::endl;
     }
 //    catch(const std::exception& ex)
 //    {
@@ -51,14 +51,16 @@ namespace cs222 {
         std::ifstream ifs(srcFileName + ".listing");
 
         std::string progName = parseProgramName(ifs);
-        logDebug("Program name is " + progName);
+        logDebug("Program name is '" + progName + "'");
 
         cs222::IntermediateParser iParser(ifs);
 
         std::unique_ptr<cs222::Instruction> instruction = iParser.next();
         while (instruction != nullptr) {
             Instruction i = *instruction;
-            logDebug(std::to_string(i.getAddress()) + i.getOperandsToken());
+            logDebug("Operands in instruction at " +
+                    std::to_string(i.getAddress()) + ": " +
+                    i.getOperandsToken());
             const size_t iAddress = i.getAddress();
             objectCode.push_back(translate(i));
             correspondingAddresses.push_back(iAddress);
@@ -87,6 +89,13 @@ namespace cs222 {
         std::string buffer;
         lineStream >> buffer; // Skip line number.
         lineStream >> buffer; // Skip address.
+        while (buffer == ".")
+        {
+            getline(ifs, line);
+            lineStream = std::stringstream(line);
+            lineStream >> buffer; // Skip line number.
+            lineStream >> buffer; // Skip address.
+        }
 
         std::string progName;
         lineStream >> progName;
