@@ -69,8 +69,11 @@ namespace cs222 {
             }
             instruction = iParser.next();
         }
+
         std::string progLength = parseProgramLength(ifs);
-        if (errorReportMessage != "") {
+        logDebug("Program is " + progLength + " bytes long");
+
+        if (errorReportMessage == "") {
             writeObjectProgram(progName, progLength);
             return "Pass 2 finished successfully";
         } else {
