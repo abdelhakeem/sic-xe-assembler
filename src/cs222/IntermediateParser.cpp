@@ -26,6 +26,10 @@ namespace cs222 {
             std::stringstream sstream(line);
             std::string token;
 
+            if (token[0] == '.') {// Skip comment lines.
+                return this->next();
+            }
+
             advanceToken(sstream, token);// Skipping line number.
 
             advanceToken(sstream, token);// Expecting address.
