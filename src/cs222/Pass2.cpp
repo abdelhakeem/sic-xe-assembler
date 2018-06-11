@@ -43,6 +43,22 @@ namespace cs222 {
         }
     }
 
+    void dumpDeque(const std::deque<std::string>& deq)
+    {
+        for (const auto& it : deq)
+        {
+            logDebug(it);
+        }
+    }
+
+    void dumpDeque(const std::deque<size_t>& deq)
+    {
+        for (const auto& it : deq)
+        {
+            std::cout << "[DEBUG] " << std::hex << it << std::endl;
+        }
+    }
+
     std::string Pass2::run(std::string srcFileName) {
         Pass2::srcFileName = srcFileName;
 
@@ -54,6 +70,28 @@ namespace cs222 {
         logDebug("Program name is '" + progName + "'");
 
         cs222::IntermediateParser iParser(ifs);
+
+        std::string line;
+        ifs.seekg(0);
+        getline(ifs, line); // Skip first line (column names).
+        getline(ifs, line); // Skip the second line (empty line).
+        size_t startInst = ifs.tellg();
+        getline(ifs, line);
+
+        // Skip comment lines
+        std::stringstream lineStream(line);
+        std::string buffer;
+        lineStream >> buffer; // Skip line number.
+        lineStream >> buffer; // Skip address.
+        while (buffer == ".")
+        {
+            startInst = ifs.tellg();
+            getline(ifs, line);
+            lineStream = std::stringstream(line);
+            lineStream >> buffer; // Skip line number.
+            lineStream >> buffer; // Skip address.
+        }
+        ifs.seekg(startInst);
 
         std::unique_ptr<cs222::Instruction> instruction = iParser.next();
         while (instruction != nullptr) {
@@ -74,6 +112,12 @@ namespace cs222 {
         logDebug("Program is " + progLength + " bytes long");
 
         if (errorReportMessage == "") {
+            logDebug("Dumping Modification Addresses");
+            dumpDeque(modificationAddresses);
+            logDebug("Dumping Object Codes");
+            dumpDeque(objectCode);
+            logDebug("Dumping Corresponding Addressses");
+            dumpDeque(correspondingAddresses);
             writeObjectProgram(progName, progLength);
             return "Pass 2 finished successfully";
         } else {
