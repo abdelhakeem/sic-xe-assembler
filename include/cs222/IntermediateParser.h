@@ -5,7 +5,7 @@
 #ifndef SIC_XE_ASSEMBLER_INTERMEDIATEPARSER_H
 #define SIC_XE_ASSEMBLER_INTERMEDIATEPARSER_H
 
-#include "Parser.h"
+#include <cs222/Parser.h>
 
 namespace cs222 {
     class IntermediateParser : public Parser {
