@@ -370,8 +370,10 @@ namespace cs222 {
 
         ifs.open(litTabPath);
 
-        if (!ifs)
-            throw std::runtime_error(std::string("Cannot open file: ") + litTabPath);
+        if (!ifs){
+            std::cout << "There is no litTab !!" << std::endl;
+            return;
+        }
 
         std::cout << "Reading from litTable file: " << litTabPath << std::endl;
 
