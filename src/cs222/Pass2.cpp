@@ -382,7 +382,6 @@ namespace cs222 {
             std::stringstream buf;
 
             buf << ifs.rdbuf();
-
             ifs.close();
 
             // ignoring SYMBOL & ADDRESS
@@ -467,6 +466,8 @@ namespace cs222 {
                     if (objectCode.at(i).length() + textRec.length() <= 60){
                         textRec += objectCode.at(i);
                         ++i;
+                    } else{
+                        break;
                     }
                 } else {
                     break;
