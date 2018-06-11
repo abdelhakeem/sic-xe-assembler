@@ -130,13 +130,27 @@ size_t processFile(
         {
             for (auto& it : temp_littab)
             {
+                cs222::Operand::Type literalType = it.second.first;
+                std::string listingLiteral;
+                if (literalType == cs222::Operand::INT_LITERAL)
+                {
+                    listingLiteral = std::string("W") + it.first;
+                }
+                else if (literalType == cs222::Operand::CHAR_LITERAL)
+                {
+                    listingLiteral = std::string("C") + it.first;
+                }
+                else if (literalType == cs222::Operand::HEX_LITERAL)
+                {
+                    listingLiteral = std::string("X") + it.first;
+                }
                 std::unique_ptr<cs222::Instruction> litinst =
                     std::make_unique<cs222::Instruction>(
                         0,
                         "",
                         "*",
-                        it.first,
-                        cs222::Operand(it.second.first),
+                        listingLiteral,
+                        cs222::Operand(literalType),
                         cs222::Operand(),
                         "",
                         "",
