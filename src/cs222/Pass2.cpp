@@ -12,7 +12,7 @@
 
 
 int main(int argc, char *argv[]) {
-    try
+//    try
     {
         if (argc < 2)
         {
@@ -22,10 +22,10 @@ int main(int argc, char *argv[]) {
         cs222::Pass2 assemblerPass2;
         std::cout << assemblerPass2.run(argv[1]) << std::endl;
     }
-    catch(const std::exception& ex)
-    {
-        std::cout << ex.what() << std::endl;
-    }
+//    catch(const std::exception& ex)
+//    {
+//        std::cout << ex.what() << std::endl;
+//    }
 
     return 0;
 }
@@ -357,9 +357,13 @@ namespace cs222 {
             while (buf)
             {
                 buf >> key;
+                if (!buf)
+                    break;
                 std::cout << key << "\t";
 
                 buf >> std::hex >> address;
+                if (!buf)
+                    break;
                 std::cout << std::hex << address << std::endl;
 
                 symTab[key] = address;
@@ -394,9 +398,13 @@ namespace cs222 {
             while (buf)
             {
                 buf >> key;
+                if (!buf)
+                    break;
                 std::cout << key << "\t";
 
                 buf >> std::hex >> address;
+                if (!buf)
+                    break;
                 std::cout << std::hex << address << std::endl;
 
                 litTab[key] = address;
