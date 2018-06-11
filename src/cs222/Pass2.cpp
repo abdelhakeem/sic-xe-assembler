@@ -371,8 +371,10 @@ namespace cs222 {
 
         ifs.open(litTabPath);
 
-        if (!ifs)
-            throw std::runtime_error(std::string("Cannot open file: ") + litTabPath);
+        if (!ifs){
+            std::cout << "There is no litTab !!" << std::endl;
+            return;
+        }
 
         std::cout << "Reading from litTable file: " << litTabPath << std::endl;
 
@@ -383,7 +385,6 @@ namespace cs222 {
             std::stringstream buf;
 
             buf << ifs.rdbuf();
-
             ifs.close();
 
             // ignoring SYMBOL & ADDRESS
@@ -471,6 +472,8 @@ namespace cs222 {
                     if (objectCode.at(i).length() + textRec.length() <= 60){
                         textRec += objectCode.at(i);
                         ++i;
+                    } else{
+                        break;
                     }
                 } else {
                     break;
