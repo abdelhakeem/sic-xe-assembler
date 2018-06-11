@@ -1,6 +1,6 @@
 #include <cs222/Utility.h>
 #include <cs222/OpTable.h>
-#include "cs222/IntermediateParser.h"
+#include <cs222/IntermediateParser.h>
 
 namespace cs222 {
 
@@ -67,7 +67,7 @@ namespace cs222 {
                     operation = token;
                     std::unique_ptr<Instruction> ptr = std::make_unique<Instruction>(
                             lineNumber, line, label, operation,
-                            "", "", "", "", nullptr);
+                            Operand(), Operand(), "", "", std::bitset<6>());
 
                     (*ptr).setAddress(address);
 

@@ -10,7 +10,7 @@
 #include <cs222/Utility.h>
 #include <cs222/IntermediateParser.h>
 
-/*
+
 int main(int argc, char *argv[]) {
     try
     {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-*/
+
 
 namespace cs222 {
 

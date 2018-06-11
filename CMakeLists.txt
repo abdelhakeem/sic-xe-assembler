@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5)
 project(SIC_XE_Assembler)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -22,4 +22,4 @@ add_library(SIC_XE_Assembler
 
 target_link_libraries(ParserTest SIC_XE_Assembler)
 target_link_libraries(pass1 SIC_XE_Assembler)
-#target_link_libraries(assemble SIC_XE_Assembler)
+target_link_libraries(assemble SIC_XE_Assembler)
