@@ -116,7 +116,7 @@ namespace cs222 {
                     int address = symTab.find (operand)->second;                 //handle operand integer
                     base = address;
                 }
-                return nullptr;
+                return "";
             }
         }
 
