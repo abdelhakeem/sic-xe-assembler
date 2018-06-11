@@ -596,13 +596,13 @@ namespace cs222 {
                 if (disp < 0 || disp > 4096)
                 {
                     errorReportMessage = "Disp is out of range";
-                    return nullptr;
+                    return "";
                 }
 
             }else
             {
                 errorReportMessage = "Base register is empty!!";
-                return nullptr;
+                return "";
             }
         }
         std::string objCode = decimalToHex(disp);
