@@ -203,6 +203,21 @@ namespace cs222 {
             inst.addError(std::string("No operands expected after ") + op);
             return false;
         }
+        else if (toUpper(op) == "BASE")
+        {
+            if (secondOpType == Operand::NONE)
+            {
+                if (
+                        firstOpType == Operand::SYMBOL ||
+                        firstOpType == Operand::INT_CONSTANT)
+                {
+                    return true;
+                }
+            }
+            inst.addError(std::string("Expected symbol or int constant after ")
+                    + op);
+            return false;
+        }
         inst.addError(
                 std::string("Unsupported directive or operation: ") + op);
         return false;
