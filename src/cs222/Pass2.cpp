@@ -102,7 +102,6 @@ namespace cs222 {
             const size_t iAddress = i.getAddress();
             logDebug("Operation: " + i.getOperation());
             logDebug("Operands: " + i.getOperandsToken());
-            logDebug("Flags: " + i.getFlags().to_string());
             std::string instObjCode = translate(i);
             logDebug("Object Code: " + instObjCode);
             objectCode.push_back(instObjCode);
@@ -261,21 +260,26 @@ namespace cs222 {
             std::string register2Str = instruction.getSecondOperand().getValue();
             if (register2Str.compare("") == 0)
             {
-                objCode += REGISTERS.find(register1Str)->second;
+                objCode += '0'+REGISTERS.find(register1Str)->second;
             }else{
-                objCode += REGISTERS.find(register1Str)->second;
-                objCode += REGISTERS.find(register2Str)->second;
+                objCode += '0'+REGISTERS.find(register1Str)->second;
+                objCode += '0'+REGISTERS.find(register2Str)->second;
             }
             return objCode;
         }
 
         else if (instruction.getFormat() == Instruction::FORMAT_3)
         {
-            char flags[6] = {'1','1','0','0','0','0'};      //n,i,x,b,p,e
+            char flags[6] = {'1','1','0','0','1','0'};      //n,i,x,b,p,e
             Operand firstOperand = instruction.getFirstOperand();
             if (instruction.isSet(instruction.FLAG_INDEXED)) flags[2] = '1';
-            if (instruction.isSet(instruction.FLAG_INDIRECT)) flags[1] = '0';
-            if (instruction.isSet(instruction.FLAG_IMMEDIATE)) flags[0] = '0';
+            if (!instruction.isSet(instruction.FLAG_INDIRECT)) flags[0] = '0';
+
+            if (!instruction.isSet(instruction.FLAG_IMMEDIATE)) flags[1] = '0';
+            else if (firstOperand.getType() == Operand::INT_CONSTANT)
+            {
+                flags[4] = '0';
+            }
 
             if (instruction.getFirstOperand().getType() == Operand::SYMBOL)
             {
@@ -284,7 +288,6 @@ namespace cs222 {
             }
             else if (instruction.getFirstOperand().getType() == Operand::INT_CONSTANT)
             {
-                flags[4] = '1';
                 //no disp will be calculated
                 objCode = decimalToHex(std::stoi(firstOperand.getValue()));
                 if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
@@ -298,15 +301,15 @@ namespace cs222 {
             }
             else if (instruction.getFirstOperand().getType() == Operand::INT_LITERAL)
             {
-                int address = Pass2::litTab.find (firstOperand.getValue())->second;
+                int address = Pass2::litTab.find ("W"+firstOperand.getValue())->second;
                 objCode = calculateDisp(address, instruction, flags);
             }else if (instruction.getFirstOperand().getType() == Operand::CHAR_LITERAL)
             {
-                int address = Pass2::litTab.find (firstOperand.getValue())->second;
+                int address = Pass2::litTab.find ("C"+firstOperand.getValue())->second;
                 objCode = calculateDisp(address, instruction, flags);
             }else if (instruction.getFirstOperand().getType() == Operand::HEX_LITERAL)
             {
-                int address = Pass2::litTab.find (firstOperand.getValue())->second;
+                int address = Pass2::litTab.find ("X"+firstOperand.getValue())->second;
                 objCode = calculateDisp(address, instruction, flags);
             }else if (instruction.getFirstOperand().getType() == Operand::EXPRESSION)
             {
@@ -331,6 +334,7 @@ namespace cs222 {
                     objCode =  calculateDisp(address, instruction, flags);
                 }
             }
+            logDebug("Flags: " + std::string(flags));
         }
 
         else if (instruction.getFormat() == instruction.FORMAT_4)
@@ -399,6 +403,7 @@ namespace cs222 {
                 binaryString.insert(size,1,flags[i]);
             }
             objCode = binaryToHex(binaryString) + objCode;
+            logDebug("Flags: " + std::string(flags));
         }
         return objCode;
     }
@@ -642,6 +647,8 @@ namespace cs222 {
             //use base relative
             if (base != INT_MIN)
             {
+                flags[3] = '1';
+                flags[4] = '0';
                 disp = address - base;
                 if (disp < 0 || disp > 4096)
                 {
@@ -655,13 +662,10 @@ namespace cs222 {
                 return "";
             }
         }
-        else
-        {
-            flags[4] = '1';
-        }
         std::string objCode = decimalToHex(disp);
         if (objCode.length() > 3) objCode = objCode.substr(objCode.length() - 3,3);
         else if (objCode.length() < 3) objCode.insert(0,3-objCode.size(),'0');
+        logDebug("DISPLACEMENT: " + objCode);
 
         std::string binaryString = charToBinStr(getOpcode(instruction.getOperation()));
         for (int i = 0; i < 6; ++i) {
@@ -678,7 +682,7 @@ namespace cs222 {
 
     std::string Pass2::binaryToHex(std::string binaryValue)
     {
-
+        int hexLength = binaryValue.length() / 4;
         int result =0 ;
         for(size_t count = 0; count < binaryValue.length() ; ++count)
         {
@@ -690,6 +694,10 @@ namespace cs222 {
         ss << std::hex  << result;
 
         std::string hexVal(ss.str());
+        if (hexVal.length() < hexLength)
+        {
+            hexVal.insert(0, hexLength-hexVal.length(), '0');
+        }
         return hexVal;
     }
 

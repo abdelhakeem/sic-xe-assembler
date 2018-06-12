@@ -43,9 +43,14 @@ namespace cs222 {
 
     char getOpcode(const std::string& op)
     {
-        if (isOperation(op))
+        std::string opp = op;
+        if (opp[0] == '+')
         {
-            return OpTable.find(toUpper(op))->second.getOpcode();
+            opp = op.substr(1);
+        }
+        if (isOperation(opp))
+        {
+            return OpTable.find(toUpper(opp))->second.getOpcode();
         }
 
         return -1;
