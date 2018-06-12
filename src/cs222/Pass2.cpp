@@ -139,9 +139,10 @@ namespace cs222 {
         // Get program name
         std::stringstream lineStream(line);
         std::string buffer;
+        std::string progName;
         lineStream >> buffer; // Skip line number.
         lineStream >> buffer; // Skip address.
-        while (buffer == ".")
+        while (buffer[0] == '.')
         {
             getline(ifs, line);
             lineStream = std::stringstream(line);
@@ -149,7 +150,6 @@ namespace cs222 {
             lineStream >> buffer; // Skip address.
         }
 
-        std::string progName;
         lineStream >> progName;
         return progName;
     }
