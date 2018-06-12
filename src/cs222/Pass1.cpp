@@ -311,7 +311,7 @@ void writeIntermediateFile(
         std::string op = it->getOperation();
         if (cs222::isDirective(op))
         {
-            if (op != "BYTE" && op != "WORD" && op != "BASE")
+            if (op != "BYTE" && op != "WORD" && op != "BASE" && op != "START")
             {
                 continue;
             }
