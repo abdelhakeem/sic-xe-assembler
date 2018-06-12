@@ -83,7 +83,7 @@ namespace cs222 {
         std::string buffer;
         lineStream >> buffer; // Skip line number.
         lineStream >> buffer; // Skip address.
-        while (buffer == ".")
+        while (buffer[0] == '.')
         {
             startInst = ifs.tellg();
             getline(ifs, line);
